@@ -5,10 +5,10 @@ import { ArrowDown, ArrowUpRight, Menu, X, Pause, Play } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 
 const features = [
-  { id: 'west-reis', title: 'West Reis', label: 'Media kit', src: '/trabalhos/west-reis-01.jpg', position: '65% 42%' },
-  { id: 'worlds-2023', title: 'Worlds 2023', label: 'Key art & pôsteres', src: '/trabalhos/worlds-2023-01.jpg', position: 'center 36%' },
-  { id: 'gaming', title: 'Gaming Content', label: 'Thumbnails', src: '/trabalhos/gaming-01.jpg', position: '42% center' },
-  { id: 'esports', title: 'Esports & Broadcast', label: 'Thumbnails & transmissões', src: '/trabalhos/esports-01.jpg', position: '60% center' },
+  { id: 'worlds', title: 'Worlds', label: '2023–2024 · Key art & pôsteres', src: '/trabalhos/worlds-2023-01.jpg', height: 1500, position: 'center 36%' },
+  { id: 'esports', title: 'Esports & Broadcast', label: 'Thumbnails & transmissões', src: '/trabalhos/esports-13.jpg', height: 675, position: '60% center' },
+  { id: 'gaming', title: 'Gaming Thumbnails', label: 'Thumbnails para games', src: '/trabalhos/gaming-01.jpg', height: 675, position: '42% center' },
+  { id: 'west-reis', title: 'West Reis', label: 'Música · Media kit', src: '/trabalhos/west-reis-01.jpg', height: 675, position: '65% 42%' },
 ];
 
 export default function PortfolioHero({ onOpen }: { onOpen: (id: string) => void }) {
@@ -17,7 +17,7 @@ export default function PortfolioHero({ onOpen }: { onOpen: (id: string) => void
   const [paused, setPaused] = useState(false);
   return <section className={`cinema-hero ${paused ? 'motion-paused' : ''}`} id="inicio" aria-label="Projetos em destaque">
     <div className="hero-visuals" aria-hidden="true">
-      {features.map((item, index) => <div key={item.id} className={`hero-frame ${index === active ? 'is-active' : ''}`}><img src={item.src} alt="" width={1200} height={item.id === 'worlds-2023' ? 1500 : 675} style={{ objectPosition: item.position }} fetchPriority={index === 0 ? 'high' : 'auto'} /></div>)}
+      {features.map((item, index) => <div key={item.id} className={`hero-frame ${index === active ? 'is-active' : ''}`}><img src={item.src} alt="" width={1200} height={item.height} style={{ objectPosition: item.position }} fetchPriority={index === 0 ? 'high' : 'auto'} /></div>)}
     </div>
     <header className="cinema-header">
       <button className="hero-menu" onClick={() => setMenu(true)} aria-label="Abrir menu"><Menu size={23}/><span>Menu</span></button>
