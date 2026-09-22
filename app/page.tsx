@@ -23,16 +23,46 @@ const campaignPartners = [
   { name: 'Sadia', logo: '/logos/sadia.png', className: 'sadia' },
 ];
 
+const esportsThumbs = [
+  { src: '/impact/baiano-heineken-djonga.webp', title: 'Baiano × Heineken — Show do Djonga' },
+  { src: '/impact/baiano-worlds-capa-azul.webp', title: 'Baiano — Worlds 2024' },
+  { src: '/impact/faker-bdd-lck-idl.webp', title: 'Faker vs BDD — Resumo LCK' },
+  { src: '/impact/faker-lck-idl.webp', title: 'Faker — LCK' },
+  { src: '/impact/final-worlds-faker-chovy.webp', title: 'Final Worlds — Faker × Chovy' },
+  { src: '/impact/idl-baiano-worlds-londres.webp', title: 'Ilha das Lendas em Londres' },
+  { src: '/impact/robo-cblol-idl.webp', title: 'Robo de Camille — CBLOL' },
+];
+
+const gamingThumbs = [
+  { src: '/impact/minerva-ambessa-lol.webp', title: 'Minerva — Ambessa' },
+  { src: '/impact/minerva-cyberpunk-2077.webp', title: 'Minerva — Cyberpunk 2077' },
+  { src: '/impact/minerva-darius-lol.webp', title: 'Minerva — Darius' },
+  { src: '/impact/minerva-eldenring.webp', title: 'Minerva — Elden Ring' },
+  { src: '/impact/minerva-expedition-33.webp', title: 'Minerva — Expedition 33' },
+  { src: '/impact/minerva-graves-lol.webp', title: 'Minerva — Graves' },
+  { src: '/impact/minerva-kratos-gow.webp', title: 'Minerva — God of War' },
+  { src: '/impact/minerva-live-thumb.webp', title: 'Minerva — Live' },
+  { src: '/impact/minerva-minecraft-1.webp', title: 'Minerva — Minecraft' },
+  { src: '/impact/minerva-red-dead-redemption2.webp', title: 'Minerva — Red Dead Redemption 2' },
+  { src: '/impact/minerva-valorant-duo-grevthar.webp', title: 'Minerva — Valorant Duo' },
+  { src: '/impact/minerva-valorant.webp', title: 'Minerva — Valorant' },
+];
+
+const impactThumbs = [...esportsThumbs, ...gamingThumbs];
+
 export default function Home() {
   const [filter, setFilter] = useState('Todos');
   const [selected, setSelected] = useState<Project | null>(null);
   const [activeImage, setActiveImage] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [impactImage, setImpactImage] = useState<number | null>(null);
+  const [impactTouchStart, setImpactTouchStart] = useState<number | null>(null);
   const visible = filter === 'Todos' ? projects : projects.filter(p => p.category === filter);
   const openProject = (project: Project) => { setSelected(project); setActiveImage(0); setExpanded(project.id === 'drew'); };
   const step = (direction: number) => {
     if (selected) { setActiveImage(i => (i + direction + selected.images.length) % selected.images.length); setExpanded(false); }
   };
+  const stepImpact = (direction: number) => setImpactImage(index => index === null ? null : (index + direction + impactThumbs.length) % impactThumbs.length);
   useEffect(() => {
     if (!selected) return;
     const onKey = (event: KeyboardEvent) => {
@@ -42,6 +72,15 @@ export default function Home() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [selected]);
+  useEffect(() => {
+    if (impactImage === null) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') stepImpact(1);
+      if (event.key === 'ArrowLeft') stepImpact(-1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [impactImage]);
 
   return (
     <>
@@ -62,6 +101,37 @@ export default function Home() {
               <p className="partner-intro">*PEÇAS PARA CAMPANHAS DE PARCEIROS NACIONAIS E GLOBAIS:</p>
               <div className="partner-logos">
                 {campaignPartners.map(partner => <div className={`partner-logo ${partner.className}`} key={partner.name}><img src={partner.logo} alt={partner.name} loading="lazy" /></div>)}
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="impact-section" id="impacto" aria-labelledby="impact-heading">
+          <div className="impact-wrap">
+            <div className="impact-top"><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>IMPACTO &amp; ESCALA — 03</span></div>
+            <h2 className="impact-pill" id="impact-heading">Visualizações e impressões acumuladas</h2>
+            <div className="impact-metrics">
+              <div className="impact-metric"><strong>400M+</strong><p>Visualizações em vídeos<br />com minhas thumbnails</p></div>
+              <div className="impact-metric"><strong>2B+</strong><p>Impressões nas redes somando<br />capas, imagens e pôsteres</p></div>
+              <div className="impact-metric"><strong>5K+</strong><p>Peças diferentes<br />produzidas</p></div>
+            </div>
+          </div>
+          <div className="impact-gallery" aria-label="Galeria de thumbnails">
+            <div className="impact-row impact-row-esports" aria-label="Thumbnails de esports">
+              <div className="impact-track impact-track-left">
+                {[0, 1].map(copy => <div className="impact-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
+                  {esportsThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(index)} aria-label={`Ampliar ${thumb.title}`}>
+                    <img src={thumb.src} alt={copy === 0 ? thumb.title : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={19} /></span>
+                  </button>)}
+                </div>)}
+              </div>
+            </div>
+            <div className="impact-row impact-row-gaming" aria-label="Thumbnails de gaming">
+              <div className="impact-track impact-track-right">
+                {[0, 1].map(copy => <div className="impact-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
+                  {gamingThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(esportsThumbs.length + index)} aria-label={`Ampliar ${thumb.title}`}>
+                    <img src={thumb.src} alt={copy === 0 ? thumb.title : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={18} /></span>
+                  </button>)}
+                </div>)}
               </div>
             </div>
           </div>
@@ -93,6 +163,22 @@ export default function Home() {
         </section>
       </main>
       <footer className="site-footer wrap"><span>© {new Date().getFullYear()} JONATHAN BOLANLE</span><span>RIO DE JANEIRO, BRASIL</span><a href="#inicio">VOLTAR AO TOPO ↑</a></footer>
+
+      <Dialog open={impactImage !== null} onOpenChange={open => { if (!open) setImpactImage(null); }}>
+        <DialogContent className="impact-dialog" showCloseButton={false}>
+          {impactImage !== null && <div className="impact-lightbox" onTouchStart={event => setImpactTouchStart(event.changedTouches[0].clientX)} onTouchEnd={event => { if (impactTouchStart !== null) { const distance = event.changedTouches[0].clientX - impactTouchStart; if (Math.abs(distance) > 55) stepImpact(distance < 0 ? 1 : -1); } setImpactTouchStart(null); }}>
+            <DialogTitle className="sr-only">{impactThumbs[impactImage].title}</DialogTitle>
+            <DialogDescription className="sr-only">Thumbnail ampliada. Use as setas para navegar entre as peças.</DialogDescription>
+            <img src={impactThumbs[impactImage].src} alt={impactThumbs[impactImage].title} />
+            <div className="impact-lightbox-bar">
+              <button className="impact-lightbox-button" onClick={() => stepImpact(-1)} aria-label="Thumbnail anterior"><ArrowLeft size={21} /></button>
+              <div><span>{String(impactImage + 1).padStart(2, '0')} / {String(impactThumbs.length).padStart(2, '0')}</span><p>{impactThumbs[impactImage].title}</p></div>
+              <button className="impact-lightbox-button" onClick={() => stepImpact(1)} aria-label="Próxima thumbnail"><ArrowRight size={21} /></button>
+            </div>
+            <DialogClose className="impact-lightbox-close" aria-label="Fechar imagem"><X size={23} /></DialogClose>
+          </div>}
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={Boolean(selected)} onOpenChange={open => { if(!open) setSelected(null); }}>
         <DialogContent className="project-dialog" showCloseButton={false}>
