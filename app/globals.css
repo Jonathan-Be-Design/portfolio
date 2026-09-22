@@ -45,3 +45,7 @@
 .filtered-grid .worlds-card .project-cover{aspect-ratio:1.55}
 .filtered-grid .game-card .project-cover{aspect-ratio:1.55}
 @media(max-width:700px){.curated-grid .worlds-card,.curated-grid .game-card{grid-column:auto}.worlds-card .project-cover,.filtered-grid .worlds-card .project-cover{aspect-ratio:1.3}.game-card .project-cover,.filtered-grid .game-card .project-cover{aspect-ratio:1.45}.cover-composition{padding:6% 4%;gap:5%}}
+
+/* Ícones oficiais das plataformas */
+.broadcast-platforms{gap:25px}.broadcast-platforms>span{display:grid;place-items:center;width:52px;height:48px;padding:0;background:transparent;color:inherit;clip-path:none}.broadcast-platforms img{display:block;width:100%;height:100%;object-fit:contain}.broadcast-platforms .platform-youtube img{width:52px}.broadcast-platforms .platform-x img{width:37px}.broadcast-platforms .platform-twitch img{width:43px}.broadcast-platforms .platform-kick img{width:40px}
+@media(max-width:700px){.broadcast-platforms{gap:17px}.broadcast-platforms>span{width:39px;height:36px}.broadcast-platforms .platform-youtube img{width:39px}.broadcast-platforms .platform-x img{width:29px}.broadcast-platforms .platform-twitch img{width:33px}.broadcast-platforms .platform-kick img{width:31px}}

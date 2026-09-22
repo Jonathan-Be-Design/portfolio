@@ -42,7 +42,10 @@ export default function EsportsBroadcast() {
       <div className="broadcast-title-row">
         <h2 id="broadcast-heading">Thumbnails · Esports</h2>
         <div className="broadcast-platforms" aria-label="Plataformas de publicação">
-          <span className="platform-youtube"><Play fill="currentColor" /></span><span className="platform-x">𝕏</span><span className="platform-twitch">T</span><span className="platform-kick">K</span>
+          <span className="platform-youtube"><img src="/icons/social/youtube.svg" alt="YouTube" /></span>
+          <span className="platform-x"><img src="/icons/social/x-twitter.svg" alt="X" /></span>
+          <span className="platform-twitch"><img src="/icons/social/twitch.svg" alt="Twitch" /></span>
+          <span className="platform-kick"><img src="/icons/social/kick.svg" alt="Kick" /></span>
         </div>
       </div>
     </div>
