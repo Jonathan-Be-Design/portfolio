@@ -41,8 +41,9 @@ export default function PosterStage() {
     <section className="case-section" id="worlds" aria-labelledby="worlds-heading">
       <div className="case-top"><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>CASE 1 · CAMPANHA &amp; KEY ART — 04</span></div>
       <div className="case-heading">
-        <div><span>WORLDS 2023 &amp; 2024</span><h2 id="worlds-heading">Artes digitais<br />para o mundial.</h2></div>
+        <h2 id="worlds-heading">Artes Digitais · Worlds 2023 &amp; 2024</h2>
         <p>Direção visual e criação de key arts para promover as co-streams oficiais do Worlds nos canais de Baiano e Ilha das Lendas — parceiros oficiais da Riot Games na transmissão do campeonato.</p>
+        <span className="case-action">CLIQUE PARA AMPLIAR</span>
       </div>
       <div className="case-stage" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
         {posters.map((poster, index) => {
@@ -59,7 +60,7 @@ export default function PosterStage() {
           <button onClick={() => step(1)} aria-label="Próximo pôster"><ArrowRight /></button>
         </div>
       </div>
-      <p className="case-hint">Passe o mouse para pausar · Clique no pôster central para ampliar</p>
+      <p className="case-hint">Passe o mouse para pausar · Use as setas para navegar</p>
     </section>
 
     <Dialog open={selected !== null} onOpenChange={open => { if (!open) setSelected(null); }}>
