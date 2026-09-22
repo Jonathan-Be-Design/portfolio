@@ -1,38 +1,44 @@
 'use client';
 
-import { useState } from 'react';
-import { ArrowDown, ArrowUpRight, Menu, X, Pause, Play } from 'lucide-react';
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
-
-const features = [
-  { id: 'worlds', title: 'Worlds', label: '2023–2024 · Key art & pôsteres', src: '/trabalhos/worlds-2023-01.jpg', height: 1500, position: 'center 36%' },
-  { id: 'esports', title: 'Esports & Broadcast', label: 'Thumbnails & transmissões', src: '/trabalhos/esports-13.jpg', height: 675, position: '60% center' },
-  { id: 'gaming', title: 'Gaming Thumbnails', label: 'Thumbnails para games', src: '/trabalhos/gaming-01.jpg', height: 675, position: '42% center' },
-  { id: 'west-reis', title: 'West Reis', label: 'Música · Media kit', src: '/trabalhos/west-reis-01.jpg', height: 675, position: '65% 42%' },
-];
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
 
 export default function PortfolioHero({ onOpen }: { onOpen: (id: string) => void }) {
-  const [active, setActive] = useState(0);
-  const [menu, setMenu] = useState(false);
-  const [paused, setPaused] = useState(false);
-  return <section className={`cinema-hero ${paused ? 'motion-paused' : ''}`} id="inicio" aria-label="Projetos em destaque">
-    <div className="hero-visuals" aria-hidden="true">
-      {features.map((item, index) => <div key={item.id} className={`hero-frame ${index === active ? 'is-active' : ''}`}><img src={item.src} alt="" width={1200} height={item.height} style={{ objectPosition: item.position }} fetchPriority={index === 0 ? 'high' : 'auto'} /></div>)}
-    </div>
-    <header className="cinema-header">
-      <button className="hero-menu" onClick={() => setMenu(true)} aria-label="Abrir menu"><Menu size={23}/><span>Menu</span></button>
-      <a className="signature" href="#inicio" aria-label="Jonathan Bolanle, início">Jonathan<span>Bolanle</span></a>
-      <a className="hero-contact" href="#contato">Vamos conversar <ArrowUpRight size={17}/></a>
-    </header>
-    <div className="hero-intro"><h1>Design & edição de vídeo.</h1><p>Jonathan Bolanle · Rio de Janeiro</p></div>
-    <div className="hero-bottom">
-      <div className="hero-selection"><span className="hero-kicker">Seleção de trabalhos / 01 — 04</span>
-        <div className="hero-projects" role="group" aria-label="Escolher projeto em destaque">
-          {features.map((item, index) => <button key={item.id} className={index === active ? 'is-active' : ''} aria-pressed={index === active} onPointerEnter={event => { if(event.pointerType === 'mouse') setActive(index); }} onFocus={() => setActive(index)} onClick={() => setActive(index)}>{item.title}<span>{String(index + 1).padStart(2,'0')}</span></button>)}
-        </div>
+  return (
+    <section className="folio-hero" id="inicio" aria-labelledby="hero-title">
+      <div className="folio-hero-art" aria-hidden="true">
+        <img src="/trabalhos/worlds-2023-01.jpg" alt="" width={1200} height={1500} />
       </div>
-      <div className="hero-actions"><p aria-live="polite">{features[active].label}</p><button className="campaign-link" onClick={() => onOpen(features[active].id)}>Ver projeto <ArrowUpRight size={18}/></button><div className="hero-utilities"><button className="motion-toggle" onClick={() => setPaused(!paused)} aria-label={paused ? 'Ativar movimento das imagens' : 'Pausar movimento das imagens'} aria-pressed={paused}>{paused ? <Play size={16}/> : <Pause size={16}/>}</button><a href="#projetos" aria-label="Explorar todos os trabalhos"><ArrowDown size={25}/></a></div></div>
-    </div>
-    <Dialog open={menu} onOpenChange={setMenu}><DialogContent className="nav-dialog" showCloseButton={false}><div className="nav-dialog-top"><DialogTitle>Jonathan Bolanle</DialogTitle><DialogClose className="icon-button" aria-label="Fechar menu"><X size={24}/></DialogClose></div><DialogDescription className="sr-only">Navegação do portfólio</DialogDescription><nav aria-label="Navegação principal">{[['Trabalhos','#projetos'],['Sobre','#sobre'],['Contato','#contato']].map(([label,href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight/></a>)}</nav><a className="menu-email" href="mailto:jotabolanle@gmail.com">jotabolanle@gmail.com</a></DialogContent></Dialog>
-  </section>;
+      <div className="folio-hero-shade" aria-hidden="true" />
+
+      <header className="folio-nav">
+        <a className="folio-brand" href="#inicio">Jonathan<br />Bolanle</a>
+        <nav aria-label="Navegação principal">
+          <a href="#projetos">Trabalhos</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <a className="folio-talk" href="#contato">Vamos conversar <ArrowUpRight size={15} /></a>
+      </header>
+
+      <div className="folio-side folio-side-left" aria-hidden="true">
+        <span>KERIA</span><span>GUMAYUSI</span><span>FAKER</span>
+      </div>
+      <div className="folio-side folio-side-right" aria-hidden="true">
+        <span>01</span><span>PORTFÓLIO / 2026</span>
+      </div>
+
+      <div className="folio-hero-copy">
+        <p className="folio-overline">PRINCIPAIS TRABALHOS / 2021 — 2026</p>
+        <h1 id="hero-title">Esports &amp; Broadcast<br />YouTube &amp; Creators<br />Key Art &amp; Media</h1>
+      </div>
+
+      <div className="folio-hero-meta">
+        <p>Designer Gráfico<br /><span>Rio de Janeiro</span></p>
+        <strong>5 ANOS DE EXPERIÊNCIA</strong>
+        <button onClick={() => onOpen('worlds')}>Ver projeto em destaque <ArrowUpRight size={15} /></button>
+      </div>
+
+      <a className="folio-scroll" href="#credibilidade" aria-label="Continuar para a próxima seção"><ArrowDown size={20} /></a>
+    </section>
+  );
 }
