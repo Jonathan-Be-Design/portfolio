@@ -24,7 +24,6 @@ export default function PortfolioHero({ onOpen }: { onOpen: (id: string) => void
       <a className="signature" href="#inicio" aria-label="Jonathan Bolanle, início">Jonathan<span>Bolanle</span></a>
       <a className="hero-contact" href="#contato">Vamos conversar <ArrowUpRight size={17}/></a>
     </header>
-    <div className="hero-intro"><h1>Design & edição de vídeo.</h1><p>Jonathan Bolanle · Rio de Janeiro</p></div>
     <div className="hero-bottom">
       <div className="hero-selection"><span className="hero-kicker">Seleção de trabalhos / 01 — 04</span>
         <div className="hero-projects" role="group" aria-label="Escolher projeto em destaque">
