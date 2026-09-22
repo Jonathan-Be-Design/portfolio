@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Jonathan Bolanle — Designer Gráfico',
-  description: 'Campanhas, key arts, conteúdo, broadcast e identidades visuais por Jonathan Bolanle. Rio de Janeiro, Brasil.',
+  title: 'Jonathan Bolanle | Design para criadores, games e esports',
+  description: 'Portfólio de Jonathan Bolanle: thumbnails para YouTube, campanhas, pôsteres e identidade visual. Rio de Janeiro, atendimento remoto.',
 };
 
 export default function RootLayout({
