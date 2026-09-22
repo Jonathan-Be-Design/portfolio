@@ -53,3 +53,7 @@
 /* A faixa escura começa somente na área dos títulos do carrossel */
 .broadcast-reel{isolation:isolate;padding:0 0 14px;background:transparent}.broadcast-reel::after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:0;height:76px;background:#06070a}.broadcast-track{position:relative;z-index:1}
 @media(max-width:700px){.broadcast-reel{padding:0 0 12px}.broadcast-reel::after{height:62px}}
+
+/* A faixa cobre 70% da thumbnail; apenas os 30% superiores ficam no fundo claro */
+.broadcast-reel::after{top:clamp(52px,5.23vw,101px);height:auto}
+@media(max-width:700px){.broadcast-reel::after{top:13.16vw;height:auto}}
