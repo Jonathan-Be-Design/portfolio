@@ -49,3 +49,7 @@
 /* Ícones oficiais das plataformas */
 .broadcast-platforms{gap:25px}.broadcast-platforms>span{display:grid;place-items:center;width:52px;height:48px;padding:0;background:transparent;color:inherit;clip-path:none}.broadcast-platforms img{display:block;width:100%;height:100%;object-fit:contain}.broadcast-platforms .platform-youtube img{width:52px}.broadcast-platforms .platform-x img{width:37px}.broadcast-platforms .platform-twitch img{width:43px}.broadcast-platforms .platform-kick img{width:40px}
 @media(max-width:700px){.broadcast-platforms{gap:17px}.broadcast-platforms>span{width:39px;height:36px}.broadcast-platforms .platform-youtube img{width:39px}.broadcast-platforms .platform-x img{width:29px}.broadcast-platforms .platform-twitch img{width:33px}.broadcast-platforms .platform-kick img{width:31px}}
+
+/* A faixa escura começa somente na área dos títulos do carrossel */
+.broadcast-reel{isolation:isolate;padding:0 0 14px;background:transparent}.broadcast-reel::after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:0;height:76px;background:#06070a}.broadcast-track{position:relative;z-index:1}
+@media(max-width:700px){.broadcast-reel{padding:0 0 12px}.broadcast-reel::after{height:62px}}
