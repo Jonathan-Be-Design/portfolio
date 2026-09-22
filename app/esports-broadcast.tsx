@@ -13,12 +13,21 @@ const thumbnails = [
   { src: '/thumbnails-2/inv-gWRluOo-HD.jpg', title: 'Faker × Creme · Grande Final', url: 'https://www.youtube.com/watch?v=inv-gWRluOo' },
 ];
 
+const stageThumbnails = [
+  { src: '/thumbnails-2/palco/idl-baiano-worlds-londres.jpg', title: 'Worlds em Londres · Ilha das Lendas' },
+  { src: '/thumbnails-2/palco/baiano-worlds-capa-azul.jpg', title: 'Worlds 2024 · Costream oficial' },
+  { src: '/thumbnails-2/palco/DQnLLVIRhVM-HD.jpg', title: 'Costream do CBLOL · Ilha das Lendas' },
+  { src: '/thumbnails-2/palco/faker-bdd-lck-idl.jpg', title: 'Faker × BDD · Resumo LCK' },
+  { src: '/thumbnails-2/palco/baiano-heineken-djonga.jpg', title: 'Show do Djonga no CBLOL' },
+  { src: '/thumbnails-2/palco/robo-cblol-idl.jpg', title: 'Robo de Camille · Resumo LTA' },
+];
+
 const linkedThumbnails = thumbnails.filter(thumb => thumb.url !== null);
 
 export default function EsportsBroadcast() {
   const [active, setActive] = useState(2);
   const [paused, setPaused] = useState(false);
-  const step = (direction: number) => setActive(index => (index + direction + thumbnails.length) % thumbnails.length);
+  const step = (direction: number) => setActive(index => (index + direction + stageThumbnails.length) % stageThumbnails.length);
 
   useEffect(() => {
     if (paused) return;
@@ -40,10 +49,10 @@ export default function EsportsBroadcast() {
 
     <div className="broadcast-stage" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
       <div className="broadcast-stage-cards">
-        {thumbnails.map((thumb, index) => {
+        {stageThumbnails.map((thumb, index) => {
           let offset = index - active;
-          if (offset > thumbnails.length / 2) offset -= thumbnails.length;
-          if (offset < -thumbnails.length / 2) offset += thumbnails.length;
+          if (offset > stageThumbnails.length / 2) offset -= stageThumbnails.length;
+          if (offset < -stageThumbnails.length / 2) offset += stageThumbnails.length;
           return <button className="broadcast-stage-card" data-active={offset === 0} key={thumb.src} onClick={() => setActive(index)} style={{ transform: `translate(-50%, -50%) translateX(${offset * 72}%) scale(${1 - Math.abs(offset) * .095})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `${thumb.title}, em destaque` : `Destacar ${thumb.title}`}>
             <img src={thumb.src} alt={thumb.title} loading={Math.abs(offset) < 2 ? 'eager' : 'lazy'} />
           </button>;
@@ -51,7 +60,7 @@ export default function EsportsBroadcast() {
       </div>
       <div className="broadcast-stage-caption">
         <button onClick={() => step(-1)} aria-label="Thumbnail anterior"><ArrowLeft /></button>
-        <div><strong>{thumbnails[active].title}</strong><span>{String(active + 1).padStart(2, '0')} / {String(thumbnails.length).padStart(2, '0')}</span></div>
+        <div><strong>{stageThumbnails[active].title}</strong><span>{String(active + 1).padStart(2, '0')} / {String(stageThumbnails.length).padStart(2, '0')}</span></div>
         <button onClick={() => step(1)} aria-label="Próxima thumbnail"><ArrowRight /></button>
       </div>
     </div>
