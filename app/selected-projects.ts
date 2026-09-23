@@ -11,6 +11,8 @@ export type Project = {
   source: string;
   coverImages: ProjectImage[];
   coverLayout: 'wide' | 'worlds' | 'drew' | 'game';
+  creator?: string;
+  contributor?: string;
 };
 
 function original(id: string) {
@@ -36,9 +38,13 @@ function project(id: string, numbers: number[] | null, overrides: Partial<Projec
 // Outros trabalhos e contribuições selecionados por Jonathan.
 export const projects: Project[] = [
   project('west-reis', null, { title: 'West Reis', kind: 'Música · Media kit' }),
-  project('drew', null, { title: 'DREW', coverLayout: 'drew' }),
+  project('drew', null, {
+    title: 'DREW', coverLayout: 'drew', creator: 'André Ferreira Carneiro', contributor: 'Jonathan Bolanle',
+    description: 'Projeto de branding e identidade visual desenvolvido por André Ferreira Carneiro, com colaboração de Jonathan Bolanle.',
+  }),
   project('1936', [13, 1, 6, 7, 11, 12, 8, 9, 10], {
     coverLayout: 'game', coverImages: selectImages('1936', [1, 13]),
-    description: 'Projeto conceitual de game design. Identidade, interface, ilustração e tipografia compõem a apresentação de um universo visual próprio.',
+    creator: 'André Ferreira Carneiro', contributor: 'Jonathan Bolanle',
+    description: 'Projeto conceitual de game design criado por André Ferreira Carneiro, com colaboração de Jonathan Bolanle. Identidade, interface, ilustração e tipografia compõem a apresentação de um universo visual próprio.',
   }),
 ];
