@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink, Play } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Eye, ExternalLink, Play, ThumbsUp } from 'lucide-react';
 
 const thumbnails = [
-  { src: '/thumbnails-2/iXCWobp75I8-HD.jpg', title: 'Pesadelo na Ilha', url: 'https://www.youtube.com/watch?v=iXCWobp75I8' },
-  { src: '/thumbnails-2/vUDutSKUCPw-HD.jpg', title: 'O título histórico da T1', url: 'https://www.youtube.com/watch?v=vUDutSKUCPw' },
-  { src: '/thumbnails-2/thumb1.jpg', title: 'CBOLÃO · Grande Final', url: 'https://www.youtube.com/watch?v=J37eDmkr9Xg' },
-  { src: '/thumbnails-2/mZu1CmH8IFw-HD.jpg', title: 'DRX × T1 · Final do Worlds', url: 'https://www.youtube.com/watch?v=mZu1CmH8IFw' },
-  { src: '/thumbnails-2/rf-U5qmLlzk-HD.jpg', title: 'T1 × BLG · Grande Final', url: 'https://www.youtube.com/watch?v=rf-U5qmLlzk' },
-  { src: '/thumbnails-2/jJvpO_aEcCg-HD.jpg', title: 'O melhor time do mundo?', url: 'https://www.youtube.com/watch?v=jJvpO_aEcCg' },
-  { src: '/thumbnails-2/inv-gWRluOo-HD.jpg', title: 'Faker × Creme · Grande Final', url: 'https://www.youtube.com/watch?v=inv-gWRluOo' },
+  { src: '/thumbnails-2/iXCWobp75I8-HD.jpg', title: 'Pesadelo na Ilha', videoId: 'iXCWobp75I8' },
+  { src: '/thumbnails-2/vUDutSKUCPw-HD.jpg', title: 'O título histórico da T1', videoId: 'vUDutSKUCPw' },
+  { src: '/thumbnails-2/thumb1.jpg', title: 'CBOLÃO · Grande Final', videoId: 'J37eDmkr9Xg' },
+  { src: '/thumbnails-2/mZu1CmH8IFw-HD.jpg', title: 'DRX × T1 · Final do Worlds', videoId: 'mZu1CmH8IFw' },
+  { src: '/thumbnails-2/rf-U5qmLlzk-HD.jpg', title: 'T1 × BLG · Grande Final', videoId: 'rf-U5qmLlzk' },
+  { src: '/thumbnails-2/jJvpO_aEcCg-HD.jpg', title: 'O melhor time do mundo?', videoId: 'jJvpO_aEcCg' },
+  { src: '/thumbnails-2/inv-gWRluOo-HD.jpg', title: 'Faker × Creme · Grande Final', videoId: 'inv-gWRluOo' },
 ];
 
 const stageThumbnails = [
@@ -22,11 +22,19 @@ const stageThumbnails = [
   { src: '/thumbnails-2/palco/robo-cblol-idl.jpg', title: 'Robo de Camille · Resumo LTA' },
 ];
 
-const linkedThumbnails = thumbnails.filter(thumb => thumb.url !== null);
+type VideoStats = Record<string, { views: number; likes: number }>;
+
+function compactNumber(value: number) {
+  const format = (number: number) => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1 }).format(number);
+  if (value >= 1_000_000) return `${format(value / 1_000_000)} mi`;
+  if (value >= 1_000) return `${format(value / 1_000)} mil`;
+  return format(value);
+}
 
 export default function EsportsBroadcast() {
   const [active, setActive] = useState(2);
   const [paused, setPaused] = useState(false);
+  const [stats, setStats] = useState<VideoStats>({});
   const step = (direction: number) => setActive(index => (index + direction + stageThumbnails.length) % stageThumbnails.length);
 
   useEffect(() => {
@@ -34,6 +42,15 @@ export default function EsportsBroadcast() {
     const timer = window.setInterval(() => step(1), 4800);
     return () => window.clearInterval(timer);
   }, [paused]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`/api/youtube-stats?ids=${thumbnails.map(thumb => thumb.videoId).join(',')}`, { signal: controller.signal })
+      .then(response => response.ok ? response.json() as Promise<{ items?: VideoStats }> : null)
+      .then(data => { if (data?.items) setStats(data.items); })
+      .catch(error => { if (error.name !== 'AbortError') console.warn('YouTube stats indisponíveis'); });
+    return () => controller.abort();
+  }, []);
 
   return <section className="broadcast-section" id="esports-broadcast" aria-labelledby="broadcast-heading">
     <span className="broadcast-watermark" aria-hidden="true">ESPORTS</span>
@@ -71,9 +88,12 @@ export default function EsportsBroadcast() {
     <div className="broadcast-reel" aria-label="Vídeos com thumbnails selecionadas">
       <div className="broadcast-track">
         {[0, 1].map(copy => <div className="broadcast-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
-          {linkedThumbnails.map(thumb => <a href={thumb.url!} target="_blank" rel="noreferrer" className="broadcast-reel-card" tabIndex={copy === 1 ? -1 : 0} key={`${copy}-${thumb.src}`} aria-label={`Assistir ${thumb.title} no YouTube`}>
+          {thumbnails.map(thumb => <a href={`https://www.youtube.com/watch?v=${thumb.videoId}`} target="_blank" rel="noreferrer" className="broadcast-reel-card" tabIndex={copy === 1 ? -1 : 0} key={`${copy}-${thumb.src}`} aria-label={`Assistir ${thumb.title} no YouTube`}>
             <span className="broadcast-reel-image"><img src={thumb.src} alt={copy === 0 ? thumb.title : ''} loading="lazy" /><span className="broadcast-play"><Play fill="currentColor" /></span></span>
-            <span className="broadcast-reel-title"><strong>{thumb.title}</strong><ExternalLink /></span>
+            <span className="broadcast-reel-title"><span><strong>{thumb.title}</strong><span className="broadcast-stats" aria-label={stats[thumb.videoId] ? `${compactNumber(stats[thumb.videoId].views)} visualizações e ${compactNumber(stats[thumb.videoId].likes)} curtidas` : 'Métricas do vídeo carregando'}>
+              <span><Eye />{stats[thumb.videoId] ? `${compactNumber(stats[thumb.videoId].views)} visualizações` : '— visualizações'}</span>
+              <span><ThumbsUp />{stats[thumb.videoId] ? `${compactNumber(stats[thumb.videoId].likes)} curtidas` : '— curtidas'}</span>
+            </span></span><ExternalLink /></span>
           </a>)}
         </div>)}
       </div>

@@ -7,6 +7,8 @@ import { projects, type Project } from './selected-projects';
 import PortfolioHero from './portfolio-hero';
 import PosterStage from './poster-stage';
 import EsportsBroadcast from './esports-broadcast';
+import GamesThumbnails from './games-thumbnails';
+import LivePosters from './live-posters';
 
 const categories = ['Todos', 'Thumbnails', 'Campanhas', 'Identidade', 'Editorial & outros'];
 
@@ -140,6 +142,8 @@ export default function Home() {
         </section>
         <PosterStage />
         <EsportsBroadcast />
+        <GamesThumbnails />
+        <LivePosters />
         <section className="work-section wrap" id="projetos" aria-labelledby="work-heading">
           <div className="section-top"><span className="eyebrow">PORTFÓLIO / JONATHAN BOLANLE</span><span className="section-note">DESIGN · CONTEÚDO · CULTURA</span></div>
           <div className="work-title"><h2 id="work-heading">Trabalhos<br /><span>selecionados.</span></h2><p>Seis projetos entre games, música e identidade visual. Um recorte do meu trabalho.</p></div>
