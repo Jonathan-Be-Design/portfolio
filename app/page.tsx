@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, Download, Mail, ZoomIn, ZoomOut } from 'lucide-react';
+import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, Mail, ZoomIn, ZoomOut } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { projects, type Project } from './selected-projects';
 import PortfolioHero from './portfolio-hero';
@@ -154,8 +154,8 @@ export default function Home() {
         </section>
 
         <section className="about-section" id="sobre" aria-labelledby="about-heading">
-          <div className="wrap about-grid"><div><span className="eyebrow">02 / POR TRÁS DAS PEÇAS</span><h2 id="about-heading">Design com<br /><span>repertório.</span></h2><span className="about-sign">DESIGN, CULTURA & UM BOM REPERTÓRIO.</span></div>
-            <div className="about-copy"><p className="about-lead">Há 5 anos, transformo ideias em imagens para criadores de conteúdo, games e esports.</p><p>Minha trajetória inclui a liderança de design para Ilha das Lendas e Baiano, além de trabalhos com a Omelete Company em campanhas e eventos como a CCXP Brasil.</p><p>Na Jonathan BeDesign, conduzo projetos de identidade visual do briefing à entrega. Também trabalho com edição de vídeo, somando movimento ao meu repertório de criação.</p><div className="skill-list"><span>THUMBNAILS & CONTEÚDO</span><span>CAMPANHAS & KEY ART</span><span>IDENTIDADE VISUAL</span><span>EDIÇÃO DE VÍDEO</span></div><div className="resume-links"><a href="/curriculo-pt.pdf" target="_blank" rel="noreferrer">Currículo em português <Download size={16}/></a><a href="/curriculo-en.pdf" target="_blank" rel="noreferrer">Résumé in English <Download size={16}/></a></div></div></div>
+          <div className="wrap about-grid"><div><span className="eyebrow">02 / POR TRÁS DAS PEÇAS</span><h2 id="about-heading">Design com<br /><span>repertório.</span></h2><span className="about-sign">DESIGN, CULTURA &amp; RESULTADO.</span></div>
+            <div className="about-copy"><p className="about-lead">Há 5 anos, transformo ideias em imagens para criadores de conteúdo, games e esports.</p><p>Minha trajetória inclui a liderança de design para Ilha das Lendas e Baiano, além de trabalhos com a Omelete Company em campanhas e eventos como a CCXP Brasil.</p><p>Como designer e profissional audiovisual, conduzo projetos variados, pôsteres para campanhas, identidade visual, thumbnails e outros. Também trabalho com edição de vídeo, somando movimento ao meu repertório de criação.</p><div className="skill-list"><span>THUMBNAILS & CONTEÚDO</span><span>CAMPANHAS & KEY ART</span><span>IDENTIDADE VISUAL</span><span>EDIÇÃO DE VÍDEO</span></div></div></div>
         </section>
 
         <section className="contact-section wrap" id="contato" aria-labelledby="contact-heading">

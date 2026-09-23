@@ -73,6 +73,10 @@
 
 @media(prefers-reduced-motion:reduce){.games-drag-row{scroll-behavior:auto}}
 
+/* Seção de outros trabalhos: título ligeiramente mais compacto */
+.work-title h2{font-size:clamp(50px,5.7vw,106px)}
+@media(max-width:700px){.work-title h2{font-size:clamp(42px,10vw,70px)}}
+
 /* Ajustes de apresentação — Worlds, página 05 e página 06 */
 .case-stage{margin-top:8px}
 .broadcast-reel{padding:18px 0 22px;background:#06070a}
