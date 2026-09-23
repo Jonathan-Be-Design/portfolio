@@ -33,19 +33,8 @@ function project(id: string, numbers: number[] | null, overrides: Partial<Projec
     coverImages: [source.images[0]], coverLayout: 'wide', ...overrides };
 }
 
-// Curadoria de seis projetos aprovada por Jonathan.
+// Outros trabalhos e contribuições selecionados por Jonathan.
 export const projects: Project[] = [
-  project('worlds-2023', null, {
-    id: 'worlds', title: 'Worlds / 2023–2024', coverLayout: 'worlds',
-    description: 'Key art e pôsteres para as edições de 2023 e 2024 do Worlds. Uma seleção de composições que reúne jogadores, criadores e o universo competitivo de League of Legends.',
-    images: [...selectImages('worlds-2023', [1, 2, 3]), ...selectImages('worlds-2024', [1, 3])],
-    coverImages: [...selectImages('worlds-2024', [3]), ...selectImages('worlds-2023', [1])],
-  }),
-  project('esports', [4, 6, 7, 10, 11, 13], {
-    coverImages: selectImages('esports', [13]),
-    description: 'Design para conteúdo e transmissões de Ilha das Lendas e Baiano. Chamadas de programação, campeonatos e convidados, com composição e hierarquia adaptadas a cada publicação.',
-  }),
-  project('gaming', [1, 2, 5, 9, 10, 11], { title: 'Gaming Thumbnails' }),
   project('west-reis', null, { title: 'West Reis', kind: 'Música · Media kit' }),
   project('drew', null, { title: 'DREW', coverLayout: 'drew' }),
   project('1936', [13, 1, 6, 7, 11, 12, 8, 9, 10], {

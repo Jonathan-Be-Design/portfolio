@@ -10,8 +10,6 @@ import EsportsBroadcast from './esports-broadcast';
 import GamesThumbnails from './games-thumbnails';
 import LivePosters from './live-posters';
 
-const categories = ['Todos', 'Thumbnails', 'Campanhas', 'Identidade', 'Editorial & outros'];
-
 const featuredBrands = [
   { name: 'Baiano', logo: '/logos/baiano.png', lines: ['STREAMER', 'E-SPORTS'], className: 'baiano' },
   { name: 'Ilha das Lendas', logo: '/logos/ilha-das-lendas.svg', lines: ['CREATORS', 'E-SPORTS'], className: 'idl' },
@@ -55,13 +53,12 @@ const gamingThumbs = [
 const impactThumbs = [...esportsThumbs, ...gamingThumbs];
 
 export default function Home() {
-  const [filter, setFilter] = useState('Todos');
   const [selected, setSelected] = useState<Project | null>(null);
   const [activeImage, setActiveImage] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [impactImage, setImpactImage] = useState<number | null>(null);
   const [impactTouchStart, setImpactTouchStart] = useState<number | null>(null);
-  const visible = filter === 'Todos' ? projects : projects.filter(p => p.category === filter);
+  const visible = projects;
   const openProject = (project: Project) => { setSelected(project); setActiveImage(0); setExpanded(project.id === 'drew'); };
   const step = (direction: number) => {
     if (selected) { setActiveImage(i => (i + direction + selected.images.length) % selected.images.length); setExpanded(false); }
@@ -145,13 +142,10 @@ export default function Home() {
         <GamesThumbnails />
         <LivePosters />
         <section className="work-section wrap" id="projetos" aria-labelledby="work-heading">
-          <div className="section-top"><span className="eyebrow">PORTFÓLIO / JONATHAN BOLANLE</span><span className="section-note">DESIGN · CONTEÚDO · CULTURA</span></div>
-          <div className="work-title"><h2 id="work-heading">Trabalhos<br /><span>selecionados.</span></h2><p>Seis projetos entre games, música e identidade visual. Um recorte do meu trabalho.</p></div>
-          <div className="filter-bar" aria-label="Filtrar projetos por categoria">
-            {categories.map(category => <button key={category} className={filter === category ? 'filter active' : 'filter'} aria-pressed={filter === category} onClick={() => setFilter(category)}>{category}{category === 'Todos' && <sup>{projects.length}</sup>}</button>)}
-          </div>
-          <p className="sr-only" role="status">{visible.length} projetos na categoria {filter}</p>
-          <div className={`project-grid ${filter === 'Todos' ? 'curated-grid' : 'filtered-grid'}`}>
+          <div className="section-top"><span className="eyebrow">PORTFÓLIO / JONATHAN BOLANLE</span><span className="section-note">DESIGN · MÚSICA · GAMES</span></div>
+          <div className="work-title"><h2 id="work-heading">Outros trabalhos<br /><span>e contribuições.</span></h2><p>Uma seleção de projetos em música, identidade visual e game design.</p></div>
+          <p className="sr-only" role="status">{visible.length} outros trabalhos e contribuições</p>
+          <div className="project-grid curated-grid">
             {visible.map((project,index) => <button className={`project-card ${project.coverLayout}-card`} key={project.id} onClick={() => openProject(project)} aria-label={`Ver projeto ${project.title}`}>
               <div className="project-cover">{project.coverImages.length > 1 ? <div className={`cover-composition ${project.coverLayout}-composition`}>{project.coverImages.map((image,i) => <img key={image.src} src={image.src} alt={`${project.title}, peça ${i+1}`} width={image.width} height={image.height} loading="lazy" />)}</div> : <img src={project.coverImages[0].src} alt={project.title} width={project.coverImages[0].width} height={project.coverImages[0].height} loading="lazy" />}<span className="card-number">{String(index+1).padStart(2,'0')}</span><span className="card-open"><Plus size={25} /></span>{project.images.length > 1 && <span className="image-count">{project.images.length} IMAGENS</span>}</div>
               <div className="project-info"><div><span className="project-kind">{project.kind}</span><h3>{project.title}</h3></div><ArrowUpRight size={23} /></div>
