@@ -84,3 +84,147 @@
 .games-header .games-hint{width:max-content;max-width:100%;margin:30px auto 0;padding:9px 17px;border:1px solid #21e87355;border-radius:999px;background:#181a1c;color:#21e873;text-align:center;font-size:10px;font-weight:650;letter-spacing:.14em;text-transform:uppercase}
 .games-gallery{margin-top:34px}
 @media(max-width:700px){.case-stage{margin-top:4px}.broadcast-reel{padding:10px 0 16px}.games-header .games-hint{padding:9px 14px;line-height:1.45}.games-gallery{margin-top:28px}}
+
+/* Parallax interno no grid, inspirado na seção Featured Work da Lusion. */
+.project-parallax-media{position:absolute;inset:-18% 0;will-change:transform}
+.project-parallax-media>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transition:scale .7s cubic-bezier(.2,.65,.3,1)}
+.project-parallax-media>.cover-composition{width:100%;height:100%}
+.campaign-card .project-parallax-media>img{object-fit:contain;object-position:center}
+.project-card:hover .project-parallax-media>img{scale:1.035}
+.drew-card .project-parallax-media>img{height:auto;min-height:100%;object-fit:initial;translate:0 -1%}
+.drew-card:hover .project-parallax-media>img{scale:1.025}
+@media(prefers-reduced-motion:reduce){.project-parallax-media{inset:0;transform:none;will-change:auto}}
+
+/* Camada de imagem separada: o scroll não sobrescreve o transform dos carrosséis. */
+.case-poster{overflow:hidden}
+.case-poster img[data-motion-card-image],.broadcast-stage-card img[data-motion-card-image],.games-thumb img[data-motion-card-image]{height:114%;margin-top:-7%;will-change:transform}
+@media(prefers-reduced-motion:reduce){.case-poster img[data-motion-card-image],.broadcast-stage-card img[data-motion-card-image],.games-thumb img[data-motion-card-image]{height:100%;margin-top:0;transform:none!important;will-change:auto}}
+
+/* Palco de pôsteres: abertura fluida no desktop e composição compacta em telas estreitas. */
+.poster-test-page{min-height:100vh;background:#050607}.poster-test-page .case-section{min-height:0;border-top:0}.case-section-spread{min-height:0;padding-bottom:clamp(42px,4vw,72px)}.case-section-spread .case-stage{--poster-width:clamp(270px,20vw,360px);height:calc(var(--poster-width)*1.25 + 72px);min-height:0;overflow:visible;cursor:grab;touch-action:pan-y;user-select:none}.case-section-spread .case-stage.is-dragging{cursor:grabbing}.case-section-spread .case-stage:focus-visible{outline:2px solid #21e873;outline-offset:8px}.case-section-spread .case-poster{top:50%;width:var(--poster-width)}.case-section-spread .case-poster img{-webkit-user-drag:none}.case-section-spread .case-controls,.case-section-spread .case-hint{display:none}
+@media(max-width:900px){.case-section-spread .case-stage{--poster-width:30vw;overflow:hidden}}
+@media(max-width:700px){.case-section-spread .case-stage{--poster-width:68vw}}
+
+/* Setas do palco ao lado do convite para ampliar. */
+.case-action-nav{display:inline-flex;align-items:center;justify-content:center;gap:14px;max-width:100%;margin-top:27px}.case-action-nav .case-action{margin-top:0}.case-action-arrow{width:42px;height:42px;flex:0 0 auto;display:grid;place-items:center;padding:0;border:1px solid #21e87380;border-radius:50%;background:#112019;color:#21e873;transition:background .2s,color .2s,transform .2s}.case-action-arrow:hover{background:#21e873;color:#07130c;transform:translateY(-2px)}.case-action-arrow:focus-visible{outline:2px solid #21e873;outline-offset:4px}
+@media(max-width:700px){.case-action-nav{gap:8px;margin-top:22px}.case-action-nav .case-action{padding:8px 11px;font-size:10px;line-height:1.2;letter-spacing:.08em}.case-action-arrow{width:36px;height:36px}}
+
+/* Em telas de toque, as faixas contínuas viram listas horizontais deslizáveis. */
+@media(hover:none) and (pointer:coarse){
+  .cinema-hero,.broadcast-stage-cards{touch-action:pan-y}
+  .gallery-image{touch-action:pan-y pinch-zoom}
+  .impact-row,.broadcast-reel{overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .impact-row::-webkit-scrollbar,.broadcast-reel::-webkit-scrollbar{display:none}
+  .impact-row{mask-image:none;-webkit-mask-image:none}
+  .impact-track,.broadcast-track{animation:none;will-change:auto}
+  .impact-track>.impact-group[aria-hidden="true"],.broadcast-track>.broadcast-group[aria-hidden="true"]{display:none}
+}
+
+/* Palco de Esports: três thumbs contidas, laterais recuadas e player no destaque. */
+.broadcast-stage-cards{--broadcast-card-width:min(58vw,920px);width:calc(100% - clamp(40px,7vw,140px));height:calc(var(--broadcast-card-width)*.5625 + 34px);min-height:0;margin-inline:auto;overflow:hidden;isolation:isolate}
+.broadcast-stage-card{width:var(--broadcast-card-width)}
+.broadcast-stage-card img[data-motion-card-image]{height:100%;margin-top:0;transform:none!important;will-change:auto}
+.broadcast-stage-card:not([data-active="true"]){filter:brightness(.42) saturate(.82)}
+.broadcast-stage-arrow{position:absolute;top:50%;z-index:20;display:grid;place-items:center;width:46px;height:46px;padding:0;border:1px solid #0002;border-radius:50%;background:#fffffff0;color:#161719;box-shadow:0 5px 24px #0004;transform:translateY(-50%);transition:background .2s,scale .2s}
+.broadcast-stage-arrow:hover{background:#fff;scale:1.08}.broadcast-stage-arrow:focus-visible{outline:3px solid #20df6f;outline-offset:3px}
+.broadcast-stage-arrow-prev{left:clamp(20px,10vw,180px)}.broadcast-stage-arrow-next{right:clamp(20px,10vw,180px)}
+.broadcast-stage-player{position:absolute;left:50%;top:50%;z-index:15;width:var(--broadcast-card-width);aspect-ratio:16/9;background:#050505;transform:translate(-50%,-50%);box-shadow:0 25px 80px #0005}
+.broadcast-stage-player iframe{display:block;width:100%;height:100%;border:0}
+.broadcast-stage-player-close{position:absolute;top:10px;right:10px;z-index:1;display:grid;place-items:center;width:38px;height:38px;border:1px solid #ffffff75;border-radius:50%;background:#111d;color:#fff}
+.broadcast-stage-player-close:hover{background:#fff;color:#111}
+.broadcast-stage-caption{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;width:min(920px,92%);margin:18px auto 0;text-align:center}
+.broadcast-stage-caption strong{max-width:100%;overflow:visible;font-size:clamp(20px,2vw,34px);line-height:1.15;white-space:normal;text-overflow:clip;overflow-wrap:anywhere}
+.broadcast-stage-caption span{white-space:nowrap}
+@media(max-width:700px){.broadcast-stage-cards{--broadcast-card-width:66vw;width:calc(100% - 24px);height:calc(var(--broadcast-card-width)*.5625 + 24px)}.broadcast-stage-arrow{width:38px;height:38px}.broadcast-stage-arrow-prev{left:clamp(12px,5vw,24px)}.broadcast-stage-arrow-next{right:clamp(12px,5vw,24px)}.broadcast-stage-caption{display:block;margin-top:12px}.broadcast-stage-caption strong{display:block;font-size:20px}.broadcast-stage-caption span{display:block;margin-top:4px}.broadcast-stage-player-close{top:5px;right:5px;width:31px;height:31px}}
+@media(prefers-reduced-motion:reduce){.broadcast-stage-card,.broadcast-stage-arrow{transition:none}}
+.broadcast-stage-caption .broadcast-stage-stats{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 18px;color:#686868;font-size:14px;letter-spacing:0}
+.broadcast-stage-stats>span{display:inline-flex;align-items:center;gap:5px;margin-top:0}
+.broadcast-stage-stats svg{width:16px;height:16px;stroke-width:1.8}
+@media(max-width:700px){.broadcast-stage-caption .broadcast-stage-stats{display:flex;margin-top:8px;font-size:12px}.broadcast-stage-stats>span{display:inline-flex;margin-top:0}}
+.broadcast-stage-card::after{content:"";position:absolute;inset:0;z-index:1;background:#050505;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.broadcast-stage-play{position:absolute;left:50%;top:50%;z-index:2;display:grid;place-items:center;width:64px;height:64px;border:1px solid #ffffff5c;border-radius:50%;background:#111b;color:#f00;box-shadow:0 8px 28px #0006;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.85);transition:opacity .25s ease,transform .25s ease}
+.broadcast-stage-play svg{width:27px;height:27px;margin-left:3px;stroke-width:1.5}
+.broadcast-stage-card[data-active="true"]:is(:hover,:focus-visible)::after{opacity:.3}
+.broadcast-stage-card[data-active="true"]:is(:hover,:focus-visible) .broadcast-stage-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media(hover:none){.broadcast-stage-card[data-active="true"] .broadcast-stage-play{opacity:.9;transform:translate(-50%,-50%) scale(1)}}
+@media(max-width:700px){.broadcast-stage-play{width:48px;height:48px}.broadcast-stage-play svg{width:22px;height:22px}}
+@media(prefers-reduced-motion:reduce){.broadcast-stage-card::after,.broadcast-stage-play{transition:none}}
+
+/* Três parceiros de campanha após a retirada de CBLOL e Sadia. */
+.partner-logos{grid-template-columns:repeat(3,minmax(0,1fr));width:min(900px,92%);gap:clamp(32px,5vw,72px)}
+@media(max-width:700px){.partner-logos{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:30px 34px}}
+
+/* As duas faixas de Games repetem a mesma sequência para permitir arraste contínuo. */
+.games-drag-track{--games-gap:14px;gap:0;padding-right:0}
+.games-drag-group{display:flex;flex:0 0 auto;gap:var(--games-gap);padding-right:var(--games-gap)}
+.games-drag-row:nth-child(1) .games-drag-track,.games-drag-row:nth-child(2) .games-drag-track{transform:none;padding-right:0}
+@media(max-width:700px){.games-drag-track{--games-gap:8px}}
+
+/* Links da abertura mantêm a aparência da antiga lista de seleção. */
+.hero-projects a{display:flex;align-items:start;gap:14px;padding:2px 0;color:#fff9;font-family:var(--display-title);font-size:clamp(35px,4.7vw,83px);font-weight:500;line-height:1.08;letter-spacing:-.055em;text-align:left;transition:color .25s,transform .3s}
+.hero-projects a.is-active{color:#fff}
+.hero-projects a:hover{transform:translateX(7px)}
+@media(max-width:1000px){.hero-projects a{font-size:5.7vw}}
+@media(max-width:700px){.hero-projects a{font-size:clamp(28px,8.2vw,53px);gap:10px;line-height:1.16}}
+@media(prefers-reduced-motion:reduce){.hero-projects a{transition:none}.hero-projects a:hover{transform:none}}
+
+/* O último destaque prioriza o lettering do media kit, com menos rosto no enquadramento. */
+.hero-frame-other-work img{object-position:left center!important;transform-origin:left center;animation-name:drift-other-work}
+@keyframes drift-other-work{from{transform:scale(1.24) translateY(-3%)}to{transform:scale(1.28) translateY(-3%)}}
+@media(max-width:700px){.hero-frame-other-work img{object-position:13% center!important;animation-name:drift-other-work-mobile}}
+@keyframes drift-other-work-mobile{from{transform:scale(1.03)}to{transform:scale(1.07)}}
+@media(prefers-reduced-motion:reduce){.hero-frame-other-work img{transform:scale(1.24) translateY(-3%)}}
+@media(max-width:700px) and (prefers-reduced-motion:reduce){.hero-frame-other-work img{transform:scale(1.03)}}
+
+/* Números de impacto na mesma família tipográfica dos títulos. */
+.impact-metric strong{font-family:var(--font-space-grotesk),'Space Grotesk',Arial,sans-serif;font-weight:400;font-variant-numeric:tabular-nums}
+
+/* Marcas e parceiros: título um pouco menor e logos com indicação de clique. */
+.brand-pill{font-size:clamp(17px,1.5vw,25px);padding:14px 32px}
+.featured-logo img,.partner-logo img{transition:transform .25s ease,opacity .25s ease}
+.featured-logo:hover img,.featured-logo:focus-visible img,.partner-logo:hover img,.partner-logo:focus-visible img{transform:translateY(-3px);opacity:1}
+.featured-logo:focus-visible,.partner-logo:focus-visible{outline:2px solid #20df6f;outline-offset:5px;border-radius:5px}
+@media(max-width:700px){.brand-pill{font-size:16px;padding:13px 16px}}
+@media(prefers-reduced-motion:reduce){.featured-logo img,.partner-logo img{transition:none}.featured-logo:hover img,.featured-logo:focus-visible img,.partner-logo:hover img,.partner-logo:focus-visible img{transform:none}}
+
+/* Teste de mural na capa de Gaming: quatro faixas com escalas alternadas. */
+.hero-gaming-mural{position:absolute;inset:-2% 0;display:grid;grid-template-rows:1fr 1.28fr 1fr 1.28fr;gap:8px;overflow:hidden;filter:brightness(.62) saturate(.9);pointer-events:none}
+.hero-gaming-mural-row{position:relative;left:-6%;display:grid;width:112%;min-height:0;gap:8px;animation:hero-mural-drift 20s ease-in-out infinite alternate;animation-play-state:paused}
+.hero-frame.is-active .hero-gaming-mural-row{animation-play-state:running;will-change:transform}
+.hero-gaming-mural-row:nth-child(even){animation-direction:alternate-reverse;animation-duration:24s}
+.motion-paused .hero-gaming-mural-row{animation-play-state:paused!important}
+.hero-gaming-mural-tile{min-width:0;min-height:0;overflow:hidden;background:#111}
+.hero-gaming-mural img{display:block;width:100%;height:100%;object-fit:cover;transform:none;animation:none;pointer-events:none}
+@keyframes hero-mural-drift{from{transform:translateX(-1.5%)}to{transform:translateX(1.5%)}}
+@media(max-width:700px){.hero-gaming-mural{gap:6px}.hero-gaming-mural-row{left:-57%;width:214%;gap:6px}}
+@media(prefers-reduced-motion:reduce){.hero-gaming-mural-row{animation:none;will-change:auto}}
+
+/* Métricas do palco principal de Esports: o estilo genérico dos spans as reduzia. */
+.broadcast-stage-caption .broadcast-stage-stats>span{font-size:18px;font-weight:500;line-height:1.35;letter-spacing:0}
+.broadcast-stage-caption .broadcast-stage-stats svg{width:19px;height:19px}
+@media(max-width:700px){.broadcast-stage-caption .broadcast-stage-stats>span{font-size:15px}.broadcast-stage-caption .broadcast-stage-stats svg{width:17px;height:17px}}
+
+/* Título da seção final mais compacto, sem a segunda linha. */
+.work-title h2{font-size:clamp(44px,5vw,92px)}
+@media(max-width:700px){.work-title h2{font-size:clamp(36px,8.8vw,60px)}}
+
+.contact-socials{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:12px 24px}
+@media(max-width:700px){.contact-socials{justify-content:flex-start;gap:14px 22px}}
+
+/* Card de vídeo: legenda discreta e alinhada à arte em destaque. */
+.broadcast-stage{--broadcast-featured-width:min(58vw,920px)}
+.broadcast-stage-cards{height:calc(var(--broadcast-featured-width)*.5625)}
+.broadcast-stage-caption{box-sizing:border-box;position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:var(--broadcast-featured-width);min-height:82px;margin:0 auto;padding:15px 22px 17px;gap:6px;background:linear-gradient(110deg,#1d1e22,#111214);color:#fff;border:0;box-shadow:0 18px 40px #0002;text-align:left}
+.broadcast-stage-caption strong{font-size:clamp(19px,1.55vw,24px);font-weight:600;line-height:1.2;letter-spacing:-.025em}
+.broadcast-stage-caption .broadcast-stage-stats{justify-content:flex-start;gap:5px 22px;margin:0;color:#b5b7be}
+.broadcast-stage-caption .broadcast-stage-stats>span{font-size:16px;font-weight:400;line-height:1.25}
+.broadcast-stage-caption .broadcast-stage-stats svg{width:18px;height:18px;color:#aaaeb8}
+@media(max-width:700px){
+  .broadcast-stage{--broadcast-featured-width:66vw}
+  .broadcast-stage-caption{min-height:0;padding:12px 13px 14px;gap:7px}
+  .broadcast-stage-caption strong{font-size:16px}
+  .broadcast-stage-caption .broadcast-stage-stats{justify-content:flex-start;gap:4px 10px;margin:0}
+  .broadcast-stage-caption .broadcast-stage-stats>span{font-size:13px}
+  .broadcast-stage-caption .broadcast-stage-stats svg{width:15px;height:15px}
+}
+.broadcast-stage-caption-compact{min-height:58px;padding-block:14px}

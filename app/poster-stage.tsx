@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
@@ -12,11 +12,15 @@ const posters = [
   { src: '/posters/final-worlds-2024.webp', title: 'Grande Final Worlds', year: '2024' },
 ];
 
-export default function PosterStage() {
+export default function PosterStage({ layout = 'default' }: { layout?: 'default' | 'spread' }) {
   const [active, setActive] = useState(2);
   const [paused, setPaused] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [viewportWidth, setViewportWidth] = useState(1920);
+  const [dragging, setDragging] = useState(false);
+  const dragStart = useRef<number | null>(null);
+  const dragged = useRef(false);
 
   const step = (direction: number) => setActive(index => (index + direction + posters.length) % posters.length);
   const stepSelected = (direction: number) => setSelected(index => index === null ? null : (index + direction + posters.length) % posters.length);
@@ -25,7 +29,7 @@ export default function PosterStage() {
     if (paused || selected !== null) return;
     const timer = window.setInterval(() => step(1), 4500);
     return () => window.clearInterval(timer);
-  }, [paused, selected]);
+  }, [active, paused, selected]);
 
   useEffect(() => {
     if (selected === null) return;
@@ -37,21 +41,80 @@ export default function PosterStage() {
     return () => window.removeEventListener('keydown', onKey);
   }, [selected]);
 
+  useEffect(() => {
+    if (layout !== 'spread') return;
+
+    let frame = 0;
+    const updateViewport = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => setViewportWidth(window.innerWidth));
+    };
+
+    updateViewport();
+    window.addEventListener('resize', updateViewport, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('resize', updateViewport);
+    };
+  }, [layout]);
+
+  const spread = layout === 'spread';
+  const spreadProgress = spread ? Math.min(1, Math.max(0, (viewportWidth - 900) / 1020)) : 0;
+
+  const startDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!spread || event.button !== 0) return;
+    dragStart.current = event.clientX;
+    dragged.current = false;
+  };
+
+  const moveDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (dragStart.current === null) return;
+    if (Math.abs(event.clientX - dragStart.current) > 10) {
+      dragged.current = true;
+      if (!event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.setPointerCapture(event.pointerId);
+      setDragging(true);
+    }
+  };
+
+  const finishDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (dragStart.current === null) return;
+    const distance = event.clientX - dragStart.current;
+    dragStart.current = null;
+    setDragging(false);
+    if (Math.abs(distance) > 45) step(distance < 0 ? 1 : -1);
+    window.setTimeout(() => { dragged.current = false; }, 0);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+
+  const cancelDrag = () => {
+    dragStart.current = null;
+    dragged.current = false;
+    setDragging(false);
+  };
+
   return <>
-    <section className="case-section" id="worlds" aria-labelledby="worlds-heading">
-      <div className="case-top"><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>CASE 1 · CAMPANHA &amp; KEY ART — 04</span></div>
-      <div className="case-heading">
+    <section className={`case-section${spread ? ' case-section-spread' : ''}`} id="worlds" aria-labelledby="worlds-heading">
+      <div className="case-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>CASE 1 · CAMPANHA &amp; KEY ART — 04</span></div>
+      <div className="case-heading" data-motion-reveal>
         <h2 id="worlds-heading">Artes Digitais · Worlds 2023 &amp; 2024</h2>
         <p>Direção visual e criação de key arts para promover as co-streams oficiais do Worlds nos canais de Baiano e Ilha das Lendas — parceiros oficiais da Riot Games na transmissão do campeonato.</p>
-        <span className="case-action">CLIQUE PARA AMPLIAR</span>
+        {spread ? <div className="case-action-nav">
+          <button type="button" className="case-action-arrow" onClick={() => step(-1)} aria-label="Pôster anterior"><ArrowLeft size={20} aria-hidden="true" /></button>
+          <span className="case-action">CLIQUE NA IMAGEM PARA AMPLIAR</span>
+          <button type="button" className="case-action-arrow" onClick={() => step(1)} aria-label="Próximo pôster"><ArrowRight size={20} aria-hidden="true" /></button>
+        </div> : <span className="case-action">CLIQUE NA IMAGEM PARA AMPLIAR</span>}
       </div>
-      <div className="case-stage" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
+      <div className={`case-stage${dragging ? ' is-dragging' : ''}`} data-motion-stage="34" data-motion-image-group onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)} onPointerDownCapture={startDrag} onPointerMoveCapture={moveDrag} onPointerUpCapture={finishDrag} onPointerCancelCapture={cancelDrag} onDragStart={event => { if (spread) event.preventDefault(); }} tabIndex={spread ? 0 : undefined} onKeyDown={event => { if (!spread) return; if (event.key === 'ArrowLeft') step(-1); if (event.key === 'ArrowRight') step(1); }}>
         {posters.map((poster, index) => {
           let offset = index - active;
           if (offset > posters.length / 2) offset -= posters.length;
           if (offset < -posters.length / 2) offset += posters.length;
-          return <button key={poster.src} className="case-poster" data-active={offset === 0} onClick={() => offset === 0 ? setSelected(index) : setActive(index)} style={{ transform: `translate(-50%, -50%) translateX(${offset * 53}%) translateZ(${Math.abs(offset) * -120}px) rotateY(${offset * -9}deg) scale(${1 - Math.abs(offset) * .08})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `Ampliar ${poster.title}` : `Destacar ${poster.title}`}>
-            <img src={poster.src} alt={poster.title} loading={offset === 0 ? 'eager' : 'lazy'} /><span>{poster.year}</span>
+          const distance = spread ? 53 + (35 * spreadProgress) : 53;
+          const depth = spread ? -120 + (55 * spreadProgress) : -120;
+          const rotation = spread ? -9 + (5 * spreadProgress) : -9;
+          const scaleStep = spread ? .08 - (.035 * spreadProgress) : .08;
+          return <button key={poster.src} className="case-poster" data-active={offset === 0} onClick={() => { if (dragged.current) { dragged.current = false; return; } offset === 0 ? setSelected(index) : setActive(index); }} style={{ transform: `translate(-50%, -50%) translateX(${offset * distance}%) translateZ(${Math.abs(offset) * depth}px) rotateY(${offset * rotation}deg) scale(${1 - Math.abs(offset) * scaleStep})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `Ampliar ${poster.title}` : `Destacar ${poster.title}`}>
+            <img src={poster.src} alt={poster.title} data-motion-card-image draggable={!spread} loading={offset === 0 ? 'eager' : 'lazy'} /><span>{poster.year}</span>
           </button>;
         })}
         <div className="case-controls">
