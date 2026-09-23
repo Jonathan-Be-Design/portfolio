@@ -82,12 +82,12 @@ export default function GamesThumbnails() {
           <span className="platform-kick"><img src="/icons/social/kick.svg" alt="Kick" /></span>
         </div>
       </div>
+      <p className="games-hint">Arraste horizontalmente para explorar</p>
     </div>
     <div className="games-gallery">
       <DragRow images={rows[0]} label="Primeira faixa de thumbnails de games" />
       <DragRow images={rows[1]} large label="Segunda faixa de thumbnails de games em destaque" />
       <DragRow images={rows[2]} label="Terceira faixa de thumbnails de games" />
     </div>
-    <p className="games-hint">Arraste horizontalmente para explorar</p>
   </section>;
 }

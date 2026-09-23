@@ -71,3 +71,11 @@
 @media(max-width:700px){.live-posters-section{padding:42px 6% 58px}.live-posters-top{font-size:9px;letter-spacing:.11em}.live-posters-top span:last-child{display:none}.live-posters-section h2{margin-top:44px;font-size:13.5vw;line-height:1}.live-posters-pair{grid-template-columns:1fr;gap:22px;margin:40px 0 0}.live-posters-watermark{right:-50%;top:.12em;font-size:73vw}}
 
 @media(prefers-reduced-motion:reduce){.games-drag-row{scroll-behavior:auto}}
+
+/* Ajustes de apresentação — Worlds, página 05 e página 06 */
+.case-stage{margin-top:8px}
+.broadcast-reel{padding:18px 0 22px;background:#06070a}
+.broadcast-reel::after{display:none}
+.games-header .games-hint{width:max-content;max-width:100%;margin:30px auto 0;padding:9px 17px;border:1px solid #21e87355;border-radius:999px;background:#181a1c;color:#21e873;text-align:center;font-size:10px;font-weight:650;letter-spacing:.14em;text-transform:uppercase}
+.games-gallery{margin-top:34px}
+@media(max-width:700px){.case-stage{margin-top:4px}.broadcast-reel{padding:10px 0 16px}.games-header .games-hint{padding:9px 14px;line-height:1.45}.games-gallery{margin-top:28px}}
