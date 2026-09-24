@@ -74,7 +74,7 @@ export default function EsportsBroadcast() {
   return <section className="broadcast-section" id="esports-broadcast" aria-labelledby="broadcast-heading">
     <span className="broadcast-watermark" data-motion-watermark aria-hidden="true">ESPORTS</span>
     <div className="broadcast-header">
-      <div className="broadcast-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>YOUTUBE &amp; THUMBNAILS — 05</span></div>
+      <div className="broadcast-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>YOUTUBE &amp; THUMBNAILS — 04</span></div>
       <div className="broadcast-title-row" data-motion-reveal>
         <h2 id="broadcast-heading">Esports</h2>
         <div className="broadcast-platforms" aria-label="Plataformas de publicação">

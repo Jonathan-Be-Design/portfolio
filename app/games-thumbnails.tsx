@@ -107,7 +107,7 @@ export default function GamesThumbnails() {
   return <section className="games-section" id="games-thumbnails" aria-labelledby="games-heading">
     <span className="games-watermark" data-motion-watermark aria-hidden="true">gaming</span>
     <div className="games-header">
-      <div className="games-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>YOUTUBE &amp; THUMBNAILS — 06</span></div>
+      <div className="games-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>YOUTUBE &amp; THUMBNAILS — 05</span></div>
       <div className="games-title-row" data-motion-reveal>
         <h2 id="games-heading">Games</h2>
         <div className="broadcast-platforms" aria-label="Plataformas de publicação">

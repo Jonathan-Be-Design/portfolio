@@ -10,7 +10,6 @@ import PortfolioHero from './portfolio-hero';
 import PosterStage from './poster-stage';
 import EsportsBroadcast from './esports-broadcast';
 import GamesThumbnails from './games-thumbnails';
-import LivePosters from './live-posters';
 
 const featuredBrands = [
   { name: 'Baiano', logo: '/logos/baiano.png', lines: ['STREAMER', 'E-SPORTS'], className: 'baiano', href: 'https://www.instagram.com/baianolol/', destination: 'Instagram' },
@@ -218,24 +217,7 @@ export default function Home() {
       <a className="skip-link" href="#projetos">Ir para os projetos</a>
       <main ref={motionScopeRef}>
         <PortfolioHero />
-        <section className="brand-section" id="marcas" aria-labelledby="brand-heading">
-          <div className="brand-wrap">
-            <div className="brand-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>MARCAS E PARCEIROS — 02</span></div>
-            <h2 className="brand-pill" id="brand-heading" data-motion-reveal>MARCAS E CRIADORES COM QUEM COLABOREI</h2>
-            <div className="featured-brands" data-motion-stagger>
-              {featuredBrands.map(brand => <article className={`featured-brand ${brand.className}`} key={brand.name}>
-                <a className="featured-logo" href={brand.href} target="_blank" rel="noopener noreferrer" aria-label={`Abrir ${brand.name} no ${brand.destination} (nova aba)`}><img src={brand.logo} alt="" loading="lazy" /></a>
-                <p>{brand.lines.map(line => <span key={line}>{line}</span>)}</p>
-              </article>)}
-            </div>
-            <div className="partner-block" data-motion-reveal>
-              <p className="partner-intro">*PEÇAS PARA CAMPANHAS DE PARCEIROS NACIONAIS E GLOBAIS:</p>
-              <div className="partner-logos">
-                {campaignPartners.map(partner => <a className={`partner-logo ${partner.className}`} key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`Abrir site oficial da ${partner.name} (nova aba)`}><img src={partner.logo} alt="" loading="lazy" /></a>)}
-              </div>
-            </div>
-          </div>
-        </section>
+        <PosterStage layout="spread" />
         <section className="impact-section" id="impacto" aria-labelledby="impact-heading">
           <div className="impact-wrap">
             <div className="impact-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>IMPACTO &amp; ESCALA — 03</span></div>
@@ -267,12 +249,10 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <PosterStage layout="spread" />
         <EsportsBroadcast />
         <GamesThumbnails />
-        <LivePosters />
         <section className="work-section wrap" id="projetos" aria-labelledby="work-heading">
-          <div className="section-top" data-motion-reveal><span className="eyebrow">PORTFÓLIO / JONATHAN BOLANLE</span><span className="section-note">DESIGN · MÚSICA · GAMES</span></div>
+          <div className="section-top" data-motion-reveal><span className="eyebrow">PORTFÓLIO / JONATHAN BOLANLE</span><span className="section-note">OUTROS TRABALHOS — 06</span></div>
           <div className="work-title" data-motion-reveal><h2 id="work-heading">Outros trabalhos</h2><p>Uma seleção de projetos em música, identidade visual e game design.</p></div>
           <p className="sr-only" role="status">{visible.length} outros trabalhos e contribuições</p>
           <div className="project-grid curated-grid" data-motion-stagger>
@@ -282,14 +262,32 @@ export default function Home() {
             </button>)}
           </div>
         </section>
+        <section className="brand-section" id="marcas" aria-labelledby="brand-heading">
+          <div className="brand-wrap">
+            <div className="brand-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>MARCAS E PARCEIROS — 07</span></div>
+            <h2 className="brand-pill" id="brand-heading" data-motion-reveal>MARCAS E CRIADORES COM QUEM COLABOREI</h2>
+            <div className="featured-brands" data-motion-stagger>
+              {featuredBrands.map(brand => <article className={`featured-brand ${brand.className}`} key={brand.name}>
+                <a className="featured-logo" href={brand.href} target="_blank" rel="noopener noreferrer" aria-label={`Abrir ${brand.name} no ${brand.destination} (nova aba)`}><img src={brand.logo} alt="" loading="lazy" /></a>
+                <p>{brand.lines.map(line => <span key={line}>{line}</span>)}</p>
+              </article>)}
+            </div>
+            <div className="partner-block" data-motion-reveal>
+              <p className="partner-intro">*PEÇAS PARA CAMPANHAS DE PARCEIROS NACIONAIS E GLOBAIS:</p>
+              <div className="partner-logos">
+                {campaignPartners.map(partner => <a className={`partner-logo ${partner.className}`} key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`Abrir site oficial da ${partner.name} (nova aba)`}><img src={partner.logo} alt="" loading="lazy" /></a>)}
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="about-section" id="sobre" aria-labelledby="about-heading">
-          <div className="wrap about-grid"><div data-motion-reveal><span className="eyebrow">02 / POR TRÁS DAS PEÇAS</span><h2 id="about-heading">Design com<br /><span>repertório.</span></h2><span className="about-sign">DESIGN, CULTURA &amp; RESULTADO.</span></div>
+          <div className="wrap about-grid"><div data-motion-reveal><span className="eyebrow">08 / POR TRÁS DAS PEÇAS</span><h2 id="about-heading">Design com<br /><span>repertório.</span></h2><span className="about-sign">DESIGN, CULTURA &amp; RESULTADO.</span></div>
             <div className="about-copy" data-motion-reveal><p className="about-lead">Há 5 anos, transformo ideias em imagens para criadores de conteúdo, games e esports.</p><p>Minha trajetória inclui a liderança de design para Ilha das Lendas e Baiano, além de colaborações em eventos e campanhas junto à Omelete Company, como o CBOLÃO na CCXP Brasil, em 2023 e 2024.</p><p>Como designer e profissional audiovisual, conduzo projetos variados, pôsteres para campanhas, identidade visual, thumbnails e outros. Também trabalho com edição de vídeo, somando movimento ao meu repertório de criação.</p><div className="skill-list"><span>THUMBNAILS & CONTEÚDO</span><span>CAMPANHAS & KEY ART</span><span>IDENTIDADE VISUAL</span><span>EDIÇÃO DE VÍDEO</span></div></div></div>
         </section>
 
         <section className="contact-section wrap" id="contato" aria-labelledby="contact-heading">
-          <div className="section-top" data-motion-reveal><span className="eyebrow"><i /> ABERTO A NOVOS PROJETOS</span><span className="section-note">03 / CONTATO</span></div>
+          <div className="section-top" data-motion-reveal><span className="eyebrow"><i /> ABERTO A NOVOS PROJETOS</span><span className="section-note">09 / CONTATO</span></div>
           <a className="contact-big" href="mailto:jotabolanle@gmail.com" data-motion-reveal><h2 id="contact-heading">Vamos criar<br /><span>algo juntos?</span></h2><ArrowUpRight aria-hidden="true" /></a>
           <div className="contact-bottom">
             <p>Projetos pontuais, parcerias recorrentes<br />e oportunidades em equipes de criação.</p>

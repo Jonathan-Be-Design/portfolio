@@ -94,7 +94,7 @@ export default function PosterStage({ layout = 'default' }: { layout?: 'default'
 
   return <>
     <section className={`case-section${spread ? ' case-section-spread' : ''}`} id="worlds" aria-labelledby="worlds-heading">
-      <div className="case-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>CASE 1 · CAMPANHA &amp; KEY ART — 04</span></div>
+      <div className="case-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>CASE 1 · CAMPANHA &amp; KEY ART — 02</span></div>
       <div className="case-heading" data-motion-reveal>
         <h2 id="worlds-heading">Artes Digitais · Worlds 2023 &amp; 2024</h2>
         <p>Direção visual e criação de key arts para promover as co-streams oficiais do Worlds nos canais de Baiano e Ilha das Lendas — parceiros oficiais da Riot Games na transmissão do campeonato.</p>
