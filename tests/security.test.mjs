@@ -49,7 +49,7 @@ test('concurrent visitors share one bounded call without exposing credentials', 
     assert.equal(url.searchParams.get('id'), ID);
     assert.equal(url.searchParams.get('key'), SECRET);
     assert.ok(init.signal instanceof AbortSignal);
-    assert.equal(init.redirect, 'error');
+    assert.equal(init.redirect, 'manual');
     await new Promise(resolve => setTimeout(resolve, 10));
     return payload();
   } }));

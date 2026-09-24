@@ -127,7 +127,7 @@ export function createYoutubeStatsHandler(options: Options) {
       const response = await fetcher(endpoint, {
         headers: { Accept: 'application/json' },
         signal: AbortSignal.timeout(5000),
-        redirect: 'error',
+        redirect: 'manual',
       });
       if (!response.ok) {
         await logUpstreamFailure(response, apiKey);
