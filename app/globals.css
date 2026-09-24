@@ -280,3 +280,6 @@ html{scrollbar-width:thin;scrollbar-color:#25262d #f0f0f5}
   .hero-menu-panel{top:calc(100% + 9px);width:min(430px,calc(100vw - 46px));max-height:calc(100svh - 78px);padding:11px 16px;border-radius:20px}
   .hero-menu-panel a{padding-block:12px;font-size:clamp(24px,7.2vw,34px)}
 }
+
+/* Logos monocromáticas da faixa de parceiros. */
+.partner-logo.heineken img,.partner-logo.snapdragon img{filter:brightness(0) invert(1)!important;opacity:1}
