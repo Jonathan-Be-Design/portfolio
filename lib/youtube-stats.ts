@@ -16,6 +16,58 @@ const FRESH_MS = 60 * 60 * 1000;
 const STALE_MS = 24 * FRESH_MS;
 const RETRY_MS = 60 * 1000;
 
+function safeDiagnosticText(value: unknown, apiKey: string) {
+  if (typeof value !== 'string') return undefined;
+  return value
+    .replaceAll(apiKey, '[redacted]')
+    .replace(/https?:\/\/[^\s"'<>]+/gi, '[URL redacted]')
+    .replace(/\b(api[_-]?key|key|access[_-]?token|token|authorization|credential)\s*[=:]\s*[^\s&,;]+/gi, '$1=[redacted]')
+    .replace(/\bBearer\s+\S+/gi, 'Bearer [redacted]')
+    .replace(/\bAIza[0-9A-Za-z_-]{20,}\b/g, '[redacted]')
+    .slice(0, 300);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+async function logUpstreamFailure(response: Response, apiKey: string) {
+  let detail: Record<string, unknown> | undefined;
+  try {
+    const payload: unknown = await response.clone().json();
+    if (isRecord(payload) && isRecord(payload.error)) detail = payload.error;
+  } catch {
+    // Keep diagnostics useful even when Google returns a non-JSON error body.
+  }
+
+  const googleErrors = Array.isArray(detail?.errors) ? detail.errors : [];
+  const reasons = googleErrors
+    .filter(isRecord)
+    .map((item) => safeDiagnosticText(item.reason, apiKey))
+    .filter((reason): reason is string => Boolean(reason))
+    .slice(0, 5);
+  const code = typeof detail?.code === 'number' || typeof detail?.code === 'string'
+    ? detail.code
+    : undefined;
+
+  console.error('[youtube-stats] YouTube API request failed', {
+    httpStatus: response.status,
+    statusText: safeDiagnosticText(response.statusText, apiKey),
+    googleCode: code === undefined ? undefined : safeDiagnosticText(String(code), apiKey),
+    googleReasons: reasons,
+    googleMessage: safeDiagnosticText(detail?.message, apiKey),
+  });
+}
+
+function logRuntimeFailure(cause: unknown, apiKey: string) {
+  const name = isRecord(cause) && typeof cause.name === 'string' ? cause.name : 'Error';
+  const message = isRecord(cause) && typeof cause.message === 'string' ? cause.message : 'Unknown runtime error';
+  console.error('[youtube-stats] Runtime failure during refresh', {
+    name: safeDiagnosticText(name, apiKey),
+    message: safeDiagnosticText(message, apiKey),
+  });
+}
+
 function count(value: unknown) {
   const number = typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value;
   return typeof number === 'number' && Number.isSafeInteger(number) && number >= 0 ? number : 0;
@@ -47,6 +99,7 @@ export function createYoutubeStatsHandler(options: Options) {
     let cache: SharedCache | undefined;
     // A single cache key for the catalog, independent of visitor query strings.
     const cacheKey = new Request(`${origin}/__portfolio-cache/youtube-stats-v1?catalog=${ids.join(',')}`);
+    let upstreamFailureLogged = false;
     try {
       cache = options.sharedCache?.();
       const cached = await cache?.match(cacheKey);
@@ -76,7 +129,11 @@ export function createYoutubeStatsHandler(options: Options) {
         signal: AbortSignal.timeout(5000),
         redirect: 'error',
       });
-      if (!response.ok) throw new Error('Upstream unavailable');
+      if (!response.ok) {
+        await logUpstreamFailure(response, apiKey);
+        upstreamFailureLogged = true;
+        throw new Error('Upstream unavailable');
+      }
       const payload = await response.json() as {
         items?: Array<{ id?: string; statistics?: { viewCount?: unknown; likeCount?: unknown } }>;
       };
@@ -88,9 +145,10 @@ export function createYoutubeStatsHandler(options: Options) {
       }
       snapshot = { items, fetchedAt: now() };
       retryAt = 0;
-    } catch {
+    } catch (cause) {
       // Keep the last valid snapshot for at most 24h and back off on failure.
-      // Never return/log the upstream error: it can contain the credential URL.
+      // Public responses stay generic; diagnostic text is explicitly redacted.
+      if (!upstreamFailureLogged) logRuntimeFailure(cause, apiKey);
       retryAt = now() + RETRY_MS;
     }
 

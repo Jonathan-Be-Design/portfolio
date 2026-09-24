@@ -82,6 +82,51 @@ test('upstream errors hide secrets and trigger a shared retry cooldown', async (
   assert.ok(!(await first.text()).includes(SECRET));
   assert.equal(calls, 1);
 });
+test('Google API diagnostics are logged safely while the public error stays generic', async () => {
+  const logged = [];
+  const originalError = console.error;
+  console.error = (...args) => logged.push(args);
+  try {
+    const get = createYoutubeStatsHandler(options({ fetcher: async () => Response.json({ error: {
+      code: 403,
+      message: `Invalid API key ${SECRET}; https://www.googleapis.com/youtube/v3/videos?key=${SECRET}`,
+      errors: [{ reason: 'quotaExceeded' }, { reason: `key=${SECRET}` }],
+    } }, { status: 403, statusText: `Forbidden ${SECRET}` }) }));
+    const response = await get(request());
+    assert.equal(response.status, 503);
+    assert.deepEqual(await response.json(), { error: 'Métricas temporariamente indisponíveis' });
+
+    const diagnostics = JSON.stringify(logged);
+    assert.match(diagnostics, /403/);
+    assert.match(diagnostics, /quotaExceeded/);
+    assert.match(diagnostics, /Invalid API key/);
+    assert.ok(!diagnostics.includes(SECRET));
+    assert.ok(!diagnostics.includes('https://'));
+  } finally {
+    console.error = originalError;
+  }
+});
+test('runtime failures are logged safely while the public error stays generic', async () => {
+  const logged = [];
+  const originalError = console.error;
+  console.error = (...args) => logged.push(args);
+  try {
+    const get = createYoutubeStatsHandler(options({ fetcher: async () => {
+      throw new Error(`Network failure at https://www.googleapis.com/youtube/v3/videos?key=${SECRET}`);
+    } }));
+    const response = await get(request());
+    assert.equal(response.status, 503);
+    assert.deepEqual(await response.json(), { error: 'Métricas temporariamente indisponíveis' });
+
+    const diagnostics = JSON.stringify(logged);
+    assert.match(diagnostics, /Runtime failure during refresh/);
+    assert.match(diagnostics, /Network failure/);
+    assert.ok(!diagnostics.includes(SECRET));
+    assert.ok(!diagnostics.includes('https://'));
+  } finally {
+    console.error = originalError;
+  }
+});
 test('stale data survives temporary failures but expires after 24 hours', async () => {
   let time = 100000000;
   let calls = 0;
