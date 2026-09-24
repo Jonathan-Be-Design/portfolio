@@ -113,7 +113,7 @@ export default function PosterStage({ layout = 'default' }: { layout?: 'default'
           const depth = spread ? -120 + (55 * spreadProgress) : -120;
           const rotation = spread ? -9 + (5 * spreadProgress) : -9;
           const scaleStep = spread ? .08 - (.035 * spreadProgress) : .08;
-          return <button key={poster.src} className="case-poster" data-active={offset === 0} onClick={() => { if (dragged.current) { dragged.current = false; return; } offset === 0 ? setSelected(index) : setActive(index); }} style={{ transform: `translate(-50%, -50%) translateX(${offset * distance}%) translateZ(${Math.abs(offset) * depth}px) rotateY(${offset * rotation}deg) scale(${1 - Math.abs(offset) * scaleStep})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `Ampliar ${poster.title}` : `Destacar ${poster.title}`}>
+          return <button key={poster.src} className="case-poster" data-active={offset === 0} onClick={() => { if (dragged.current) { dragged.current = false; return; } if (offset === 0) setSelected(index); else setActive(index); }} style={{ transform: `translate(-50%, -50%) translateX(${offset * distance}%) translateZ(${Math.abs(offset) * depth}px) rotateY(${offset * rotation}deg) scale(${1 - Math.abs(offset) * scaleStep})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `Ampliar ${poster.title}` : `Destacar ${poster.title}`}>
             <img src={poster.src} alt={poster.title} data-motion-card-image draggable={!spread} loading={offset === 0 ? 'eager' : 'lazy'} /><span>{poster.year}</span>
           </button>;
         })}

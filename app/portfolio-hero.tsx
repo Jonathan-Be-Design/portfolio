@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type TouchEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { ArrowDown, ArrowUpRight, Menu, Pause, Play } from 'lucide-react';
 import { gameThumbnailRows } from './games-thumbnails';
 
@@ -72,7 +73,19 @@ export default function PortfolioHero() {
     setActive(index => (index + (distanceX < 0 ? 1 : -1) + features.length) % features.length);
   };
 
-  return <section className={`cinema-hero ${paused ? 'motion-paused' : ''}`} id="inicio" aria-label="Projetos em destaque" onTouchStart={startSwipe} onTouchEnd={endSwipe} onTouchCancel={() => { touchStart.current = null; }} onClickCapture={event => { if (Date.now() < suppressTapUntil.current) { event.preventDefault(); event.stopPropagation(); suppressTapUntil.current = 0; } }}>
+  const header = <header className={`cinema-header ${isFloating ? 'is-floating' : ''} ${menu ? 'menu-open' : ''}`}>
+    <a className="signature" href="#inicio" aria-label="Jonathan Bolanle, início">Jonathan<span>Bolanle</span></a>
+    <div className="hero-nav-shell">
+      <a className="hero-contact nav-pill" href="#contato">Vamos conversar <ArrowUpRight size={17}/></a>
+      <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation"><span>{menu ? 'Fechar' : 'Menu'}</span><Menu size={18}/></button>
+    </div>
+    {menu && <nav className="hero-menu-panel" id="portfolio-navigation" aria-label="Navegação principal">
+      {menuItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight aria-hidden="true" /></a>)}
+    </nav>}
+  </header>;
+
+  return <>
+  <section className={`cinema-hero ${paused ? 'motion-paused' : ''}`} id="inicio" aria-label="Projetos em destaque" onTouchStart={startSwipe} onTouchEnd={endSwipe} onTouchCancel={() => { touchStart.current = null; }} onClickCapture={event => { if (Date.now() < suppressTapUntil.current) { event.preventDefault(); event.stopPropagation(); suppressTapUntil.current = 0; } }}>
     <div className="hero-visuals" aria-hidden="true">
       {features.map((item, index) => <div key={item.id} className={`hero-frame hero-frame-${item.id} ${index === active ? 'is-active' : ''}`}>
         {item.id === 'gaming' ? <div className="hero-gaming-mural">
@@ -82,16 +95,7 @@ export default function PortfolioHero() {
         </div> : <img src={item.src} alt="" width={item.width} height={item.height} style={{ objectPosition: item.position }} fetchPriority={index === 0 ? 'high' : 'auto'} />}
       </div>)}
     </div>
-    <header className={`cinema-header ${isFloating ? 'is-floating' : ''} ${menu ? 'menu-open' : ''}`}>
-      <div className="hero-nav-shell">
-        <a className="signature nav-pill" href="#inicio" aria-label="Jonathan Bolanle, início">Jonathan Bolanle</a>
-        <a className="hero-contact nav-pill" href="#contato">Vamos conversar <ArrowUpRight size={17}/></a>
-        <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation"><span>{menu ? 'Fechar' : 'Menu'}</span><Menu size={18}/></button>
-      </div>
-      {menu && <nav className="hero-menu-panel" id="portfolio-navigation" aria-label="Navegação principal">
-        {menuItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight aria-hidden="true" /></a>)}
-      </nav>}
-    </header>
+    {!isFloating && header}
     <div className="hero-bottom">
       <div className="hero-selection"><span className="hero-kicker">Seleção de trabalhos</span>
         <nav className="hero-projects" aria-label="Ir para uma seção do portfólio">
@@ -100,5 +104,7 @@ export default function PortfolioHero() {
       </div>
       <div className="hero-actions"><p aria-live="polite">{features[active].label}</p><a className="campaign-link" href={features[active].href}>Ver seção <ArrowUpRight size={18}/></a><div className="hero-utilities"><button className="motion-toggle" onClick={() => setPaused(!paused)} aria-label={paused ? 'Ativar movimento das imagens' : 'Pausar movimento das imagens'} aria-pressed={paused}>{paused ? <Play size={16}/> : <Pause size={16}/>}</button><a href="#projetos" aria-label="Explorar todos os trabalhos"><ArrowDown size={25}/></a></div></div>
     </div>
-  </section>;
+  </section>
+  {isFloating ? createPortal(header, document.body) : null}
+  </>;
 }

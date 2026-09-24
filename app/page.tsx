@@ -254,7 +254,7 @@ export default function Home() {
         <section className="work-section wrap" id="projetos" aria-labelledby="work-heading">
           <div className="section-top" data-motion-reveal><span className="eyebrow">PORTFÓLIO / JONATHAN BOLANLE</span><span className="section-note">OUTROS TRABALHOS — 06</span></div>
           <div className="work-title" data-motion-reveal><h2 id="work-heading">Outros trabalhos</h2><p>Uma seleção de projetos em música, identidade visual e game design.</p></div>
-          <p className="sr-only" role="status">{visible.length} outros trabalhos e contribuições</p>
+          <output className="sr-only">{visible.length} outros trabalhos e contribuições</output>
           <div className="project-grid curated-grid" data-motion-stagger>
             {visible.map((project,index) => <button className={`project-card ${project.coverLayout}-card`} key={project.id} onClick={() => openProject(project)} aria-label={`Ver projeto ${project.title}`}>
               <div className="project-cover"><div className="project-parallax-media" data-project-parallax>{project.coverImages.length > 1 ? <div className={`cover-composition ${project.coverLayout}-composition`}>{project.coverImages.map((image,i) => <img key={image.src} src={image.src} alt={`${project.title}, peça ${i+1}`} width={image.width} height={image.height} loading="lazy" />)}</div> : <img src={project.coverImages[0].src} alt={project.title} width={project.coverImages[0].width} height={project.coverImages[0].height} loading="lazy" />}</div><span className="card-number">{String(index+1).padStart(2,'0')}</span><span className="card-open"><Plus size={25} /></span>{project.images.length > 1 && <span className="image-count">{project.images.length} IMAGENS</span>}</div>
