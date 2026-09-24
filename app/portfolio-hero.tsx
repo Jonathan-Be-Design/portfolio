@@ -1,8 +1,7 @@
 'use client';
 
-import { useRef, useState, type TouchEvent } from 'react';
-import { ArrowDown, ArrowUpRight, Menu, X, Pause, Play } from 'lucide-react';
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
+import { useEffect, useRef, useState, type TouchEvent } from 'react';
+import { ArrowDown, ArrowUpRight, Menu, Pause, Play } from 'lucide-react';
 import { gameThumbnailRows } from './games-thumbnails';
 
 const features = [
@@ -11,6 +10,17 @@ const features = [
   { id: 'gaming', href: '#games-thumbnails', title: 'Conteúdo · Gaming', label: 'Thumbnails para games', src: '/trabalhos/gaming-hero-test.jpg', width: 2560, height: 1440, position: 'center center' },
   { id: 'other-work', href: '#projetos', title: 'Outros Trabalhos', label: 'Música, identidade visual & game design', src: '/trabalhos/west-reis-hero.jpg', width: 2560, height: 1683, position: 'left center' },
 ];
+
+const menuItems = [
+  ['Artes · Worlds', '#worlds'],
+  ['Impacto & Escala', '#impacto'],
+  ['Esports · Broadcast', '#esports-broadcast'],
+  ['Gaming', '#games-thumbnails'],
+  ['Outros Trabalhos', '#projetos'],
+  ['Marcas & Parceiros', '#marcas'],
+  ['Sobre', '#sobre'],
+  ['Contato', '#contato'],
+] as const;
 
 const gamingMuralRows = [
   gameThumbnailRows[0].slice(0, 5),
@@ -28,8 +38,24 @@ export default function PortfolioHero() {
   const [active, setActive] = useState(0);
   const [menu, setMenu] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [isFloating, setIsFloating] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const suppressTapUntil = useRef(0);
+
+  useEffect(() => {
+    const updateHeader = () => setIsFloating(window.scrollY > 64);
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenu(false);
+    };
+
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      window.removeEventListener('scroll', updateHeader);
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, []);
 
   const startSwipe = (event: TouchEvent<HTMLElement>) => {
     if (event.touches.length !== 1) return;
@@ -56,10 +82,15 @@ export default function PortfolioHero() {
         </div> : <img src={item.src} alt="" width={item.width} height={item.height} style={{ objectPosition: item.position }} fetchPriority={index === 0 ? 'high' : 'auto'} />}
       </div>)}
     </div>
-    <header className="cinema-header">
-      <button className="hero-menu" onClick={() => setMenu(true)} aria-label="Abrir menu"><Menu size={23}/><span>Menu</span></button>
-      <a className="signature" href="#inicio" aria-label="Jonathan Bolanle, início">Jonathan<span>Bolanle</span></a>
-      <a className="hero-contact" href="#contato">Vamos conversar <ArrowUpRight size={17}/></a>
+    <header className={`cinema-header ${isFloating ? 'is-floating' : ''} ${menu ? 'menu-open' : ''}`}>
+      <div className="hero-nav-shell">
+        <a className="signature nav-pill" href="#inicio" aria-label="Jonathan Bolanle, início">Jonathan Bolanle</a>
+        <a className="hero-contact nav-pill" href="#contato">Vamos conversar <ArrowUpRight size={17}/></a>
+        <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation"><span>{menu ? 'Fechar' : 'Menu'}</span><Menu size={18}/></button>
+      </div>
+      {menu && <nav className="hero-menu-panel" id="portfolio-navigation" aria-label="Navegação principal">
+        {menuItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight aria-hidden="true" /></a>)}
+      </nav>}
     </header>
     <div className="hero-bottom">
       <div className="hero-selection"><span className="hero-kicker">Seleção de trabalhos</span>
@@ -69,6 +100,5 @@ export default function PortfolioHero() {
       </div>
       <div className="hero-actions"><p aria-live="polite">{features[active].label}</p><a className="campaign-link" href={features[active].href}>Ver seção <ArrowUpRight size={18}/></a><div className="hero-utilities"><button className="motion-toggle" onClick={() => setPaused(!paused)} aria-label={paused ? 'Ativar movimento das imagens' : 'Pausar movimento das imagens'} aria-pressed={paused}>{paused ? <Play size={16}/> : <Pause size={16}/>}</button><a href="#projetos" aria-label="Explorar todos os trabalhos"><ArrowDown size={25}/></a></div></div>
     </div>
-    <Dialog open={menu} onOpenChange={setMenu}><DialogContent className="nav-dialog" showCloseButton={false}><div className="nav-dialog-top"><DialogTitle>Jonathan Bolanle</DialogTitle><DialogClose className="icon-button" aria-label="Fechar menu"><X size={24}/></DialogClose></div><DialogDescription className="sr-only">Navegação do portfólio</DialogDescription><nav aria-label="Navegação principal">{[['Trabalhos','#projetos'],['Sobre','#sobre'],['Contato','#contato']].map(([label,href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight/></a>)}</nav><a className="menu-email" href="mailto:jotabolanle@gmail.com">jotabolanle@gmail.com</a></DialogContent></Dialog>
   </section>;
 }

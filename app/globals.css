@@ -228,3 +228,47 @@
   .broadcast-stage-caption .broadcast-stage-stats svg{width:15px;height:15px}
 }
 .broadcast-stage-caption-compact{min-height:58px;padding-block:14px}
+
+/* Navegação flutuante: integrada ao hero e compacta durante a rolagem. */
+.cinema-header{position:relative;z-index:80;display:flex;justify-content:flex-end;pointer-events:none}
+.hero-nav-shell{display:flex;align-items:center;justify-content:flex-end;gap:8px;pointer-events:auto}
+.nav-pill{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;padding:0 18px;font-size:12px;font-weight:700;letter-spacing:.045em;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
+.nav-pill:hover{transform:translateY(-2px)}
+.signature.nav-pill{position:static;background:#f4f4f8;color:#15161c;border:1px solid #fff9;font-size:11px;letter-spacing:.07em;line-height:1;text-align:left;white-space:nowrap}
+.signature.nav-pill span{display:inline}
+.hero-contact.nav-pill{justify-self:auto;border:1px solid #ffffff1f;background:#292b37;color:#fff;gap:9px;white-space:nowrap}
+.hero-contact.nav-pill:hover{background:#111218;color:#fff}
+.hero-menu.nav-pill{width:auto;border:1px solid #fff9;background:#f4f4f8;color:#15161c;gap:9px;cursor:pointer;text-transform:uppercase}
+.hero-menu.nav-pill:hover{background:#fff;color:#111}
+.cinema-header.is-floating{position:fixed;top:18px;right:clamp(16px,3.2vw,54px);left:auto;width:auto;z-index:100}
+.cinema-header.is-floating .hero-nav-shell{filter:drop-shadow(0 10px 22px #0004)}
+.hero-menu-panel{position:absolute;top:calc(100% + 12px);right:0;display:grid;width:min(472px,calc(100vw - 32px));max-height:calc(100svh - 104px);overflow-y:auto;padding:14px 20px;background:#f7f7fa;color:#101116;border:1px solid #fff;border-radius:24px;box-shadow:0 18px 55px #0005;pointer-events:auto}
+.hero-menu-panel a{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(11px,1.65vh,18px) 2px;border-bottom:1px solid #17182018;color:inherit;font-family:var(--display-title);font-size:clamp(25px,3.05vw,39px);font-weight:500;line-height:1.04;letter-spacing:-.045em;text-decoration:none;transition:padding .18s ease,color .18s ease}
+.hero-menu-panel a:last-child{border-bottom:0}
+.hero-menu-panel a svg{flex:0 0 auto;width:23px;height:23px;opacity:.52;transition:transform .18s ease,opacity .18s ease}
+.hero-menu-panel a:hover,.hero-menu-panel a:focus-visible{padding-left:10px;color:#008e54}
+.hero-menu-panel a:hover svg,.hero-menu-panel a:focus-visible svg{transform:translate(3px,-3px);opacity:1}
+@media(prefers-reduced-motion:no-preference){.hero-menu-panel{animation:hero-menu-enter .2s ease-out both}@keyframes hero-menu-enter{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}}
+
+/* Scrollbar global, fina e sem alterar a mecânica de rolagem. */
+html{scrollbar-width:thin;scrollbar-color:#25262d #f0f0f5}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#f0f0f5}
+::-webkit-scrollbar-thumb{background:#25262d;border:3px solid #f0f0f5;border-radius:999px}
+::-webkit-scrollbar-thumb:hover{background:#111218}
+::-webkit-scrollbar-button{display:none;width:0;height:0}
+
+@media(max-width:700px){
+  .cinema-header{justify-content:flex-end}
+  .hero-nav-shell{gap:6px}
+  .nav-pill{min-height:42px;padding-inline:12px;font-size:10px;letter-spacing:.025em}
+  .signature.nav-pill{max-width:108px;overflow:hidden;text-overflow:ellipsis;font-size:9px;letter-spacing:.045em}
+  .hero-contact.nav-pill{gap:5px;font-size:10px}
+  .hero-contact.nav-pill svg{width:14px;height:14px}
+  .hero-menu.nav-pill{gap:5px;padding-inline:11px}
+  .hero-menu.nav-pill span{display:inline}
+  .hero-menu.nav-pill svg{width:15px;height:15px}
+  .cinema-header.is-floating{top:12px;right:16px}
+  .hero-menu-panel{top:calc(100% + 9px);width:min(430px,calc(100vw - 46px));max-height:calc(100svh - 78px);padding:11px 16px;border-radius:20px}
+  .hero-menu-panel a{padding-block:12px;font-size:clamp(24px,7.2vw,34px)}
+}
