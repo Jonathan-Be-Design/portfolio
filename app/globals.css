@@ -231,13 +231,14 @@
 
 /* Navegação flutuante: integrada ao hero e compacta durante a rolagem. */
 .cinema-header{position:fixed;top:30px;right:3.2%;left:3.2%;z-index:2147483640;display:flex;align-items:flex-start;justify-content:space-between;width:auto;pointer-events:none}
+.cinema-header-spacer{height:50px;flex:0 0 auto;pointer-events:none}
 .hero-nav-shell{display:flex;align-items:center;justify-content:flex-end;gap:8px;pointer-events:auto}
 .nav-pill{display:inline-flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;padding:0 20px;font-family:var(--display),Arial,sans-serif;font-size:14px;font-style:normal;font-weight:700;letter-spacing:.045em;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
 .nav-pill:hover{transform:translateY(-2px)}
 .cinema-header .signature{position:relative;z-index:1;display:grid;width:132px;height:48px;overflow:hidden;place-items:start;pointer-events:auto;color:#fff;font-family:var(--display);font-size:25px;font-weight:600;letter-spacing:-1.2px;line-height:.9;text-align:left;text-decoration:none;text-shadow:0 2px 14px #000b;transition:width .28s ease,height .28s ease,padding .28s ease,border-radius .28s ease,background .28s ease,color .28s ease,box-shadow .28s ease,text-shadow .28s ease}
 .signature-name{display:grid;gap:1px;align-self:center;transition:opacity .18s ease,transform .28s ease}
 .signature-name>span{display:block}
-.signature-monogram{position:absolute;inset:0;display:grid;place-items:center;opacity:0;color:inherit;font-family:var(--display);font-size:15px;font-weight:750;letter-spacing:-.05em;transform:scale(.65);transition:opacity .16s ease .08s,transform .28s ease .08s}
+.cinema-header .signature-monogram{position:absolute;inset:0;display:grid;place-items:center;opacity:0;color:inherit;font-family:var(--display);font-size:15px;font-weight:750;letter-spacing:-.05em;line-height:1;transform:scale(.65);transition:opacity .16s ease .08s,transform .28s ease .08s}
 .hero-contact.nav-pill{justify-self:auto;border:1px solid #ffffff1f;background:#292b37;color:#fff;gap:9px;white-space:nowrap}
 .hero-contact.nav-pill:hover{background:#111218;color:#fff}
 .hero-menu.nav-pill{width:auto;border:1px solid #fff9;background:#f4f4f8;color:#15161c;gap:9px;cursor:pointer;text-transform:uppercase}
@@ -265,6 +266,7 @@ html{scrollbar-width:thin;scrollbar-color:#25262d #f0f0f5}
 
 @media(max-width:700px){
   .cinema-header{top:22px;right:6%;left:6%;justify-content:space-between}
+  .cinema-header-spacer{height:44px}
   .hero-nav-shell{gap:6px}
   .nav-pill{min-height:44px;padding-inline:14px;font-size:12px;letter-spacing:.025em}
   .cinema-header .signature{width:106px;height:44px;font-size:20px;letter-spacing:-1px}

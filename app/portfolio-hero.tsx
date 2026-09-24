@@ -100,6 +100,7 @@ export default function PortfolioHero() {
         </div> : <img src={item.src} alt="" width={item.width} height={item.height} style={{ objectPosition: item.position }} fetchPriority={index === 0 ? 'high' : 'auto'} />}
       </div>)}
     </div>
+    <div className="cinema-header-spacer" aria-hidden="true" />
     <div className="hero-bottom">
       <div className="hero-selection"><span className="hero-kicker">Seleção de trabalhos</span>
         <nav className="hero-projects" aria-label="Ir para uma seção do portfólio">
