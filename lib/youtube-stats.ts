@@ -166,7 +166,10 @@ export function createYoutubeStatsHandler(options: Options) {
     const url = new URL(request.url);
     if (url.search) return error(400, 'Esta consulta não aceita parâmetros');
     const apiKey = options.apiKey();
-    if (!apiKey) return error(503, 'Métricas temporariamente indisponíveis');
+    if (!apiKey) {
+      console.error('[youtube-stats] Missing YOUTUBE_API_KEY runtime binding');
+      return error(503, 'Métricas temporariamente indisponíveis');
+    }
 
     if ((!snapshot || now() - snapshot.fetchedAt >= FRESH_MS) && now() >= retryAt) {
       // Concurrent visitors share the same upstream request inside each instance.
