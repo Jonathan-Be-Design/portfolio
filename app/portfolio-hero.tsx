@@ -7,7 +7,7 @@ import { gameThumbnailRows } from './games-thumbnails';
 
 const features = [
   { id: 'worlds', href: '#worlds', title: 'Artes · Worlds', label: '2023–2024 · Key art & pôsteres', src: '/trabalhos/worlds-hero-test.png?v=ebbd013a', width: 2058, height: 1350, position: 'center 30%' },
-  { id: 'esports', href: '#esports-broadcast', title: 'Esports · Broadcast', label: 'Thumbnails & transmissões', src: '/trabalhos/esports-hero-test.jpg?v=09d08c68', width: 2560, height: 1877, position: 'center 35%' },
+  { id: 'esports', href: '#esports-broadcast', title: 'Esports · Broadcast', label: 'Thumbnails & transmissões', src: '/trabalhos/final-worlds-2023-cover.webp', width: 2400, height: 1760, position: 'center 35%' },
   { id: 'gaming', href: '#games-thumbnails', title: 'Conteúdo · Gaming', label: 'Thumbnails para games', src: '/trabalhos/gaming-hero-test.jpg', width: 2560, height: 1440, position: 'center center' },
   { id: 'other-work', href: '#projetos', title: 'Outros Trabalhos', label: 'Música, identidade visual & game design', src: '/trabalhos/west-reis-hero.jpg', width: 2560, height: 1683, position: 'left center' },
 ];

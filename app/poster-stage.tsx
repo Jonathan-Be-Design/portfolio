@@ -6,7 +6,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } fr
 
 const posters = [
   { src: '/posters/poster-viagem-londres-worlds.webp', title: 'Worlds em Londres', year: '2024' },
-  { src: '/posters/final-worlds-2023.webp', title: 'Final Worlds', year: '2023' },
+  { src: '/posters/final-worlds-2023-v2.webp', title: 'Final Worlds', year: '2023' },
   { src: '/posters/semifinal-worlds-2023.webp', title: 'Semifinal T1 × JDG', year: '2023' },
   { src: '/posters/semifinal2-worlds-2023.webp', title: 'Semifinal Worlds', year: '2023' },
   { src: '/posters/final-worlds-2024.webp', title: 'Grande Final Worlds', year: '2024' },
