@@ -6,7 +6,7 @@ import { reelVideos as thumbnails, stageVideos as stageThumbnails } from '@/lib/
 
 type VideoStats = Record<string, { views: number; likes: number }>;
 // Re-enable once production has a working YouTube API secret.
-const SHOW_VIDEO_STATS = false;
+const SHOW_VIDEO_STATS = true;
 
 function compactNumber(value: number) {
   const format = (number: number) => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1 }).format(number);
