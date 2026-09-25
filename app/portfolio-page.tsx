@@ -5,7 +5,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, Mail, ZoomIn, ZoomOut } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
-import { projects, type Project } from './selected-projects';
+import { getProjects, type Project } from './selected-projects';
+import { tr, type Locale } from './i18n';
 import PortfolioHero from './portfolio-hero';
 import PosterStage from './poster-stage';
 import EsportsBroadcast from './esports-broadcast';
@@ -51,7 +52,16 @@ const gamingThumbs = [
 
 const impactThumbs = [...esportsThumbs, ...gamingThumbs];
 
-export default function Home() {
+const englishImpactTitles: Record<string, string> = {
+  'Baiano × Heineken — Show do Djonga': 'Baiano × Heineken — Djonga’s performance',
+  'Faker vs BDD — Resumo LCK': 'Faker vs BDD — LCK highlights',
+  'Final Worlds — Faker × Chovy': 'Worlds Final — Faker × Chovy',
+  'Ilha das Lendas em Londres': 'Ilha das Lendas in London',
+  'Robo de Camille — CBLOL': 'Robo on Camille — CBLOL',
+};
+
+export default function Home({ locale }: { locale: Locale }) {
+  const impactTitle = (title: string) => locale === 'en' ? englishImpactTitles[title] ?? title : title;
   const motionScopeRef = useRef<HTMLElement>(null);
   const [selected, setSelected] = useState<Project | null>(null);
   const [activeImage, setActiveImage] = useState(0);
@@ -59,7 +69,7 @@ export default function Home() {
   const [impactImage, setImpactImage] = useState<number | null>(null);
   const [impactTouchStart, setImpactTouchStart] = useState<number | null>(null);
   const galleryTouchStart = useRef<{ x: number; y: number } | null>(null);
-  const visible = projects;
+  const visible = getProjects(locale);
   const openProject = (project: Project) => { setSelected(project); setActiveImage(0); setExpanded(project.id === 'drew'); };
   const step = (direction: number) => {
     if (selected) { setActiveImage(i => (i + direction + selected.images.length) % selected.images.length); setExpanded(false); }
@@ -214,83 +224,83 @@ export default function Home() {
 
   return (
     <>
-      <a className="skip-link" href="#projetos">Ir para os projetos</a>
+      <a className="skip-link" href="#projetos">{tr(locale, 'Ir para os projetos', 'Skip to projects')}</a>
       <main ref={motionScopeRef}>
-        <PortfolioHero />
-        <PosterStage layout="spread" />
+        <PortfolioHero locale={locale} />
+        <PosterStage layout="spread" locale={locale} />
         <section className="impact-section" id="impacto" aria-labelledby="impact-heading">
           <div className="impact-wrap">
-            <div className="impact-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>IMPACTO &amp; ESCALA — 03</span></div>
-            <h2 className="impact-pill" id="impact-heading" data-motion-reveal>Visualizações e impressões acumuladas</h2>
+            <div className="impact-top" data-motion-reveal><span>{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span>{tr(locale, 'IMPACTO & ESCALA', 'IMPACT & REACH')} — 03</span></div>
+            <h2 className="impact-pill" id="impact-heading" data-motion-reveal>{tr(locale, 'Visualizações e impressões acumuladas', 'Combined views and impressions')}</h2>
             <div className="impact-metrics" data-motion-stagger>
-              <div className="impact-metric"><strong data-impact-count="300" data-impact-suffix="M+" aria-label="Mais de 300 milhões">300M+</strong><p>Visualizações em vídeos<br />com minhas thumbnails</p></div>
-              <div className="impact-metric"><strong data-impact-count="2" data-impact-suffix="B+" aria-label="Mais de 2 bilhões">2B+</strong><p>Impressões nas redes somando<br />capas, imagens e pôsteres</p></div>
-              <div className="impact-metric"><strong data-impact-count="5" data-impact-suffix="K+" aria-label="Mais de 5 mil">5K+</strong><p>Peças diferentes<br />produzidas</p></div>
+              <div className="impact-metric"><strong data-impact-count="300" data-impact-suffix="M+" aria-label={tr(locale, 'Mais de 300 milhões', 'More than 300 million')}>300M+</strong><p>{tr(locale, 'Visualizações em vídeos', 'Video views')}<br />{tr(locale, 'com minhas thumbnails', 'featuring my thumbnails')}</p></div>
+              <div className="impact-metric"><strong data-impact-count="2" data-impact-suffix="B+" aria-label={tr(locale, 'Mais de 2 bilhões', 'More than 2 billion')}>2B+</strong><p>{tr(locale, 'Impressões nas redes somando', 'Social media impressions across')}<br />{tr(locale, 'capas, imagens e pôsteres', 'covers, images and posters')}</p></div>
+              <div className="impact-metric"><strong data-impact-count="5" data-impact-suffix="K+" aria-label={tr(locale, 'Mais de 5 mil', 'More than 5 thousand')}>5K+</strong><p>{tr(locale, 'Peças diferentes', 'Individual pieces')}<br />{tr(locale, 'produzidas', 'produced')}</p></div>
             </div>
           </div>
-          <div className="impact-gallery" data-motion-stage="24" aria-label="Galeria de thumbnails">
-            <div className="impact-row impact-row-esports" aria-label="Thumbnails de esports">
+          <div className="impact-gallery" data-motion-stage="24" aria-label={tr(locale, 'Galeria de thumbnails', 'Thumbnail gallery')}>
+            <div className="impact-row impact-row-esports" aria-label={tr(locale, 'Thumbnails de esports', 'Esports thumbnails')}>
               <div className="impact-track impact-track-left">
                 {[0, 1].map(copy => <div className="impact-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
-                  {esportsThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(index)} aria-label={`Ampliar ${thumb.title}`}>
-                    <img src={thumb.src} alt={copy === 0 ? thumb.title : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={19} /></span>
+                  {esportsThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(index)} aria-label={`${tr(locale, 'Ampliar', 'Enlarge')} ${impactTitle(thumb.title)}`}>
+                    <img src={thumb.src} alt={copy === 0 ? impactTitle(thumb.title) : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={19} /></span>
                   </button>)}
                 </div>)}
               </div>
             </div>
-            <div className="impact-row impact-row-gaming" aria-label="Thumbnails de gaming">
+            <div className="impact-row impact-row-gaming" aria-label={tr(locale, 'Thumbnails de gaming', 'Gaming thumbnails')}>
               <div className="impact-track impact-track-right">
                 {[0, 1].map(copy => <div className="impact-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
-                  {gamingThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(esportsThumbs.length + index)} aria-label={`Ampliar ${thumb.title}`}>
-                    <img src={thumb.src} alt={copy === 0 ? thumb.title : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={18} /></span>
+                  {gamingThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(esportsThumbs.length + index)} aria-label={`${tr(locale, 'Ampliar', 'Enlarge')} ${impactTitle(thumb.title)}`}>
+                    <img src={thumb.src} alt={copy === 0 ? impactTitle(thumb.title) : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={18} /></span>
                   </button>)}
                 </div>)}
               </div>
             </div>
           </div>
         </section>
-        <EsportsBroadcast />
-        <GamesThumbnails />
+        <EsportsBroadcast locale={locale} />
+        <GamesThumbnails locale={locale} />
         <section className="work-section wrap" id="projetos" aria-labelledby="work-heading">
-          <div className="section-top" data-motion-reveal><span className="eyebrow">PORTFÓLIO / JONATHAN BOLANLE</span><span className="section-note">OUTROS TRABALHOS — 06</span></div>
-          <div className="work-title" data-motion-reveal><h2 id="work-heading">Outros trabalhos</h2><p>Uma seleção de projetos em música, identidade visual e game design.</p></div>
-          <output className="sr-only">{visible.length} outros trabalhos e contribuições</output>
+          <div className="section-top" data-motion-reveal><span className="eyebrow">{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span className="section-note">{tr(locale, 'OUTROS TRABALHOS', 'OTHER WORK')} — 06</span></div>
+          <div className="work-title" data-motion-reveal><h2 id="work-heading">{tr(locale, 'Outros trabalhos', 'Other work')}</h2><p>{tr(locale, 'Uma seleção de projetos em música, identidade visual e game design.', 'A selection of projects in music, visual identity and game design.')}</p></div>
+          <output className="sr-only">{visible.length} {tr(locale, 'outros trabalhos e contribuições', 'other projects and contributions')}</output>
           <div className="project-grid curated-grid" data-motion-stagger>
-            {visible.map((project,index) => <button className={`project-card ${project.coverLayout}-card`} key={project.id} onClick={() => openProject(project)} aria-label={`Ver projeto ${project.title}`}>
-              <div className="project-cover"><div className="project-parallax-media" data-project-parallax>{project.coverImages.length > 1 ? <div className={`cover-composition ${project.coverLayout}-composition`}>{project.coverImages.map((image,i) => <img key={image.src} src={image.src} alt={`${project.title}, peça ${i+1}`} width={image.width} height={image.height} loading="lazy" />)}</div> : <img src={project.coverImages[0].src} alt={project.title} width={project.coverImages[0].width} height={project.coverImages[0].height} loading="lazy" />}</div><span className="card-number">{String(index+1).padStart(2,'0')}</span><span className="card-open"><Plus size={25} /></span>{project.images.length > 1 && <span className="image-count">{project.images.length} IMAGENS</span>}</div>
+            {visible.map((project,index) => <button className={`project-card ${project.coverLayout}-card`} key={project.id} onClick={() => openProject(project)} aria-label={`${tr(locale, 'Ver projeto', 'View project')} ${project.title}`}>
+              <div className="project-cover"><div className="project-parallax-media" data-project-parallax>{project.coverImages.length > 1 ? <div className={`cover-composition ${project.coverLayout}-composition`}>{project.coverImages.map((image,i) => <img key={image.src} src={image.src} alt={`${project.title}, ${tr(locale, 'peça', 'piece')} ${i+1}`} width={image.width} height={image.height} loading="lazy" />)}</div> : <img src={project.coverImages[0].src} alt={project.title} width={project.coverImages[0].width} height={project.coverImages[0].height} loading="lazy" />}</div><span className="card-number">{String(index+1).padStart(2,'0')}</span><span className="card-open"><Plus size={25} /></span>{project.images.length > 1 && <span className="image-count">{project.images.length} {tr(locale, 'IMAGENS', 'IMAGES')}</span>}</div>
               <div className="project-info"><div><span className="project-kind">{project.kind}</span><h3>{project.title}</h3></div><ArrowUpRight size={23} /></div>
             </button>)}
           </div>
         </section>
         <section className="brand-section" id="marcas" aria-labelledby="brand-heading">
           <div className="brand-wrap">
-            <div className="brand-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>MARCAS E PARCEIROS — 07</span></div>
-            <h2 className="brand-pill" id="brand-heading" data-motion-reveal>MARCAS E CRIADORES COM QUEM COLABOREI</h2>
+            <div className="brand-top" data-motion-reveal><span>{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span>{tr(locale, 'MARCAS E PARCEIROS', 'BRANDS & PARTNERS')} — 07</span></div>
+            <h2 className="brand-pill" id="brand-heading" data-motion-reveal>{tr(locale, 'MARCAS E CRIADORES COM QUEM COLABOREI', 'BRANDS AND CREATORS I HAVE WORKED WITH')}</h2>
             <div className="featured-brands" data-motion-stagger>
               {featuredBrands.map(brand => <article className={`featured-brand ${brand.className}`} key={brand.name}>
-                <a className="featured-logo" href={brand.href} target="_blank" rel="noopener noreferrer" aria-label={`Abrir ${brand.name} no ${brand.destination} (nova aba)`}><img src={brand.logo} alt="" loading="lazy" /></a>
-                <p>{brand.lines.map(line => <span key={line}>{line}</span>)}</p>
+                <a className="featured-logo" href={brand.href} target="_blank" rel="noopener noreferrer" aria-label={`${tr(locale, 'Abrir', 'Open')} ${brand.name} ${tr(locale, 'no', 'on')} ${tr(locale, brand.destination, brand.destination === 'site oficial' ? 'official website' : brand.destination)} ${tr(locale, '(nova aba)', '(new tab)')}`}><img src={brand.logo} alt="" loading="lazy" /></a>
+                <p>{brand.lines.map(line => <span key={line}>{tr(locale, line, line === 'ENTRETENIMENTO' ? 'ENTERTAINMENT' : line === 'E-SPORTS' ? 'ESPORTS' : line === 'CREATORS' ? 'CREATORS' : line)}</span>)}</p>
               </article>)}
             </div>
             <div className="partner-block" data-motion-reveal>
-              <p className="partner-intro">*PEÇAS PARA CAMPANHAS DE PARCEIROS NACIONAIS E GLOBAIS:</p>
+              <p className="partner-intro">{tr(locale, '*PEÇAS PARA CAMPANHAS DE PARCEIROS NACIONAIS E GLOBAIS:', '*DESIGNS FOR CAMPAIGNS BY NATIONAL AND GLOBAL PARTNERS:')}</p>
               <div className="partner-logos">
-                {campaignPartners.map(partner => <a className={`partner-logo ${partner.className}`} key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`Abrir site oficial da ${partner.name} (nova aba)`}><img src={partner.logo} alt="" loading="lazy" /></a>)}
+                {campaignPartners.map(partner => <a className={`partner-logo ${partner.className}`} key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${tr(locale, 'Abrir site oficial da', 'Open the official website of')} ${partner.name} ${tr(locale, '(nova aba)', '(new tab)')}`}><img src={partner.logo} alt="" loading="lazy" /></a>)}
               </div>
             </div>
           </div>
         </section>
 
         <section className="about-section" id="sobre" aria-labelledby="about-heading">
-          <div className="wrap about-grid"><div data-motion-reveal><span className="eyebrow">08 / POR TRÁS DAS PEÇAS</span><h2 id="about-heading">Design com<br /><span>repertório.</span></h2><span className="about-sign">DESIGN, CULTURA &amp; RESULTADO.</span></div>
-            <div className="about-copy" data-motion-reveal><p className="about-lead">Há 5 anos, transformo ideias em imagens para criadores de conteúdo, games e esports.</p><p>Minha trajetória inclui a liderança de design para Ilha das Lendas e Baiano, além de colaborações em eventos e campanhas junto à Omelete Company, como o CBOLÃO na CCXP Brasil, em 2023 e 2024.</p><p>Como designer e profissional audiovisual, conduzo projetos variados, pôsteres para campanhas, identidade visual, thumbnails e outros. Também trabalho com edição de vídeo, somando movimento ao meu repertório de criação.</p><div className="skill-list"><span>THUMBNAILS & CONTEÚDO</span><span>CAMPANHAS & KEY ART</span><span>IDENTIDADE VISUAL</span><span>EDIÇÃO DE VÍDEO</span></div></div></div>
+          <div className="wrap about-grid"><div data-motion-reveal><span className="eyebrow">08 / {tr(locale, 'POR TRÁS DAS PEÇAS', 'BEHIND THE WORK')}</span><h2 id="about-heading">{tr(locale, 'Design com', 'Design with')}<br /><span>{tr(locale, 'repertório.', 'perspective.')}</span></h2><span className="about-sign">{tr(locale, 'DESIGN, CULTURA & RESULTADO.', 'DESIGN, CULTURE & IMPACT.')}</span></div>
+            <div className="about-copy" data-motion-reveal><p className="about-lead">{tr(locale, 'Há 5 anos, transformo ideias em imagens para criadores de conteúdo, games e esports.', 'For five years, I have turned ideas into visuals for content creators, gaming and esports.')}</p><p>{tr(locale, 'Minha trajetória inclui a liderança de design para Ilha das Lendas e Baiano, além de colaborações em eventos e campanhas junto à Omelete Company, como o CBOLÃO na CCXP Brasil, em 2023 e 2024.', 'My experience includes leading design for Ilha das Lendas and Baiano, as well as collaborating on events and campaigns with Omelete Company, including CBOLÃO at CCXP Brasil in 2023 and 2024.')}</p><p>{tr(locale, 'Como designer e profissional audiovisual, conduzo projetos variados, pôsteres para campanhas, identidade visual, thumbnails e outros. Também trabalho com edição de vídeo, somando movimento ao meu repertório de criação.', 'As a designer and audiovisual professional, I work across campaign posters, visual identity, thumbnails and other projects. I also edit video, bringing motion into my creative practice.')}</p><div className="skill-list"><span>{tr(locale, 'THUMBNAILS & CONTEÚDO', 'THUMBNAILS & CONTENT')}</span><span>{tr(locale, 'CAMPANHAS & KEY ART', 'CAMPAIGNS & KEY ART')}</span><span>{tr(locale, 'IDENTIDADE VISUAL', 'VISUAL IDENTITY')}</span><span>{tr(locale, 'EDIÇÃO DE VÍDEO', 'VIDEO EDITING')}</span></div></div></div>
         </section>
 
         <section className="contact-section wrap" id="contato" aria-labelledby="contact-heading">
-          <div className="section-top" data-motion-reveal><span className="eyebrow"><i /> ABERTO A NOVOS PROJETOS</span><span className="section-note">09 / CONTATO</span></div>
-          <a className="contact-big" href="mailto:jotabolanle@gmail.com" data-motion-reveal><h2 id="contact-heading">Vamos criar<br /><span>algo juntos?</span></h2><ArrowUpRight aria-hidden="true" /></a>
+          <div className="section-top" data-motion-reveal><span className="eyebrow"><i /> {tr(locale, 'ABERTO A NOVOS PROJETOS', 'OPEN TO NEW PROJECTS')}</span><span className="section-note">09 / {tr(locale, 'CONTATO', 'CONTACT')}</span></div>
+          <a className="contact-big" href="mailto:jotabolanle@gmail.com" data-motion-reveal><h2 id="contact-heading">{tr(locale, 'Vamos criar', 'Let’s create')}<br /><span>{tr(locale, 'algo juntos?', 'something together?')}</span></h2><ArrowUpRight aria-hidden="true" /></a>
           <div className="contact-bottom">
-            <p>Projetos pontuais, parcerias recorrentes<br />e oportunidades em equipes de criação.</p>
+            <p>{tr(locale, 'Projetos pontuais, parcerias recorrentes', 'One-off projects, ongoing partnerships')}<br />{tr(locale, 'e oportunidades em equipes de criação.', 'and opportunities with creative teams.')}</p>
             <a href="mailto:jotabolanle@gmail.com"><Mail size={19}/> jotabolanle@gmail.com</a>
             <div className="contact-socials">
               <a href="https://www.linkedin.com/in/johnbolanle/" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={18}/></a>
@@ -300,20 +310,20 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer className="site-footer wrap"><span>© {new Date().getFullYear()} JONATHAN BOLANLE</span><span>RIO DE JANEIRO, BRASIL</span><a href="#inicio">VOLTAR AO TOPO ↑</a></footer>
+      <footer className="site-footer wrap"><span>© {new Date().getFullYear()} JONATHAN BOLANLE</span><span>RIO DE JANEIRO, {tr(locale, 'BRASIL', 'BRAZIL')}</span><a href="#inicio">{tr(locale, 'VOLTAR AO TOPO', 'BACK TO TOP')} ↑</a></footer>
 
       <Dialog open={impactImage !== null} onOpenChange={open => { if (!open) setImpactImage(null); }}>
         <DialogContent className="impact-dialog" showCloseButton={false}>
           {impactImage !== null && <div className="impact-lightbox" onTouchStart={event => setImpactTouchStart(event.changedTouches[0].clientX)} onTouchEnd={event => { if (impactTouchStart !== null) { const distance = event.changedTouches[0].clientX - impactTouchStart; if (Math.abs(distance) > 55) stepImpact(distance < 0 ? 1 : -1); } setImpactTouchStart(null); }}>
-            <DialogTitle className="sr-only">{impactThumbs[impactImage].title}</DialogTitle>
-            <DialogDescription className="sr-only">Thumbnail ampliada. Use as setas para navegar entre as peças.</DialogDescription>
-            <img src={impactThumbs[impactImage].src} alt={impactThumbs[impactImage].title} />
+            <DialogTitle className="sr-only">{impactTitle(impactThumbs[impactImage].title)}</DialogTitle>
+            <DialogDescription className="sr-only">{tr(locale, 'Thumbnail ampliada. Use as setas para navegar entre as peças.', 'Enlarged thumbnail. Use the arrow buttons to browse the images.')}</DialogDescription>
+            <img src={impactThumbs[impactImage].src} alt={impactTitle(impactThumbs[impactImage].title)} />
             <div className="impact-lightbox-bar">
-              <button className="impact-lightbox-button" onClick={() => stepImpact(-1)} aria-label="Thumbnail anterior"><ArrowLeft size={21} /></button>
-              <div><span>{String(impactImage + 1).padStart(2, '0')} / {String(impactThumbs.length).padStart(2, '0')}</span><p>{impactThumbs[impactImage].title}</p></div>
-              <button className="impact-lightbox-button" onClick={() => stepImpact(1)} aria-label="Próxima thumbnail"><ArrowRight size={21} /></button>
+              <button className="impact-lightbox-button" onClick={() => stepImpact(-1)} aria-label={tr(locale, 'Thumbnail anterior', 'Previous thumbnail')}><ArrowLeft size={21} /></button>
+              <div><span>{String(impactImage + 1).padStart(2, '0')} / {String(impactThumbs.length).padStart(2, '0')}</span><p>{impactTitle(impactThumbs[impactImage].title)}</p></div>
+              <button className="impact-lightbox-button" onClick={() => stepImpact(1)} aria-label={tr(locale, 'Próxima thumbnail', 'Next thumbnail')}><ArrowRight size={21} /></button>
             </div>
-            <DialogClose className="impact-lightbox-close" aria-label="Fechar imagem"><X size={23} /></DialogClose>
+            <DialogClose className="impact-lightbox-close" aria-label={tr(locale, 'Fechar imagem', 'Close image')}><X size={23} /></DialogClose>
           </div>}
         </DialogContent>
       </Dialog>
@@ -321,10 +331,10 @@ export default function Home() {
       <Dialog open={Boolean(selected)} onOpenChange={open => { if(!open) setSelected(null); }}>
         <DialogContent className="project-dialog" showCloseButton={false}>
           {selected && <>
-            <div className="dialog-heading"><div><span className="project-kind">{selected.kind}</span><DialogTitle className="dialog-title">{selected.title}</DialogTitle></div><DialogClose className="icon-button" aria-label="Fechar projeto"><X size={25}/></DialogClose></div>
+            <div className="dialog-heading"><div><span className="project-kind">{selected.kind}</span><DialogTitle className="dialog-title">{selected.title}</DialogTitle></div><DialogClose className="icon-button" aria-label={tr(locale, 'Fechar projeto', 'Close project')}><X size={25}/></DialogClose></div>
             <div className="dialog-body">
-              <div className="gallery-stage"><div className={`gallery-image ${expanded ? 'expanded' : ''}`} key={`${selected.id}-${activeImage}`} onTouchStart={startGallerySwipe} onTouchEnd={endGallerySwipe} onTouchCancel={() => { galleryTouchStart.current = null; }}><img src={selected.images[activeImage].src} width={selected.images[activeImage].width} height={selected.images[activeImage].height} alt={`${selected.title}, imagem ${activeImage+1} de ${selected.images.length}`} /></div><div className="gallery-controls"><button className="icon-button" aria-label="Imagem anterior" disabled={selected.images.length < 2} onClick={() => step(-1)}><ArrowLeft size={20}/></button><span aria-live="polite">{String(activeImage+1).padStart(2,'0')} / {String(selected.images.length).padStart(2,'0')}</span><button className="icon-button" aria-label={expanded ? 'Ajustar imagem à tela' : 'Ampliar imagem'} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? <ZoomOut size={20}/> : <ZoomIn size={20}/>}</button><button className="icon-button" aria-label="Próxima imagem" disabled={selected.images.length < 2} onClick={() => step(1)}><ArrowRight size={20}/></button></div></div>
-              <div className="project-context"><DialogDescription className="dialog-description">{selected.description}</DialogDescription><dl><div><dt>CRIAÇÃO</dt><dd>{selected.creator ?? 'Jonathan Bolanle'}</dd></div>{selected.contributor && <div><dt>COLABORAÇÃO</dt><dd>{selected.contributor}</dd></div>}<div><dt>ESPECIALIDADE</dt><dd>{selected.kind}</dd></div></dl><div className="gallery-thumbs" aria-label="Escolher imagem">{selected.images.map((image,i) => <button key={image.src} className={i === activeImage ? 'thumb selected' : 'thumb'} aria-label={`Ver imagem ${i+1}`} aria-pressed={i === activeImage} onClick={() => {setActiveImage(i);setExpanded(false);}}><img src={image.src} alt="" loading="lazy" /></button>)}</div><a className="project-enquiry" href={`mailto:jotabolanle@gmail.com?subject=${encodeURIComponent('Projeto de design - ' + selected.kind)}`}>Tem um projeto em mente? <ArrowUpRight size={18}/></a></div>
+              <div className="gallery-stage"><div className={`gallery-image ${expanded ? 'expanded' : ''}`} key={`${selected.id}-${activeImage}`} onTouchStart={startGallerySwipe} onTouchEnd={endGallerySwipe} onTouchCancel={() => { galleryTouchStart.current = null; }}><img src={selected.images[activeImage].src} width={selected.images[activeImage].width} height={selected.images[activeImage].height} alt={`${selected.title}, ${tr(locale, 'imagem', 'image')} ${activeImage+1} ${tr(locale, 'de', 'of')} ${selected.images.length}`} /></div><div className="gallery-controls"><button className="icon-button" aria-label={tr(locale, 'Imagem anterior', 'Previous image')} disabled={selected.images.length < 2} onClick={() => step(-1)}><ArrowLeft size={20}/></button><span aria-live="polite">{String(activeImage+1).padStart(2,'0')} / {String(selected.images.length).padStart(2,'0')}</span><button className="icon-button" aria-label={expanded ? tr(locale, 'Ajustar imagem à tela', 'Fit image to screen') : tr(locale, 'Ampliar imagem', 'Enlarge image')} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? <ZoomOut size={20}/> : <ZoomIn size={20}/>}</button><button className="icon-button" aria-label={tr(locale, 'Próxima imagem', 'Next image')} disabled={selected.images.length < 2} onClick={() => step(1)}><ArrowRight size={20}/></button></div></div>
+              <div className="project-context"><DialogDescription className="dialog-description">{selected.description}</DialogDescription><dl><div><dt>{tr(locale, 'CRIAÇÃO', 'CREATED BY')}</dt><dd>{selected.creator ?? 'Jonathan Bolanle'}</dd></div>{selected.contributor && <div><dt>{tr(locale, 'COLABORAÇÃO', 'CONTRIBUTION')}</dt><dd>{selected.contributor}</dd></div>}<div><dt>{tr(locale, 'ESPECIALIDADE', 'SPECIALTY')}</dt><dd>{selected.kind}</dd></div></dl><div className="gallery-thumbs" aria-label={tr(locale, 'Escolher imagem', 'Choose image')}>{selected.images.map((image,i) => <button key={image.src} className={i === activeImage ? 'thumb selected' : 'thumb'} aria-label={`${tr(locale, 'Ver imagem', 'View image')} ${i+1}`} aria-pressed={i === activeImage} onClick={() => {setActiveImage(i);setExpanded(false);}}><img src={image.src} alt="" loading="lazy" /></button>)}</div><a className="project-enquiry" href={`mailto:jotabolanle@gmail.com?subject=${encodeURIComponent(tr(locale, 'Projeto de design - ', 'Design project - ') + selected.kind)}`}>{tr(locale, 'Tem um projeto em mente?', 'Have a project in mind?')} <ArrowUpRight size={18}/></a></div>
             </div>
           </>}
         </DialogContent>

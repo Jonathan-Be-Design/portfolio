@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { tr, type Locale } from './i18n';
 
 const posters = [
   { src: '/posters/poster-viagem-londres-worlds.webp', title: 'Worlds em Londres', year: '2024' },
@@ -12,7 +13,8 @@ const posters = [
   { src: '/posters/final-worlds-2024.webp', title: 'Grande Final Worlds', year: '2024' },
 ];
 
-export default function PosterStage({ layout = 'default' }: { layout?: 'default' | 'spread' }) {
+export default function PosterStage({ layout = 'default', locale = 'pt' }: { layout?: 'default' | 'spread'; locale?: Locale }) {
+  const localizedPosters = posters.map(poster => ({ ...poster, title: tr(locale, poster.title, ({ 'Worlds em Londres': 'Worlds in London', 'Final Worlds': 'Worlds Final', 'Semifinal T1 × JDG': 'T1 × JDG Semifinal', 'Semifinal Worlds': 'Worlds Semifinal', 'Grande Final Worlds': 'Worlds Grand Final' } as Record<string, string>)[poster.title]) }));
   const [active, setActive] = useState(2);
   const [paused, setPaused] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
@@ -94,15 +96,15 @@ export default function PosterStage({ layout = 'default' }: { layout?: 'default'
 
   return <>
     <section className={`case-section${spread ? ' case-section-spread' : ''}`} id="worlds" aria-labelledby="worlds-heading">
-      <div className="case-top" data-motion-reveal><span>PORTFÓLIO / JONATHAN BOLANLE</span><span>CASE 1 · CAMPANHA &amp; KEY ART — 02</span></div>
+      <div className="case-top" data-motion-reveal><span>{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span>CASE 1 · {tr(locale, 'CAMPANHA & KEY ART', 'CAMPAIGN & KEY ART')} — 02</span></div>
       <div className="case-heading" data-motion-reveal>
-        <h2 id="worlds-heading">Artes Digitais · Worlds 2023 &amp; 2024</h2>
-        <p>Direção visual e criação de key arts para promover as co-streams oficiais do Worlds nos canais de Baiano e Ilha das Lendas — parceiros oficiais da Riot Games na transmissão do campeonato.</p>
+        <h2 id="worlds-heading">{tr(locale, 'Artes Digitais', 'Digital Artwork')} · Worlds 2023 &amp; 2024</h2>
+        <p>{tr(locale, 'Direção visual e criação de key arts para promover as co-streams oficiais do Worlds nos canais de Baiano e Ilha das Lendas — parceiros oficiais da Riot Games na transmissão do campeonato.', 'Visual direction and key art to promote official Worlds co-streams on Baiano and Ilha das Lendas channels, official Riot Games broadcast partners for the tournament.')}</p>
         {spread ? <div className="case-action-nav">
-          <button type="button" className="case-action-arrow" onClick={() => step(-1)} aria-label="Pôster anterior"><ArrowLeft size={20} aria-hidden="true" /></button>
-          <span className="case-action">CLIQUE NA IMAGEM PARA AMPLIAR</span>
-          <button type="button" className="case-action-arrow" onClick={() => step(1)} aria-label="Próximo pôster"><ArrowRight size={20} aria-hidden="true" /></button>
-        </div> : <span className="case-action">CLIQUE NA IMAGEM PARA AMPLIAR</span>}
+          <button type="button" className="case-action-arrow" onClick={() => step(-1)} aria-label={tr(locale, 'Pôster anterior', 'Previous poster')}><ArrowLeft size={20} aria-hidden="true" /></button>
+          <span className="case-action">{tr(locale, 'CLIQUE NA IMAGEM PARA AMPLIAR', 'CLICK AN IMAGE TO ENLARGE')}</span>
+          <button type="button" className="case-action-arrow" onClick={() => step(1)} aria-label={tr(locale, 'Próximo pôster', 'Next poster')}><ArrowRight size={20} aria-hidden="true" /></button>
+        </div> : <span className="case-action">{tr(locale, 'CLIQUE NA IMAGEM PARA AMPLIAR', 'CLICK AN IMAGE TO ENLARGE')}</span>}
       </div>
       <div className={`case-stage${dragging ? ' is-dragging' : ''}`} data-motion-stage="34" data-motion-image-group onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)} onPointerDownCapture={startDrag} onPointerMoveCapture={moveDrag} onPointerUpCapture={finishDrag} onPointerCancelCapture={cancelDrag} onDragStart={event => { if (spread) event.preventDefault(); }} tabIndex={spread ? 0 : undefined} onKeyDown={event => { if (!spread) return; if (event.key === 'ArrowLeft') step(-1); if (event.key === 'ArrowRight') step(1); }}>
         {posters.map((poster, index) => {
@@ -113,27 +115,27 @@ export default function PosterStage({ layout = 'default' }: { layout?: 'default'
           const depth = spread ? -120 + (55 * spreadProgress) : -120;
           const rotation = spread ? -9 + (5 * spreadProgress) : -9;
           const scaleStep = spread ? .08 - (.035 * spreadProgress) : .08;
-          return <button key={poster.src} className="case-poster" data-active={offset === 0} onClick={() => { if (dragged.current) { dragged.current = false; return; } if (offset === 0) setSelected(index); else setActive(index); }} style={{ transform: `translate(-50%, -50%) translateX(${offset * distance}%) translateZ(${Math.abs(offset) * depth}px) rotateY(${offset * rotation}deg) scale(${1 - Math.abs(offset) * scaleStep})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `Ampliar ${poster.title}` : `Destacar ${poster.title}`}>
-            <img src={poster.src} alt={poster.title} data-motion-card-image draggable={!spread} loading={offset === 0 ? 'eager' : 'lazy'} /><span>{poster.year}</span>
+          return <button key={poster.src} className="case-poster" data-active={offset === 0} onClick={() => { if (dragged.current) { dragged.current = false; return; } if (offset === 0) setSelected(index); else setActive(index); }} style={{ transform: `translate(-50%, -50%) translateX(${offset * distance}%) translateZ(${Math.abs(offset) * depth}px) rotateY(${offset * rotation}deg) scale(${1 - Math.abs(offset) * scaleStep})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `${tr(locale, 'Ampliar', 'Enlarge')} ${localizedPosters[index].title}` : `${tr(locale, 'Destacar', 'Show')} ${localizedPosters[index].title}`}>
+            <img src={poster.src} alt={localizedPosters[index].title} data-motion-card-image draggable={!spread} loading={offset === 0 ? 'eager' : 'lazy'} /><span>{poster.year}</span>
           </button>;
         })}
         <div className="case-controls">
-          <button onClick={() => step(-1)} aria-label="Pôster anterior"><ArrowLeft /></button>
-          <div><span>{String(active + 1).padStart(2, '0')} / {String(posters.length).padStart(2, '0')}</span><strong>{posters[active].title}</strong></div>
-          <button onClick={() => step(1)} aria-label="Próximo pôster"><ArrowRight /></button>
+          <button onClick={() => step(-1)} aria-label={tr(locale, 'Pôster anterior', 'Previous poster')}><ArrowLeft /></button>
+          <div><span>{String(active + 1).padStart(2, '0')} / {String(posters.length).padStart(2, '0')}</span><strong>{localizedPosters[active].title}</strong></div>
+          <button onClick={() => step(1)} aria-label={tr(locale, 'Próximo pôster', 'Next poster')}><ArrowRight /></button>
         </div>
       </div>
-      <p className="case-hint">Passe o mouse para pausar · Use as setas para navegar</p>
+      <p className="case-hint">{tr(locale, 'Passe o mouse para pausar · Use as setas para navegar', 'Hover to pause · Use the arrows to browse')}</p>
     </section>
 
     <Dialog open={selected !== null} onOpenChange={open => { if (!open) setSelected(null); }}>
       <DialogContent className="case-dialog" showCloseButton={false}>
         {selected !== null && <div className="case-lightbox" onTouchStart={event => setTouchStart(event.changedTouches[0].clientX)} onTouchEnd={event => { if (touchStart !== null) { const distance = event.changedTouches[0].clientX - touchStart; if (Math.abs(distance) > 55) stepSelected(distance < 0 ? 1 : -1); } setTouchStart(null); }}>
-          <DialogTitle className="sr-only">{posters[selected].title}</DialogTitle>
-          <DialogDescription className="sr-only">Pôster ampliado. Use as setas para navegar.</DialogDescription>
-          <img src={posters[selected].src} alt={posters[selected].title} />
-          <div className="case-lightbox-controls"><button onClick={() => stepSelected(-1)} aria-label="Pôster anterior"><ArrowLeft /></button><div><span>{String(selected + 1).padStart(2, '0')} / {String(posters.length).padStart(2, '0')}</span><strong>{posters[selected].title}</strong></div><button onClick={() => stepSelected(1)} aria-label="Próximo pôster"><ArrowRight /></button></div>
-          <DialogClose className="case-lightbox-close" aria-label="Fechar"><X /></DialogClose>
+          <DialogTitle className="sr-only">{localizedPosters[selected].title}</DialogTitle>
+          <DialogDescription className="sr-only">{tr(locale, 'Pôster ampliado. Use as setas para navegar.', 'Enlarged poster. Use the arrow buttons to browse.')}</DialogDescription>
+          <img src={posters[selected].src} alt={localizedPosters[selected].title} />
+          <div className="case-lightbox-controls"><button onClick={() => stepSelected(-1)} aria-label={tr(locale, 'Pôster anterior', 'Previous poster')}><ArrowLeft /></button><div><span>{String(selected + 1).padStart(2, '0')} / {String(posters.length).padStart(2, '0')}</span><strong>{localizedPosters[selected].title}</strong></div><button onClick={() => stepSelected(1)} aria-label={tr(locale, 'Próximo pôster', 'Next poster')}><ArrowRight /></button></div>
+          <DialogClose className="case-lightbox-close" aria-label={tr(locale, 'Fechar', 'Close')}><X /></DialogClose>
         </div>}
       </DialogContent>
     </Dialog>

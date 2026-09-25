@@ -1,4 +1,5 @@
 import catalog from './projects.json';
+import type { Locale } from './i18n';
 
 export type ProjectImage = { src: string; width: number; height: number };
 export type Project = {
@@ -36,7 +37,7 @@ function project(id: string, numbers: number[] | null, overrides: Partial<Projec
 }
 
 // Outros trabalhos e contribuições selecionados por Jonathan.
-export const projects: Project[] = [
+const projectsPt: Project[] = [
   project('west-reis', null, { title: 'West Reis', kind: 'Música · Media kit' }),
   project('drew', null, {
     title: 'DREW', coverLayout: 'drew', creator: 'André Ferreira Carneiro', contributor: 'Jonathan Bolanle',
@@ -48,3 +49,16 @@ export const projects: Project[] = [
     description: 'Projeto conceitual de game design criado por André Ferreira Carneiro, com colaboração de Jonathan Bolanle. Identidade, interface, ilustração e tipografia compõem a apresentação de um universo visual próprio.',
   }),
 ];
+
+export function getProjects(locale: Locale): Project[] {
+  if (locale === 'pt') return projectsPt;
+  return projectsPt.map(project => {
+    if (project.id === 'west-reis') return { ...project, category: 'Editorial & more', kind: 'Music · Media kit',
+      description: 'A visual presentation for West Reis. Photography, contrast and typography bring structure to the artist’s visual identity.' };
+    if (project.id === 'drew') return { ...project, category: 'Visual identity', kind: 'Branding & visual identity',
+      description: 'Branding and visual identity project created by André Ferreira Carneiro, with contributions from Jonathan Bolanle.' };
+    if (project.id === '1936') return { ...project, category: 'Editorial & more',
+      description: 'Concept game design project created by André Ferreira Carneiro, with contributions from Jonathan Bolanle. Identity, interface, illustration and typography shape the presentation of its visual world.' };
+    return project;
+  });
+}

@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState, type TouchEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowDown, ArrowUpRight, Menu, Pause, Play } from 'lucide-react';
+import Link from 'next/link';
 import { gameThumbnailRows } from './games-thumbnails';
+import { tr, type Locale } from './i18n';
 
 const features = [
   { id: 'worlds', href: '#worlds', title: 'Artes · Worlds', label: '2023–2024 · Key art & pôsteres', src: '/trabalhos/worlds-hero-test.png?v=ebbd013a', width: 2058, height: 1350, position: 'center 30%' },
@@ -35,7 +37,12 @@ const gamingMuralSrc = (filename: string) =>
     ? `/games-thumbnails/${filename}`
     : `/impact/${filename.replace(/\.jpg$/, '.webp')}`;
 
-export default function PortfolioHero() {
+export default function PortfolioHero({ locale }: { locale: Locale }) {
+  const localizedFeatures = features.map(item => ({ ...item,
+    title: tr(locale, item.title, ({ worlds: 'Worlds · Artwork', esports: 'Esports · Broadcast', gaming: 'Content · Gaming', 'other-work': 'Other Work' } as Record<string, string>)[item.id]),
+    label: tr(locale, item.label, ({ worlds: '2023–2024 · Key art & posters', esports: 'Thumbnails & broadcasts', gaming: 'Gaming thumbnails', 'other-work': 'Music, visual identity & game design' } as Record<string, string>)[item.id]),
+  }));
+  const localizedMenu = menuItems.map(([label, href]) => [tr(locale, label, ({ '#worlds': 'Worlds · Artwork', '#impacto': 'Impact & Reach', '#esports-broadcast': 'Esports · Broadcast', '#games-thumbnails': 'Gaming', '#projetos': 'Other Work', '#marcas': 'Brands & Partners', '#sobre': 'About', '#contato': 'Contact' } as Record<string, string>)[href]), href] as const);
   const [active, setActive] = useState(0);
   const [menu, setMenu] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -76,23 +83,24 @@ export default function PortfolioHero() {
   };
 
   const header = <header className={`cinema-header ${isFloating ? 'is-floating' : ''} ${menu ? 'menu-open' : ''}`}>
-    <a className="signature" href="#inicio" aria-label="Jonathan Bolanle, início">
+    <a className="signature" href="#inicio" aria-label={tr(locale, 'Jonathan Bolanle, início', 'Jonathan Bolanle, home')}>
       <span className="signature-name"><span>Jonathan</span><span>Bolanle</span></span>
       <span className="signature-monogram" aria-hidden="true">JB</span>
     </a>
     <div className="hero-nav-shell">
-      <a className="hero-contact nav-pill" href="#contato">Vamos conversar <ArrowUpRight size={17}/></a>
-      <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation"><span>{menu ? 'Fechar' : 'Menu'}</span><Menu size={18}/></button>
+      <a className="hero-contact nav-pill" href="#contato">{tr(locale, 'Vamos conversar', 'Let’s talk')} <ArrowUpRight size={17}/></a>
+      <nav className="language-switch" aria-label={tr(locale, 'Idioma', 'Language')}><Link href="/pt" hrefLang="pt-BR" lang="pt-BR" aria-current={locale === 'pt' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/pt${window.location.hash}`); } }}>PT</Link><span aria-hidden="true">/</span><Link href="/en" hrefLang="en" lang="en" aria-current={locale === 'en' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/en${window.location.hash}`); } }}>EN</Link></nav>
+      <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation"><span>{menu ? tr(locale, 'Fechar', 'Close') : 'Menu'}</span><Menu size={18}/></button>
     </div>
-    {menu && <nav className="hero-menu-panel" id="portfolio-navigation" aria-label="Navegação principal">
-      {menuItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight aria-hidden="true" /></a>)}
+    {menu && <nav className="hero-menu-panel" id="portfolio-navigation" aria-label={tr(locale, 'Navegação principal', 'Main navigation')}>
+      {localizedMenu.map(([label, href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight aria-hidden="true" /></a>)}
     </nav>}
   </header>;
 
   return <>
-  <section className={`cinema-hero ${paused ? 'motion-paused' : ''}`} id="inicio" aria-label="Projetos em destaque" onTouchStart={startSwipe} onTouchEnd={endSwipe} onTouchCancel={() => { touchStart.current = null; }} onClickCapture={event => { if (Date.now() < suppressTapUntil.current) { event.preventDefault(); event.stopPropagation(); suppressTapUntil.current = 0; } }}>
+  <section className={`cinema-hero ${paused ? 'motion-paused' : ''}`} id="inicio" aria-label={tr(locale, 'Projetos em destaque', 'Featured projects')} onTouchStart={startSwipe} onTouchEnd={endSwipe} onTouchCancel={() => { touchStart.current = null; }} onClickCapture={event => { if (Date.now() < suppressTapUntil.current) { event.preventDefault(); event.stopPropagation(); suppressTapUntil.current = 0; } }}>
     <div className="hero-visuals" aria-hidden="true">
-      {features.map((item, index) => <div key={item.id} className={`hero-frame hero-frame-${item.id} ${index === active ? 'is-active' : ''}`}>
+      {localizedFeatures.map((item, index) => <div key={item.id} className={`hero-frame hero-frame-${item.id} ${index === active ? 'is-active' : ''}`}>
         {item.id === 'gaming' ? <div className="hero-gaming-mural">
           {gamingMuralRows.map((images, rowIndex) => <div className="hero-gaming-mural-row" style={{ gridTemplateColumns: `repeat(${images.length}, minmax(0, 1fr))` }} key={rowIndex}>
             {images.map(image => <div className="hero-gaming-mural-tile" key={image}><img src={gamingMuralSrc(image)} alt="" loading="lazy" draggable={false} /></div>)}
@@ -102,12 +110,12 @@ export default function PortfolioHero() {
     </div>
     <div className="cinema-header-spacer" aria-hidden="true" />
     <div className="hero-bottom">
-      <div className="hero-selection"><span className="hero-kicker">Seleção de trabalhos</span>
-        <nav className="hero-projects" aria-label="Ir para uma seção do portfólio">
-          {features.map((item, index) => <a key={item.id} href={item.href} className={index === active ? 'is-active' : ''} onPointerEnter={event => { if(event.pointerType === 'mouse') setActive(index); }} onFocus={() => setActive(index)} onClick={() => setActive(index)}>{item.title}</a>)}
+      <div className="hero-selection"><span className="hero-kicker">{tr(locale, 'Seleção de trabalhos', 'Selected work')}</span>
+        <nav className="hero-projects" aria-label={tr(locale, 'Ir para uma seção do portfólio', 'Go to a portfolio section')}>
+          {localizedFeatures.map((item, index) => <a key={item.id} href={item.href} className={index === active ? 'is-active' : ''} onPointerEnter={event => { if(event.pointerType === 'mouse') setActive(index); }} onFocus={() => setActive(index)} onClick={() => setActive(index)}>{item.title}</a>)}
         </nav>
       </div>
-      <div className="hero-actions"><p aria-live="polite">{features[active].label}</p><a className="campaign-link" href={features[active].href}>Ver seção <ArrowUpRight size={18}/></a><div className="hero-utilities"><button className="motion-toggle" onClick={() => setPaused(!paused)} aria-label={paused ? 'Ativar movimento das imagens' : 'Pausar movimento das imagens'} aria-pressed={paused}>{paused ? <Play size={16}/> : <Pause size={16}/>}</button><a href="#projetos" aria-label="Explorar todos os trabalhos"><ArrowDown size={25}/></a></div></div>
+      <div className="hero-actions"><p aria-live="polite">{localizedFeatures[active].label}</p><a className="campaign-link" href={localizedFeatures[active].href}>{tr(locale, 'Ver seção', 'View section')} <ArrowUpRight size={18}/></a><div className="hero-utilities"><button className="motion-toggle" onClick={() => setPaused(!paused)} aria-label={paused ? tr(locale, 'Ativar movimento das imagens', 'Resume image motion') : tr(locale, 'Pausar movimento das imagens', 'Pause image motion')} aria-pressed={paused}>{paused ? <Play size={16}/> : <Pause size={16}/>}</button><a href="#projetos" aria-label={tr(locale, 'Explorar todos os trabalhos', 'Explore all work')}><ArrowDown size={25}/></a></div></div>
     </div>
   </section>
   {!isMounted ? header : createPortal(header, document.body)}
