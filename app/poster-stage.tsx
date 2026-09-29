@@ -99,8 +99,8 @@ export default function PosterStage({ layout = 'default', locale = 'pt' }: { lay
     <section className={`case-section${spread ? ' case-section-spread' : ''}`} id="worlds" aria-labelledby="worlds-heading">
       <div className="case-top" data-motion-reveal><span>{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span>CASE 1 · {tr(locale, 'CAMPANHA & KEY ART', 'CAMPAIGN & KEY ART')} — 02</span></div>
       <div className="case-heading" data-motion-reveal>
-        <h2 id="worlds-heading">{tr(locale, 'Artes Digitais', 'Digital Artwork')} · Worlds</h2>
-        <p>{tr(locale, 'Direção visual e criação de key arts para promover as co-streams oficiais do Worlds nos canais de Baiano e Ilha das Lendas — parceiros oficiais da Riot Games na transmissão do campeonato.', 'Visual direction and key art to promote official Worlds co-streams on Baiano and Ilha das Lendas channels, official Riot Games broadcast partners for the tournament.')}</p>
+        <h2 id="worlds-heading">{tr(locale, 'Artes Digitais', 'Digital Artwork')}</h2>
+        <p>{tr(locale, 'Direção visual e criação de key arts para promover os eventos e transmissões de maior audiência do cenário de esports.', 'Visual direction and key art creation to promote the most-watched events and broadcasts in esports.')}</p>
         {spread ? <div className="case-action-nav">
           <button type="button" className="case-action-arrow" onClick={() => step(-1)} aria-label={tr(locale, 'Pôster anterior', 'Previous poster')}><ArrowLeft size={20} aria-hidden="true" /></button>
           <span className="case-action">{tr(locale, 'CLIQUE NA IMAGEM PARA AMPLIAR', 'CLICK AN IMAGE TO ENLARGE')}</span>
