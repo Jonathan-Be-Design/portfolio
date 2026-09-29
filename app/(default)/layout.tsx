@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
-import './globals.css';
+import '../globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,9 +19,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio.jotabolanle.workers.dev'),
+  metadataBase: new URL('https://jonathanbolanle.studio'),
   title: 'Jonathan Bolanle | Design para criadores, games e esports',
-  description: 'Portfólio de Jonathan Bolanle: thumbnails para YouTube, campanhas, pôsteres e identidade visual. Rio de Janeiro, atendimento remoto.',
+  description: 'Portfólio de Jonathan Bolanle: key visuals, campanhas, pôsteres, identidade visual e conteúdo para YouTube. Rio de Janeiro, atendimento remoto.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'Jonathan Bolanle — Portfólio',
     title: 'Jonathan Bolanle | Design para criadores, games e esports',
-    description: 'Thumbnails para YouTube, campanhas, pôsteres e identidade visual. Conheça meus trabalhos para criadores, games e esports.',
+    description: 'Key visuals, campanhas, pôsteres, identidade visual e conteúdo para YouTube. Conheça meus trabalhos para criadores, games e esports.',
     images: [{
       url: '/thumbnails-2/palco/baiano-worlds-capa-azul.jpg',
       width: 1920,
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Jonathan Bolanle | Design para criadores, games e esports',
-    description: 'Thumbnails para YouTube, campanhas, pôsteres e identidade visual.',
+    description: 'Key visuals, campanhas, pôsteres, identidade visual e conteúdo para YouTube.',
     images: ['/thumbnails-2/palco/baiano-worlds-capa-azul.jpg'],
   },
 };
