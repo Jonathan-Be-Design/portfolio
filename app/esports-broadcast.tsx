@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type TouchEvent } from 'react';
 import { ArrowLeft, ArrowRight, Eye, ExternalLink, Play, ThumbsUp, X } from 'lucide-react';
+import Image from 'next/image';
 import { reelVideos as thumbnails, stageVideos as stageThumbnails } from '@/lib/youtube-videos';
 import { tr, type Locale } from './i18n';
 
@@ -97,10 +98,10 @@ export default function EsportsBroadcast({ locale }: { locale: Locale }) {
       <div className="broadcast-title-row" data-motion-reveal>
         <h2 id="broadcast-heading">Esports</h2>
         <div className="broadcast-platforms" aria-label={tr(locale, 'Plataformas de publicação', 'Publishing platforms')}>
-          <span className="platform-youtube"><img src="/icons/social/youtube.svg" alt="YouTube" /></span>
-          <span className="platform-x"><img src="/icons/social/x-twitter.svg" alt="X" /></span>
-          <span className="platform-twitch"><img src="/icons/social/twitch.svg" alt="Twitch" /></span>
-          <span className="platform-kick"><img src="/icons/social/kick.svg" alt="Kick" /></span>
+          <span className="platform-youtube"><Image src="/icons/social/youtube.svg" alt="YouTube" width={52} height={48} unoptimized /></span>
+          <span className="platform-x"><Image src="/icons/social/x-twitter.svg" alt="X" width={37} height={48} unoptimized /></span>
+          <span className="platform-twitch"><Image src="/icons/social/twitch.svg" alt="Twitch" width={43} height={48} unoptimized /></span>
+          <span className="platform-kick"><Image src="/icons/social/kick.svg" alt="Kick" width={40} height={48} unoptimized /></span>
         </div>
       </div>
     </div>
@@ -112,7 +113,7 @@ export default function EsportsBroadcast({ locale }: { locale: Locale }) {
           if (offset > stageThumbnails.length / 2) offset -= stageThumbnails.length;
           if (offset < -stageThumbnails.length / 2) offset += stageThumbnails.length;
           return <button className="broadcast-stage-card" data-active={offset === 0} key={thumb.src} tabIndex={Math.abs(offset) > 1 ? -1 : 0} aria-hidden={Math.abs(offset) > 1} onClick={() => { if (Date.now() < suppressTapUntil.current) { suppressTapUntil.current = 0; return; } if (offset === 0) { setPlaying(true); } else { setPlaying(false); setActive(index); } }} style={{ transform: `translate(-50%, -50%) translateX(${offset * 35}%) scale(${1 - Math.abs(offset) * .03})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 1 ? 0 : 1, pointerEvents: Math.abs(offset) > 1 ? 'none' : 'auto' }} aria-label={offset === 0 ? `${tr(locale, 'Reproduzir', 'Play')} ${videoTitle(thumb.title)}` : `${tr(locale, 'Destacar', 'Show')} ${videoTitle(thumb.title)}`}>
-            <img src={thumb.src} alt={videoTitle(thumb.title)} data-motion-card-image loading={Math.abs(offset) < 2 ? 'eager' : 'lazy'} />
+            <Image src={thumb.src} alt={videoTitle(thumb.title)} width={1920} height={1080} sizes="(max-width: 700px) 90vw, 55vw" data-motion-card-image loading={Math.abs(offset) < 2 ? 'eager' : 'lazy'} />
             <span className="broadcast-stage-play" aria-hidden="true"><Play fill="currentColor" /></span>
           </button>;
         })}
@@ -136,7 +137,7 @@ export default function EsportsBroadcast({ locale }: { locale: Locale }) {
       <div className="broadcast-track">
         {[0, 1].map(copy => <div className="broadcast-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
           {thumbnails.map(thumb => <a href={`https://www.youtube.com/watch?v=${thumb.videoId}`} target="_blank" rel="noreferrer" className="broadcast-reel-card" tabIndex={copy === 1 ? -1 : 0} key={`${copy}-${thumb.src}`} aria-label={`${tr(locale, 'Assistir', 'Watch')} ${videoTitle(thumb.title)} ${tr(locale, 'no YouTube', 'on YouTube')}`}>
-            <span className="broadcast-reel-image"><img src={thumb.src} alt={copy === 0 ? videoTitle(thumb.title) : ''} loading="lazy" /><span className="broadcast-play"><Play fill="currentColor" /></span></span>
+            <span className="broadcast-reel-image"><Image src={thumb.src} alt={copy === 0 ? videoTitle(thumb.title) : ''} width={1920} height={1080} sizes="(max-width: 700px) 70vw, 30vw" loading="lazy" /><span className="broadcast-play"><Play fill="currentColor" /></span></span>
             <span className="broadcast-reel-title"><span><strong>{videoTitle(thumb.title)}</strong>{SHOW_VIDEO_STATS && <span className="broadcast-stats" aria-label={stats[thumb.videoId] ? `${formatCount(stats[thumb.videoId].views)} ${tr(locale, 'visualizações', 'views')} ${tr(locale, 'e', 'and')} ${formatCount(stats[thumb.videoId].likes)} ${tr(locale, 'curtidas', 'likes')}` : tr(locale, 'Métricas do vídeo carregando', 'Loading video metrics')}>
               <span><Eye />{stats[thumb.videoId] ? `${formatCount(stats[thumb.videoId].views)} ${tr(locale, 'visualizações', 'views')}` : `— ${tr(locale, 'visualizações', 'views')}`}</span>
               <span><ThumbsUp />{stats[thumb.videoId] ? `${formatCount(stats[thumb.videoId].likes)} ${tr(locale, 'curtidas', 'likes')}` : `— ${tr(locale, 'curtidas', 'likes')}`}</span>

@@ -230,7 +230,7 @@
 .broadcast-stage-caption-compact{min-height:58px;padding-block:14px}
 
 /* Navegação flutuante: integrada ao hero e compacta durante a rolagem. */
-.cinema-header{position:fixed;top:30px;right:3.2%;left:3.2%;z-index:2147483640;display:flex;align-items:flex-start;justify-content:space-between;width:auto;pointer-events:none}
+.cinema-header{position:fixed;top:30px;right:3.2%;left:3.2%;z-index:40;display:flex;align-items:flex-start;justify-content:space-between;width:auto;pointer-events:none}
 .cinema-header-spacer{height:50px;flex:0 0 auto;pointer-events:none}
 .hero-nav-shell{display:flex;align-items:center;justify-content:flex-end;gap:8px;pointer-events:auto}
 .nav-pill{display:inline-flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;padding:0 20px;font-family:var(--display),Arial,sans-serif;font-size:14px;font-style:normal;font-weight:700;letter-spacing:.045em;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}

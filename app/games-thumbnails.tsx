@@ -1,6 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import Image from 'next/image';
 import { tr, type Locale } from './i18n';
 
 export const gameThumbnailRows = [
@@ -97,7 +98,7 @@ function DragRow({ images, large, label, locale }: { images: string[]; large?: b
     <div className="games-drag-track">
       {[0, 1, 2].map(copy => <div className="games-drag-group" aria-hidden={copy === 1 ? undefined : true} key={copy}>
         {images.map((image, index) => <div className="games-thumb" key={`${copy}-${image}`}>
-          <img src={`/games-thumbnails/${image}`} alt={copy === 1 ? `${tr(locale, 'Thumbnail de gaming', 'Gaming thumbnail')} ${index + 1}` : ''} data-motion-card-image loading="lazy" draggable={false} />
+          <Image src={`/games-thumbnails/${image}`} alt={copy === 1 ? `${tr(locale, 'Thumbnail de gaming', 'Gaming thumbnail')} ${index + 1}` : ''} width={1920} height={1080} sizes={large ? '(max-width: 700px) 90vw, 43vw' : '(max-width: 700px) 90vw, 32vw'} data-motion-card-image loading="lazy" draggable={false} />
         </div>)}
       </div>)}
     </div>
@@ -112,10 +113,10 @@ export default function GamesThumbnails({ locale }: { locale: Locale }) {
       <div className="games-title-row" data-motion-reveal>
         <h2 id="games-heading">Games</h2>
         <div className="broadcast-platforms" aria-label={tr(locale, 'Plataformas de publicação', 'Publishing platforms')}>
-          <span className="platform-youtube"><img src="/icons/social/youtube.svg" alt="YouTube" /></span>
-          <span className="platform-x"><img src="/icons/social/x-twitter.svg" alt="X" /></span>
-          <span className="platform-twitch"><img src="/icons/social/twitch.svg" alt="Twitch" /></span>
-          <span className="platform-kick"><img src="/icons/social/kick.svg" alt="Kick" /></span>
+          <span className="platform-youtube"><Image src="/icons/social/youtube.svg" alt="YouTube" width={52} height={48} unoptimized /></span>
+          <span className="platform-x"><Image src="/icons/social/x-twitter.svg" alt="X" width={37} height={48} unoptimized /></span>
+          <span className="platform-twitch"><Image src="/icons/social/twitch.svg" alt="Twitch" width={43} height={48} unoptimized /></span>
+          <span className="platform-kick"><Image src="/icons/social/kick.svg" alt="Kick" width={40} height={48} unoptimized /></span>
         </div>
       </div>
       <p className="games-hint" data-motion-reveal>{tr(locale, 'Arraste horizontalmente para explorar', 'Drag horizontally to explore')}</p>

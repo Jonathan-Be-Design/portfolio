@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
+import Image from 'next/image';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { tr, type Locale } from './i18n';
 
@@ -98,7 +99,7 @@ export default function PosterStage({ layout = 'default', locale = 'pt' }: { lay
     <section className={`case-section${spread ? ' case-section-spread' : ''}`} id="worlds" aria-labelledby="worlds-heading">
       <div className="case-top" data-motion-reveal><span>{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span>CASE 1 · {tr(locale, 'CAMPANHA & KEY ART', 'CAMPAIGN & KEY ART')} — 02</span></div>
       <div className="case-heading" data-motion-reveal>
-        <h2 id="worlds-heading">{tr(locale, 'Artes Digitais', 'Digital Artwork')} · Worlds 2023 &amp; 2024</h2>
+        <h2 id="worlds-heading">{tr(locale, 'Artes Digitais', 'Digital Artwork')} · Worlds</h2>
         <p>{tr(locale, 'Direção visual e criação de key arts para promover as co-streams oficiais do Worlds nos canais de Baiano e Ilha das Lendas — parceiros oficiais da Riot Games na transmissão do campeonato.', 'Visual direction and key art to promote official Worlds co-streams on Baiano and Ilha das Lendas channels, official Riot Games broadcast partners for the tournament.')}</p>
         {spread ? <div className="case-action-nav">
           <button type="button" className="case-action-arrow" onClick={() => step(-1)} aria-label={tr(locale, 'Pôster anterior', 'Previous poster')}><ArrowLeft size={20} aria-hidden="true" /></button>
@@ -106,7 +107,7 @@ export default function PosterStage({ layout = 'default', locale = 'pt' }: { lay
           <button type="button" className="case-action-arrow" onClick={() => step(1)} aria-label={tr(locale, 'Próximo pôster', 'Next poster')}><ArrowRight size={20} aria-hidden="true" /></button>
         </div> : <span className="case-action">{tr(locale, 'CLIQUE NA IMAGEM PARA AMPLIAR', 'CLICK AN IMAGE TO ENLARGE')}</span>}
       </div>
-      <div className={`case-stage${dragging ? ' is-dragging' : ''}`} data-motion-stage="34" data-motion-image-group onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)} onPointerDownCapture={startDrag} onPointerMoveCapture={moveDrag} onPointerUpCapture={finishDrag} onPointerCancelCapture={cancelDrag} onDragStart={event => { if (spread) event.preventDefault(); }} tabIndex={spread ? 0 : undefined} onKeyDown={event => { if (!spread) return; if (event.key === 'ArrowLeft') step(-1); if (event.key === 'ArrowRight') step(1); }}>
+      <div className={`case-stage${dragging ? ' is-dragging' : ''}`} data-motion-stage="34" data-motion-image-group onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)} onPointerDownCapture={startDrag} onPointerMoveCapture={moveDrag} onPointerUpCapture={finishDrag} onPointerCancelCapture={cancelDrag} onDragStart={event => { if (spread) event.preventDefault(); }}>
         {posters.map((poster, index) => {
           let offset = index - active;
           if (offset > posters.length / 2) offset -= posters.length;
@@ -115,8 +116,8 @@ export default function PosterStage({ layout = 'default', locale = 'pt' }: { lay
           const depth = spread ? -120 + (55 * spreadProgress) : -120;
           const rotation = spread ? -9 + (5 * spreadProgress) : -9;
           const scaleStep = spread ? .08 - (.035 * spreadProgress) : .08;
-          return <button key={poster.src} className="case-poster" data-active={offset === 0} onClick={() => { if (dragged.current) { dragged.current = false; return; } if (offset === 0) setSelected(index); else setActive(index); }} style={{ transform: `translate(-50%, -50%) translateX(${offset * distance}%) translateZ(${Math.abs(offset) * depth}px) rotateY(${offset * rotation}deg) scale(${1 - Math.abs(offset) * scaleStep})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `${tr(locale, 'Ampliar', 'Enlarge')} ${localizedPosters[index].title}` : `${tr(locale, 'Destacar', 'Show')} ${localizedPosters[index].title}`}>
-            <img src={poster.src} alt={localizedPosters[index].title} data-motion-card-image draggable={!spread} loading={offset === 0 ? 'eager' : 'lazy'} /><span>{poster.year}</span>
+          return <button key={poster.src} className="case-poster" onKeyDown={event => { if (!spread) return; if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); step(event.key === 'ArrowLeft' ? -1 : 1); } }} data-active={offset === 0} onClick={() => { if (dragged.current) { dragged.current = false; return; } if (offset === 0) setSelected(index); else setActive(index); }} style={{ transform: `translate(-50%, -50%) translateX(${offset * distance}%) translateZ(${Math.abs(offset) * depth}px) rotateY(${offset * rotation}deg) scale(${1 - Math.abs(offset) * scaleStep})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `${tr(locale, 'Ampliar', 'Enlarge')} ${localizedPosters[index].title}` : `${tr(locale, 'Destacar', 'Show')} ${localizedPosters[index].title}`}>
+            <Image src={poster.src} alt={localizedPosters[index].title} width={1620} height={2025} sizes="(max-width: 700px) 70vw, 360px" data-motion-card-image draggable={!spread} loading={offset === 0 ? 'eager' : 'lazy'} /><span>{poster.year}</span>
           </button>;
         })}
         <div className="case-controls">
@@ -133,7 +134,7 @@ export default function PosterStage({ layout = 'default', locale = 'pt' }: { lay
         {selected !== null && <div className="case-lightbox" onTouchStart={event => setTouchStart(event.changedTouches[0].clientX)} onTouchEnd={event => { if (touchStart !== null) { const distance = event.changedTouches[0].clientX - touchStart; if (Math.abs(distance) > 55) stepSelected(distance < 0 ? 1 : -1); } setTouchStart(null); }}>
           <DialogTitle className="sr-only">{localizedPosters[selected].title}</DialogTitle>
           <DialogDescription className="sr-only">{tr(locale, 'Pôster ampliado. Use as setas para navegar.', 'Enlarged poster. Use the arrow buttons to browse.')}</DialogDescription>
-          <img src={posters[selected].src} alt={localizedPosters[selected].title} />
+          <Image src={posters[selected].src} alt={localizedPosters[selected].title} width={1620} height={2025} sizes="90vw" />
           <div className="case-lightbox-controls"><button onClick={() => stepSelected(-1)} aria-label={tr(locale, 'Pôster anterior', 'Previous poster')}><ArrowLeft /></button><div><span>{String(selected + 1).padStart(2, '0')} / {String(posters.length).padStart(2, '0')}</span><strong>{localizedPosters[selected].title}</strong></div><button onClick={() => stepSelected(1)} aria-label={tr(locale, 'Próximo pôster', 'Next poster')}><ArrowRight /></button></div>
           <DialogClose className="case-lightbox-close" aria-label={tr(locale, 'Fechar', 'Close')}><X /></DialogClose>
         </div>}

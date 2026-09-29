@@ -18,11 +18,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const isEnglish = locale === 'en';
   const title = isEnglish ? 'Jonathan Bolanle | Design for creators, gaming and esports' : 'Jonathan Bolanle | Design para criadores, games e esports';
   const description = isEnglish
-    ? 'Jonathan Bolanle’s portfolio: YouTube thumbnails, campaigns, posters and visual identity. Based in Rio de Janeiro, available for remote work.'
-    : 'Portfólio de Jonathan Bolanle: thumbnails para YouTube, campanhas, pôsteres e identidade visual. Rio de Janeiro, atendimento remoto.';
+    ? 'Jonathan Bolanle’s portfolio: key visuals, campaigns, posters, visual identity and YouTube content. Based in Rio de Janeiro, available for remote work.'
+    : 'Portfólio de Jonathan Bolanle: key visuals, campanhas, pôsteres, identidade visual e conteúdo para YouTube. Rio de Janeiro, atendimento remoto.';
   const image = '/thumbnails-2/palco/baiano-worlds-capa-azul.jpg';
   return {
-    metadataBase: new URL('https://portfolio.jotabolanle.workers.dev'),
+    metadataBase: new URL('https://jonathanbolanle.studio'),
     title,
     description,
     alternates: { canonical: `/${locale}`, languages: { 'pt-BR': '/pt', en: '/en', 'x-default': '/pt' } },

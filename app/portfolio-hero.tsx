@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState, type TouchEvent } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type TouchEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowDown, ArrowUpRight, Menu, Pause, Play } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { gameThumbnailRows } from './games-thumbnails';
 import { tr, type Locale } from './i18n';
 
@@ -37,6 +38,10 @@ const gamingMuralSrc = (filename: string) =>
     ? `/games-thumbnails/${filename}`
     : `/impact/${filename.replace(/\.jpg$/, '.webp')}`;
 
+const subscribeToMount = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
+
 export default function PortfolioHero({ locale }: { locale: Locale }) {
   const localizedFeatures = features.map(item => ({ ...item,
     title: tr(locale, item.title, ({ worlds: 'Worlds · Artwork', esports: 'Esports · Broadcast', gaming: 'Content · Gaming', 'other-work': 'Other Work' } as Record<string, string>)[item.id]),
@@ -47,12 +52,11 @@ export default function PortfolioHero({ locale }: { locale: Locale }) {
   const [menu, setMenu] = useState(false);
   const [paused, setPaused] = useState(false);
   const [isFloating, setIsFloating] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useSyncExternalStore(subscribeToMount, clientSnapshot, serverSnapshot);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const suppressTapUntil = useRef(0);
 
   useEffect(() => {
-    setIsMounted(true);
     const updateHeader = () => setIsFloating(window.scrollY > 64);
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setMenu(false);
@@ -103,9 +107,9 @@ export default function PortfolioHero({ locale }: { locale: Locale }) {
       {localizedFeatures.map((item, index) => <div key={item.id} className={`hero-frame hero-frame-${item.id} ${index === active ? 'is-active' : ''}`}>
         {item.id === 'gaming' ? <div className="hero-gaming-mural">
           {gamingMuralRows.map((images, rowIndex) => <div className="hero-gaming-mural-row" style={{ gridTemplateColumns: `repeat(${images.length}, minmax(0, 1fr))` }} key={rowIndex}>
-            {images.map(image => <div className="hero-gaming-mural-tile" key={image}><img src={gamingMuralSrc(image)} alt="" loading="lazy" draggable={false} /></div>)}
+            {images.map(image => <div className="hero-gaming-mural-tile" key={image}><Image src={gamingMuralSrc(image)} alt="" width={1920} height={1080} sizes="(max-width: 700px) 50vw, 25vw" loading="lazy" draggable={false} /></div>)}
           </div>)}
-        </div> : <img src={item.src} alt="" width={item.width} height={item.height} style={{ objectPosition: item.position }} fetchPriority={index === 0 ? 'high' : 'auto'} />}
+        </div> : <Image src={item.src} alt="" width={item.width} height={item.height} sizes="100vw" style={{ objectPosition: item.position }} priority={index === 0} />}
       </div>)}
     </div>
     <div className="cinema-header-spacer" aria-hidden="true" />

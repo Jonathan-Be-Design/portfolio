@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type TouchEvent } from 'r
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, Mail, ZoomIn, ZoomOut } from 'lucide-react';
+import Image from 'next/image';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { getProjects, type Project } from './selected-projects';
 import { tr, type Locale } from './i18n';
@@ -13,16 +14,16 @@ import EsportsBroadcast from './esports-broadcast';
 import GamesThumbnails from './games-thumbnails';
 
 const featuredBrands = [
-  { name: 'Baiano', logo: '/logos/baiano.png', lines: ['STREAMER', 'E-SPORTS'], className: 'baiano', href: 'https://www.instagram.com/baianolol/', destination: 'Instagram' },
-  { name: 'Ilha das Lendas', logo: '/logos/ilha-das-lendas.svg', lines: ['CREATORS', 'E-SPORTS'], className: 'idl', href: 'https://www.instagram.com/ilhadaslendas/', destination: 'Instagram' },
-  { name: 'Omelete & Co', logo: '/logos/omelete-co.png', lines: ['ENTRETENIMENTO', 'E-SPORTS'], className: 'omelete', href: 'https://omeletecompany.com/home/', destination: 'site oficial' },
-  { name: 'Minerva', logo: '/logos/minerva-logo-new.png', lines: ['ENTRETENIMENTO', 'GAMING'], className: 'minerva', href: 'https://www.instagram.com/gustavominerva/', destination: 'Instagram' },
+  { name: 'Baiano', logo: '/logos/baiano.png', width: 1366, height: 338, lines: ['STREAMER', 'E-SPORTS'], className: 'baiano', href: 'https://www.instagram.com/baianolol/', destination: 'Instagram' },
+  { name: 'Ilha das Lendas', logo: '/logos/ilha-das-lendas.svg', width: 1500, height: 514, lines: ['CREATORS', 'E-SPORTS'], className: 'idl', href: 'https://www.instagram.com/ilhadaslendas/', destination: 'Instagram' },
+  { name: 'Omelete & Co', logo: '/logos/omelete-co.png', width: 1700, height: 198, lines: ['ENTRETENIMENTO', 'E-SPORTS'], className: 'omelete', href: 'https://omeletecompany.com/home/', destination: 'site oficial' },
+  { name: 'Minerva', logo: '/logos/minerva-logo-new.png', width: 744, height: 382, lines: ['ENTRETENIMENTO', 'GAMING'], className: 'minerva', href: 'https://www.instagram.com/gustavominerva/', destination: 'Instagram' },
 ];
 
 const campaignPartners = [
-  { name: 'Riot Games', logo: '/logos/riot-games.png', className: 'riot', href: 'https://www.riotgames.com/' },
-  { name: 'Heineken', logo: '/logos/heineken.png', className: 'heineken', href: 'https://www.heineken.com/br/pt/pagina-inicial' },
-  { name: 'Snapdragon', logo: '/logos/snapdragon.png', className: 'snapdragon', href: 'https://www.qualcomm.com/snapdragon/overview' },
+  { name: 'Riot Games', logo: '/logos/riot-games.png', width: 5275, height: 682, className: 'riot', href: 'https://www.riotgames.com/' },
+  { name: 'Heineken', logo: '/logos/heineken.png', width: 1280, height: 308, className: 'heineken', href: 'https://www.heineken.com/br/pt/pagina-inicial' },
+  { name: 'Snapdragon', logo: '/logos/snapdragon.png', width: 3840, height: 743, className: 'snapdragon', href: 'https://www.qualcomm.com/snapdragon/overview' },
 ];
 
 const esportsThumbs = [
@@ -243,7 +244,7 @@ export default function Home({ locale }: { locale: Locale }) {
               <div className="impact-track impact-track-left">
                 {[0, 1].map(copy => <div className="impact-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
                   {esportsThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(index)} aria-label={`${tr(locale, 'Ampliar', 'Enlarge')} ${impactTitle(thumb.title)}`}>
-                    <img src={thumb.src} alt={copy === 0 ? impactTitle(thumb.title) : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={19} /></span>
+                    <Image src={thumb.src} alt={copy === 0 ? impactTitle(thumb.title) : ''} width={1920} height={1080} sizes="(max-width: 700px) 85vw, 490px" loading="lazy" /><span className="impact-zoom"><ZoomIn size={19} /></span>
                   </button>)}
                 </div>)}
               </div>
@@ -252,7 +253,7 @@ export default function Home({ locale }: { locale: Locale }) {
               <div className="impact-track impact-track-right">
                 {[0, 1].map(copy => <div className="impact-group" aria-hidden={copy === 1 ? true : undefined} key={copy}>
                   {gamingThumbs.map((thumb, index) => <button className="impact-thumb" key={`${copy}-${thumb.src}`} tabIndex={copy === 1 ? -1 : 0} onClick={() => setImpactImage(esportsThumbs.length + index)} aria-label={`${tr(locale, 'Ampliar', 'Enlarge')} ${impactTitle(thumb.title)}`}>
-                    <img src={thumb.src} alt={copy === 0 ? impactTitle(thumb.title) : ''} loading="lazy" /><span className="impact-zoom"><ZoomIn size={18} /></span>
+                    <Image src={thumb.src} alt={copy === 0 ? impactTitle(thumb.title) : ''} width={1920} height={1080} sizes="(max-width: 700px) 80vw, 380px" loading="lazy" /><span className="impact-zoom"><ZoomIn size={18} /></span>
                   </button>)}
                 </div>)}
               </div>
@@ -267,7 +268,7 @@ export default function Home({ locale }: { locale: Locale }) {
           <output className="sr-only">{visible.length} {tr(locale, 'outros trabalhos e contribuições', 'other projects and contributions')}</output>
           <div className="project-grid curated-grid" data-motion-stagger>
             {visible.map((project,index) => <button className={`project-card ${project.coverLayout}-card`} key={project.id} onClick={() => openProject(project)} aria-label={`${tr(locale, 'Ver projeto', 'View project')} ${project.title}`}>
-              <div className="project-cover"><div className="project-parallax-media" data-project-parallax>{project.coverImages.length > 1 ? <div className={`cover-composition ${project.coverLayout}-composition`}>{project.coverImages.map((image,i) => <img key={image.src} src={image.src} alt={`${project.title}, ${tr(locale, 'peça', 'piece')} ${i+1}`} width={image.width} height={image.height} loading="lazy" />)}</div> : <img src={project.coverImages[0].src} alt={project.title} width={project.coverImages[0].width} height={project.coverImages[0].height} loading="lazy" />}</div><span className="card-number">{String(index+1).padStart(2,'0')}</span><span className="card-open"><Plus size={25} /></span>{project.images.length > 1 && <span className="image-count">{project.images.length} {tr(locale, 'IMAGENS', 'IMAGES')}</span>}</div>
+              <div className="project-cover"><div className="project-parallax-media" data-project-parallax>{project.coverImages.length > 1 ? <div className={`cover-composition ${project.coverLayout}-composition`}>{project.coverImages.map((image,i) => <Image key={image.src} src={image.src} alt={`${project.title}, ${tr(locale, 'peça', 'piece')} ${i+1}`} width={image.width} height={image.height} sizes="(max-width: 700px) 44vw, 20vw" loading="lazy" />)}</div> : <Image src={project.coverImages[0].src} alt={project.title} width={project.coverImages[0].width} height={project.coverImages[0].height} sizes="(max-width: 700px) 90vw, 33vw" loading="lazy" />}</div><span className="card-number">{String(index+1).padStart(2,'0')}</span><span className="card-open"><Plus size={25} /></span>{project.images.length > 1 && <span className="image-count">{project.images.length} {tr(locale, 'IMAGENS', 'IMAGES')}</span>}</div>
               <div className="project-info"><div><span className="project-kind">{project.kind}</span><h3>{project.title}</h3></div><ArrowUpRight size={23} /></div>
             </button>)}
           </div>
@@ -278,14 +279,14 @@ export default function Home({ locale }: { locale: Locale }) {
             <h2 className="brand-pill" id="brand-heading" data-motion-reveal>{tr(locale, 'MARCAS E CRIADORES COM QUEM COLABOREI', 'BRANDS AND CREATORS I HAVE WORKED WITH')}</h2>
             <div className="featured-brands" data-motion-stagger>
               {featuredBrands.map(brand => <article className={`featured-brand ${brand.className}`} key={brand.name}>
-                <a className="featured-logo" href={brand.href} target="_blank" rel="noopener noreferrer" aria-label={`${tr(locale, 'Abrir', 'Open')} ${brand.name} ${tr(locale, 'no', 'on')} ${tr(locale, brand.destination, brand.destination === 'site oficial' ? 'official website' : brand.destination)} ${tr(locale, '(nova aba)', '(new tab)')}`}><img src={brand.logo} alt="" loading="lazy" /></a>
+                <a className="featured-logo" href={brand.href} target="_blank" rel="noopener noreferrer" aria-label={`${tr(locale, 'Abrir', 'Open')} ${brand.name} ${tr(locale, 'no', 'on')} ${tr(locale, brand.destination, brand.destination === 'site oficial' ? 'official website' : brand.destination)} ${tr(locale, '(nova aba)', '(new tab)')}`}><Image src={brand.logo} alt="" width={brand.width} height={brand.height} sizes="(max-width: 700px) 40vw, 20vw" loading="lazy" unoptimized={brand.logo.endsWith('.svg')} /></a>
                 <p>{brand.lines.map(line => <span key={line}>{tr(locale, line, line === 'ENTRETENIMENTO' ? 'ENTERTAINMENT' : line === 'E-SPORTS' ? 'ESPORTS' : line === 'CREATORS' ? 'CREATORS' : line)}</span>)}</p>
               </article>)}
             </div>
             <div className="partner-block" data-motion-reveal>
               <p className="partner-intro">{tr(locale, '*PEÇAS PARA CAMPANHAS DE PARCEIROS NACIONAIS E GLOBAIS:', '*DESIGNS FOR CAMPAIGNS BY NATIONAL AND GLOBAL PARTNERS:')}</p>
               <div className="partner-logos">
-                {campaignPartners.map(partner => <a className={`partner-logo ${partner.className}`} key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${tr(locale, 'Abrir site oficial da', 'Open the official website of')} ${partner.name} ${tr(locale, '(nova aba)', '(new tab)')}`}><img src={partner.logo} alt="" loading="lazy" /></a>)}
+                {campaignPartners.map(partner => <a className={`partner-logo ${partner.className}`} key={partner.name} href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${tr(locale, 'Abrir site oficial da', 'Open the official website of')} ${partner.name} ${tr(locale, '(nova aba)', '(new tab)')}`}><Image src={partner.logo} alt="" width={partner.width} height={partner.height} sizes="(max-width: 700px) 40vw, 18vw" loading="lazy" /></a>)}
               </div>
             </div>
           </div>
@@ -317,7 +318,7 @@ export default function Home({ locale }: { locale: Locale }) {
           {impactImage !== null && <div className="impact-lightbox" onTouchStart={event => setImpactTouchStart(event.changedTouches[0].clientX)} onTouchEnd={event => { if (impactTouchStart !== null) { const distance = event.changedTouches[0].clientX - impactTouchStart; if (Math.abs(distance) > 55) stepImpact(distance < 0 ? 1 : -1); } setImpactTouchStart(null); }}>
             <DialogTitle className="sr-only">{impactTitle(impactThumbs[impactImage].title)}</DialogTitle>
             <DialogDescription className="sr-only">{tr(locale, 'Thumbnail ampliada. Use as setas para navegar entre as peças.', 'Enlarged thumbnail. Use the arrow buttons to browse the images.')}</DialogDescription>
-            <img src={impactThumbs[impactImage].src} alt={impactTitle(impactThumbs[impactImage].title)} />
+            <Image src={impactThumbs[impactImage].src} alt={impactTitle(impactThumbs[impactImage].title)} width={1920} height={1080} sizes="95vw" />
             <div className="impact-lightbox-bar">
               <button className="impact-lightbox-button" onClick={() => stepImpact(-1)} aria-label={tr(locale, 'Thumbnail anterior', 'Previous thumbnail')}><ArrowLeft size={21} /></button>
               <div><span>{String(impactImage + 1).padStart(2, '0')} / {String(impactThumbs.length).padStart(2, '0')}</span><p>{impactTitle(impactThumbs[impactImage].title)}</p></div>
@@ -333,8 +334,8 @@ export default function Home({ locale }: { locale: Locale }) {
           {selected && <>
             <div className="dialog-heading"><div><span className="project-kind">{selected.kind}</span><DialogTitle className="dialog-title">{selected.title}</DialogTitle></div><DialogClose className="icon-button" aria-label={tr(locale, 'Fechar projeto', 'Close project')}><X size={25}/></DialogClose></div>
             <div className="dialog-body">
-              <div className="gallery-stage"><div className={`gallery-image ${expanded ? 'expanded' : ''}`} key={`${selected.id}-${activeImage}`} onTouchStart={startGallerySwipe} onTouchEnd={endGallerySwipe} onTouchCancel={() => { galleryTouchStart.current = null; }}><img src={selected.images[activeImage].src} width={selected.images[activeImage].width} height={selected.images[activeImage].height} alt={`${selected.title}, ${tr(locale, 'imagem', 'image')} ${activeImage+1} ${tr(locale, 'de', 'of')} ${selected.images.length}`} /></div><div className="gallery-controls"><button className="icon-button" aria-label={tr(locale, 'Imagem anterior', 'Previous image')} disabled={selected.images.length < 2} onClick={() => step(-1)}><ArrowLeft size={20}/></button><span aria-live="polite">{String(activeImage+1).padStart(2,'0')} / {String(selected.images.length).padStart(2,'0')}</span><button className="icon-button" aria-label={expanded ? tr(locale, 'Ajustar imagem à tela', 'Fit image to screen') : tr(locale, 'Ampliar imagem', 'Enlarge image')} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? <ZoomOut size={20}/> : <ZoomIn size={20}/>}</button><button className="icon-button" aria-label={tr(locale, 'Próxima imagem', 'Next image')} disabled={selected.images.length < 2} onClick={() => step(1)}><ArrowRight size={20}/></button></div></div>
-              <div className="project-context"><DialogDescription className="dialog-description">{selected.description}</DialogDescription><dl><div><dt>{tr(locale, 'CRIAÇÃO', 'CREATED BY')}</dt><dd>{selected.creator ?? 'Jonathan Bolanle'}</dd></div>{selected.contributor && <div><dt>{tr(locale, 'COLABORAÇÃO', 'CONTRIBUTION')}</dt><dd>{selected.contributor}</dd></div>}<div><dt>{tr(locale, 'ESPECIALIDADE', 'SPECIALTY')}</dt><dd>{selected.kind}</dd></div></dl><div className="gallery-thumbs" aria-label={tr(locale, 'Escolher imagem', 'Choose image')}>{selected.images.map((image,i) => <button key={image.src} className={i === activeImage ? 'thumb selected' : 'thumb'} aria-label={`${tr(locale, 'Ver imagem', 'View image')} ${i+1}`} aria-pressed={i === activeImage} onClick={() => {setActiveImage(i);setExpanded(false);}}><img src={image.src} alt="" loading="lazy" /></button>)}</div><a className="project-enquiry" href={`mailto:jotabolanle@gmail.com?subject=${encodeURIComponent(tr(locale, 'Projeto de design - ', 'Design project - ') + selected.kind)}`}>{tr(locale, 'Tem um projeto em mente?', 'Have a project in mind?')} <ArrowUpRight size={18}/></a></div>
+              <div className="gallery-stage"><div className={`gallery-image ${expanded ? 'expanded' : ''}`} key={`${selected.id}-${activeImage}`} onTouchStart={startGallerySwipe} onTouchEnd={endGallerySwipe} onTouchCancel={() => { galleryTouchStart.current = null; }}><Image src={selected.images[activeImage].src} width={selected.images[activeImage].width} height={selected.images[activeImage].height} sizes="(max-width: 700px) 95vw, 65vw" alt={`${selected.title}, ${tr(locale, 'imagem', 'image')} ${activeImage+1} ${tr(locale, 'de', 'of')} ${selected.images.length}`} /></div><div className="gallery-controls"><button className="icon-button" aria-label={tr(locale, 'Imagem anterior', 'Previous image')} disabled={selected.images.length < 2} onClick={() => step(-1)}><ArrowLeft size={20}/></button><span aria-live="polite">{String(activeImage+1).padStart(2,'0')} / {String(selected.images.length).padStart(2,'0')}</span><button className="icon-button" aria-label={expanded ? tr(locale, 'Ajustar imagem à tela', 'Fit image to screen') : tr(locale, 'Ampliar imagem', 'Enlarge image')} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? <ZoomOut size={20}/> : <ZoomIn size={20}/>}</button><button className="icon-button" aria-label={tr(locale, 'Próxima imagem', 'Next image')} disabled={selected.images.length < 2} onClick={() => step(1)}><ArrowRight size={20}/></button></div></div>
+              <div className="project-context"><DialogDescription className="dialog-description">{selected.description}</DialogDescription><dl><div><dt>{tr(locale, 'CRIAÇÃO', 'CREATED BY')}</dt><dd>{selected.creator ?? 'Jonathan Bolanle'}</dd></div>{selected.contributor && <div><dt>{tr(locale, 'COLABORAÇÃO', 'CONTRIBUTION')}</dt><dd>{selected.contributor}</dd></div>}<div><dt>{tr(locale, 'ESPECIALIDADE', 'SPECIALTY')}</dt><dd>{selected.kind}</dd></div></dl><div className="gallery-thumbs" aria-label={tr(locale, 'Escolher imagem', 'Choose image')}>{selected.images.map((image,i) => <button key={image.src} className={i === activeImage ? 'thumb selected' : 'thumb'} aria-label={`${tr(locale, 'Ver imagem', 'View image')} ${i+1}`} aria-pressed={i === activeImage} onClick={() => {setActiveImage(i);setExpanded(false);}}><Image src={image.src} alt="" width={image.width} height={image.height} sizes="96px" loading="lazy" /></button>)}</div><a className="project-enquiry" href={`mailto:jotabolanle@gmail.com?subject=${encodeURIComponent(tr(locale, 'Projeto de design - ', 'Design project - ') + selected.kind)}`}>{tr(locale, 'Tem um projeto em mente?', 'Have a project in mind?')} <ArrowUpRight size={18}/></a></div>
             </div>
           </>}
         </DialogContent>

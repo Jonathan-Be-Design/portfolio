@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Grid3X3, Layers3, MousePointer2, X } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import styles from './preview.module.css';
 
@@ -56,9 +58,9 @@ export default function PageFourOptions() {
 
   return <main className={styles.page}>
     <header className={styles.topbar}>
-      <a href="/">JONATHAN BOLANLE</a>
+      <Link href="/">JONATHAN BOLANLE</Link>
       <nav aria-label="Opções da página 4"><a href="#palco">01 PALCO</a><a href="#scroll">02 SCROLL</a><a href="#parede">03 PAREDE</a></nav>
-      <a href="/" className={styles.back}>Voltar ao portfólio <ArrowUpRight size={15} /></a>
+      <Link href="/" className={styles.back}>Voltar ao portfólio <ArrowUpRight size={15} /></Link>
     </header>
 
     <section className={styles.intro}>
@@ -76,7 +78,7 @@ export default function PageFourOptions() {
           if (offset > posters.length / 2) offset -= posters.length;
           if (offset < -posters.length / 2) offset += posters.length;
           return <button key={poster.src} className={styles.coverCard} data-active={offset === 0} onClick={() => offset === 0 ? setSelected(index) : setActive(index)} style={{ transform: `translate(-50%, -50%) translateX(${offset * 53}%) translateZ(${Math.abs(offset) * -120}px) rotateY(${offset * -9}deg) scale(${1 - Math.abs(offset) * .08})`, zIndex: 10 - Math.abs(offset), opacity: Math.abs(offset) > 2 ? 0 : 1 }} aria-label={offset === 0 ? `Ampliar ${poster.title}` : `Destacar ${poster.title}`}>
-            <img src={poster.src} alt={poster.title} /><span>{poster.year}</span>
+            <Image src={poster.src} alt={poster.title} width={1620} height={2025} sizes="(max-width: 600px) 68vw, 390px" /><span>{poster.year}</span>
           </button>;
         })}
         <div className={styles.stageControls}><button onClick={() => step(-1)} aria-label="Pôster anterior"><ArrowLeft /></button><div><span>{String(active + 1).padStart(2, '0')} / {String(posters.length).padStart(2, '0')}</span><strong>{posters[active].title}</strong></div><button onClick={() => step(1)} aria-label="Próximo pôster"><ArrowRight /></button></div>
@@ -91,7 +93,7 @@ export default function PageFourOptions() {
           {posters.map((poster, index) => {
             const reveal = clamp(scrollProgress * 1.55 - index * .14);
             const spread = (index - (posters.length - 1) / 2);
-            return <button key={poster.src} className={styles.stackCard} onClick={() => setSelected(index)} style={{ transform: `translate(-50%, ${108 - reveal * 158}%) translateX(${spread * reveal * 31}%) rotate(${spread * reveal * 5.5}deg) scale(${.78 + reveal * .22})`, opacity: .08 + reveal * .92, zIndex: index + 1 }} aria-label={`Ampliar ${poster.title}`}><img src={poster.src} alt={poster.title} /></button>;
+            return <button key={poster.src} className={styles.stackCard} onClick={() => setSelected(index)} style={{ transform: `translate(-50%, ${108 - reveal * 158}%) translateX(${spread * reveal * 31}%) rotate(${spread * reveal * 5.5}deg) scale(${.78 + reveal * .22})`, opacity: .08 + reveal * .92, zIndex: index + 1 }} aria-label={`Ampliar ${poster.title}`}><Image src={poster.src} alt={poster.title} width={1620} height={2025} sizes="(max-width: 600px) 60vw, 365px" /></button>;
           })}
         </div>
       </div>
@@ -101,7 +103,7 @@ export default function PageFourOptions() {
       <div className={styles.optionHead}><div><span className={styles.number}>03</span><p>PAREDE EDITORIAL INTERATIVA</p></div><div className={styles.icon}><Grid3X3 size={19} /></div></div>
       <div className={styles.optionCopy}><h2>Todos em cena.<br />Um ganha foco.</h2><p>A composição permanece aberta. Ao passar o mouse, uma peça assume o primeiro plano e reorganiza o ritmo visual.</p></div>
       <div className={styles.posterWall}>
-        {posters.map((poster, index) => <button key={poster.src} className={styles.wallCard} onClick={() => setSelected(index)} aria-label={`Ampliar ${poster.title}`}><img src={poster.src} alt={poster.title} /><span><small>{poster.year}</small>{poster.title}</span></button>)}
+        {posters.map((poster, index) => <button key={poster.src} className={styles.wallCard} onClick={() => setSelected(index)} aria-label={`Ampliar ${poster.title}`}><Image src={poster.src} alt={poster.title} width={1620} height={2025} sizes="(max-width: 600px) 45vw, 20vw" /><span><small>{poster.year}</small>{poster.title}</span></button>)}
       </div>
     </section>
 
@@ -112,7 +114,7 @@ export default function PageFourOptions() {
         {selected !== null && <div className={styles.lightbox}>
           <DialogTitle className="sr-only">{posters[selected].title}</DialogTitle>
           <DialogDescription className="sr-only">Pôster ampliado. Use as setas para navegar.</DialogDescription>
-          <img src={posters[selected].src} alt={posters[selected].title} />
+          <Image src={posters[selected].src} alt={posters[selected].title} width={1620} height={2025} sizes="95vw" />
           <div className={styles.lightboxControls}><button onClick={() => stepSelected(-1)} aria-label="Pôster anterior"><ArrowLeft /></button><div><span>{String(selected + 1).padStart(2, '0')} / {String(posters.length).padStart(2, '0')}</span><strong>{posters[selected].title}</strong></div><button onClick={() => stepSelected(1)} aria-label="Próximo pôster"><ArrowRight /></button></div>
           <DialogClose className={styles.close} aria-label="Fechar"><X /></DialogClose>
         </div>}
