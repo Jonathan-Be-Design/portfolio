@@ -234,7 +234,7 @@ export default function Home({ locale }: { locale: Locale }) {
             <div className="impact-top" data-motion-reveal><span>{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span>{tr(locale, 'IMPACTO & ESCALA', 'IMPACT & REACH')} — 03</span></div>
             <h2 className="impact-pill" id="impact-heading" data-motion-reveal>{tr(locale, 'Visualizações e impressões acumuladas', 'Combined views and impressions')}</h2>
             <div className="impact-metrics" data-motion-stagger>
-              <div className="impact-metric"><strong data-impact-count="300" data-impact-suffix="M+" aria-label={tr(locale, 'Mais de 300 milhões', 'More than 300 million')}>300M+</strong><p>{tr(locale, 'Visualizações', 'Views')}</p></div>
+              <div className="impact-metric"><strong data-impact-count="300" data-impact-suffix="M+" aria-label={tr(locale, 'Mais de 300 milhões', 'More than 300 million')}>300M+</strong><p>{tr(locale, 'Visualizações totais', 'Total views')}</p></div>
               <div className="impact-metric"><strong data-impact-count="2" data-impact-suffix="B+" aria-label={tr(locale, 'Mais de 2 bilhões', 'More than 2 billion')}>2B+</strong><p>{tr(locale, 'Impressões nas redes somando', 'Social media impressions across')}<br />{tr(locale, 'capas, imagens e pôsteres', 'covers, images and posters')}</p></div>
               <div className="impact-metric"><strong data-impact-count="5" data-impact-suffix="K+" aria-label={tr(locale, 'Mais de 5 mil', 'More than 5 thousand')}>5K+</strong><p>{tr(locale, 'Peças diferentes', 'Individual pieces')}<br />{tr(locale, 'produzidas', 'produced')}</p></div>
             </div>
