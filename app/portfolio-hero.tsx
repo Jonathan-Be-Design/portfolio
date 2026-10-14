@@ -92,7 +92,7 @@ export default function PortfolioHero({ locale }: { locale: Locale }) {
       <span className="signature-monogram" aria-hidden="true">JB</span>
     </a>
     <div className="hero-nav-shell">
-      <a className="hero-contact nav-pill" href="#contato">{tr(locale, 'Vamos conversar', 'Let’s talk')} <ArrowUpRight size={17}/></a>
+      <a className="hero-contact nav-pill" href="#contato"><span className="cta-long">{tr(locale, 'Pedir orçamento', 'Get a quote')}</span><span className="cta-short">{tr(locale, 'Orçamento', 'Quote')}</span> <ArrowUpRight size={17}/></a>
       <nav className="language-switch" aria-label={tr(locale, 'Idioma', 'Language')}><Link href="/pt" hrefLang="pt-BR" lang="pt-BR" aria-current={locale === 'pt' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/pt${window.location.hash}`); } }}>PT</Link><span aria-hidden="true">/</span><Link href="/en" hrefLang="en" lang="en" aria-current={locale === 'en' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/en${window.location.hash}`); } }}>EN</Link></nav>
       <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation"><span>{menu ? tr(locale, 'Fechar', 'Close') : 'Menu'}</span><Menu size={18}/></button>
     </div>
