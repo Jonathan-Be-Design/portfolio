@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore, type TouchEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowDown, ArrowUpRight, Menu, Pause, Play } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Menu, Pause, Play, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { gameThumbnailRows } from './games-thumbnails';
@@ -93,12 +93,14 @@ export default function PortfolioHero({ locale }: { locale: Locale }) {
     </a>
     <div className="hero-nav-shell">
       <a className="hero-contact nav-pill" href="#contato"><span className="cta-long">{tr(locale, 'Pedir orçamento', 'Get a quote')}</span><span className="cta-short">{tr(locale, 'Orçamento', 'Quote')}</span> <ArrowUpRight size={17}/></a>
-      <nav className="language-switch" aria-label={tr(locale, 'Idioma', 'Language')}><Link href="/pt" hrefLang="pt-BR" lang="pt-BR" aria-current={locale === 'pt' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/pt${window.location.hash}`); } }}>PT</Link><span aria-hidden="true">/</span><Link href="/en" hrefLang="en" lang="en" aria-current={locale === 'en' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/en${window.location.hash}`); } }}>EN</Link></nav>
-      <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation"><span>{menu ? tr(locale, 'Fechar', 'Close') : 'Menu'}</span><Menu size={18}/></button>
+      <button className="hero-menu nav-pill" onClick={() => setMenu(open => !open)} aria-expanded={menu} aria-controls="portfolio-navigation" aria-label={menu ? tr(locale, 'Fechar menu', 'Close menu') : tr(locale, 'Abrir menu', 'Open menu')}><span>{menu ? tr(locale, 'Fechar', 'Close') : 'Menu'}</span>{menu ? <X size={18}/> : <Menu size={18}/>}</button>
     </div>
-    {menu && <nav className="hero-menu-panel" id="portfolio-navigation" aria-label={tr(locale, 'Navegação principal', 'Main navigation')}>
-      {localizedMenu.map(([label, href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight aria-hidden="true" /></a>)}
-    </nav>}
+    {menu && <div className="hero-menu-panel" id="portfolio-navigation">
+      <nav aria-label={tr(locale, 'Navegação principal', 'Main navigation')}>
+        {localizedMenu.map(([label, href]) => <a key={href} href={href} onClick={() => setMenu(false)}>{label}<ArrowUpRight aria-hidden="true" /></a>)}
+      </nav>
+      <div className="menu-language"><span>{tr(locale, 'Idioma', 'Language')}</span><nav className="language-switch" aria-label={tr(locale, 'Idioma', 'Language')}><Link href="/pt" hrefLang="pt-BR" lang="pt-BR" aria-current={locale === 'pt' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/pt${window.location.hash}`); } }}>PT</Link><span aria-hidden="true">/</span><Link href="/en" hrefLang="en" lang="en" aria-current={locale === 'en' ? 'page' : undefined} onClick={event => { if (window.location.hash) { event.preventDefault(); window.location.assign(`/en${window.location.hash}`); } }}>EN</Link></nav></div>
+    </div>}
   </header>;
 
   return <>
@@ -119,7 +121,7 @@ export default function PortfolioHero({ locale }: { locale: Locale }) {
           {localizedFeatures.map((item, index) => <a key={item.id} href={item.href} className={index === active ? 'is-active' : ''} onPointerEnter={event => { if(event.pointerType === 'mouse') setActive(index); }} onFocus={() => setActive(index)} onClick={() => setActive(index)}>{item.title}</a>)}
         </nav>
       </div>
-      <div className="hero-actions"><p aria-live="polite">{localizedFeatures[active].label}</p><a className="campaign-link" href={localizedFeatures[active].href}>{tr(locale, 'Ver seção', 'View section')} <ArrowUpRight size={18}/></a><div className="hero-utilities"><button className="motion-toggle" onClick={() => setPaused(!paused)} aria-label={paused ? tr(locale, 'Ativar movimento das imagens', 'Resume image motion') : tr(locale, 'Pausar movimento das imagens', 'Pause image motion')} aria-pressed={paused}>{paused ? <Play size={16}/> : <Pause size={16}/>}</button><a href="#projetos" aria-label={tr(locale, 'Explorar todos os trabalhos', 'Explore all work')}><ArrowDown size={25}/></a></div></div>
+      <div className="hero-actions"><div className="hero-utilities"><button className="motion-toggle" onClick={() => setPaused(!paused)} aria-label={paused ? tr(locale, 'Ativar movimento das imagens', 'Resume image motion') : tr(locale, 'Pausar movimento das imagens', 'Pause image motion')} aria-pressed={paused}>{paused ? <Play size={16}/> : <Pause size={16}/>}</button><a href="#projetos" aria-label={tr(locale, 'Explorar todos os trabalhos', 'Explore all work')}><ArrowDown size={25}/></a></div></div>
     </div>
   </section>
   {!isMounted ? header : createPortal(header, document.body)}
