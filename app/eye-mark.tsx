@@ -28,7 +28,7 @@ export default function EyeMark() {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const target = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
-    let blinkAt = -1, lastB = 0, raf = 0, timer = 0;
+    let blinkAt = -1, lastB = 0, raf = 0, timer = 0, lastLook = 0;
 
     const setLid = (b: number) => {
       const edge = lidEdge(b);
@@ -36,8 +36,6 @@ export default function EyeMark() {
       clip.setAttribute('d', clipPath(edge));
     };
     const tick = (t: number) => {
-      cur.x += (target.x - cur.x) * 0.14;
-      cur.y += (target.y - cur.y) * 0.14;
       let b = 0;
       if (blinkAt >= 0) {
         const p = (t - blinkAt) / 300;
@@ -45,23 +43,26 @@ export default function EyeMark() {
         else if (p < 0.4) b = 1 - (1 - p / 0.4) ** 2;
         else { const u = (p - 0.4) / 0.6; b = 1 - u * u * (3 - 2 * u); }
       }
-      pupil.setAttribute('transform', `translate(${cur.x.toFixed(1)} ${cur.y.toFixed(1)})`);
       if (b !== lastB) { setLid(b); lastB = b; }
-      const settled = blinkAt < 0 && Math.abs(target.x - cur.x) < 0.1 && Math.abs(target.y - cur.y) < 0.1;
-      raf = settled ? 0 : requestAnimationFrame(tick);
+      raf = blinkAt < 0 ? 0 : requestAnimationFrame(tick);
     };
-    const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
-    const blink = () => { if (blinkAt < 0) { blinkAt = performance.now(); wake(); } };
+    const blink = () => { if (blinkAt < 0) { blinkAt = performance.now(); raf = requestAnimationFrame(tick); } };
     const scheduleBlink = () => { timer = window.setTimeout(() => { if (!document.hidden) blink(); scheduleBlink(); }, 2800 + Math.random() * 4200); };
 
-    // A pupila olha para onde o ponteiro está na página.
+    // A pupila olha para onde o ponteiro está na página. No tamanho do topo ela
+    // anda poucos pixels, então atualiza em passos espaçados: redesenhar a cada
+    // quadro obrigaria o navegador a refazer o recorte da marca o tempo todo.
     const look = (event: PointerEvent) => {
+      if (event.timeStamp - lastLook < 90) return;
+      lastLook = event.timeStamp;
       const r = svg.getBoundingClientRect();
       const dx = event.clientX - (r.left + r.width / 2), dy = event.clientY - (r.top + r.height / 2);
       const d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 240);
       target.x = (dx / d) * 120 * k;
       target.y = Math.max(-30, Math.min(50, (dy / d) * 50 * k));
-      wake();
+      if (Math.abs(target.x - cur.x) < 6 && Math.abs(target.y - cur.y) < 6) return;
+      cur.x = target.x; cur.y = target.y;
+      pupil.setAttribute('transform', `translate(${cur.x.toFixed(1)} ${cur.y.toFixed(1)})`);
     };
     const host = svg.parentElement;
 
