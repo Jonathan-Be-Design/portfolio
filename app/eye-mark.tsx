@@ -4,7 +4,6 @@ import { useEffect, useId, useRef } from 'react';
 import { EYE } from './eye-mark-geometry';
 
 const CREAM = '#fef7ef';
-const INK = '#020203';
 const VIEWBOX = '109 113 1773 1773';
 
 // Borda de baixo da pálpebra: b = 0 aberta, b = 1 fechada.
@@ -77,12 +76,17 @@ export default function EyeMark() {
     };
   }, []);
 
+  // Pupila e pálpebra são recortes na forma creme (máscara), então o fundo fica transparente.
   const [cx, cy, r] = EYE.pupil;
   return <svg ref={svgRef} className="eye-mark" viewBox={VIEWBOX} aria-hidden="true" focusable="false">
-    <defs><clipPath id={clipId}><path ref={clipRef} d={clipPath(REST)} /></clipPath></defs>
-    <rect x="126" y="113" width="1739" height="1773" rx="195" fill={INK} />
-    <path d={EYE.cream} fill={CREAM} fillRule="evenodd" />
-    <g clipPath={`url(#${clipId})`}><circle ref={pupilRef} cx={cx} cy={cy} r={r} fill={INK} /></g>
-    <path ref={lidRef} d={lidPath(REST)} fill={INK} />
+    <defs>
+      <clipPath id={`${clipId}-c`}><path ref={clipRef} d={clipPath(REST)} /></clipPath>
+      <mask id={`${clipId}-m`} maskUnits="userSpaceOnUse" x="0" y="0" width="2000" height="2000">
+        <rect width="2000" height="2000" fill="#fff" />
+        <g clipPath={`url(#${clipId}-c)`}><circle ref={pupilRef} cx={cx} cy={cy} r={r} fill="#000" /></g>
+        <path ref={lidRef} d={lidPath(REST)} fill="#000" />
+      </mask>
+    </defs>
+    <path d={EYE.cream} fill={CREAM} fillRule="evenodd" mask={`url(#${clipId}-m)`} />
   </svg>;
 }
