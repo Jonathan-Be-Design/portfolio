@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState, type TouchEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, Mail, ZoomIn, ZoomOut } from 'lucide-react';
+import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, Mail, ZoomIn } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
-import { getProjects, type Project } from './selected-projects';
+import { getProjects } from './selected-projects';
 import { tr, type Locale } from './i18n';
 import PortfolioHero from './portfolio-hero';
 import PosterStage from './poster-stage';
@@ -64,39 +65,10 @@ const englishImpactTitles: Record<string, string> = {
 export default function Home({ locale }: { locale: Locale }) {
   const impactTitle = (title: string) => locale === 'en' ? englishImpactTitles[title] ?? title : title;
   const motionScopeRef = useRef<HTMLElement>(null);
-  const [selected, setSelected] = useState<Project | null>(null);
-  const [activeImage, setActiveImage] = useState(0);
-  const [expanded, setExpanded] = useState(false);
   const [impactImage, setImpactImage] = useState<number | null>(null);
   const [impactTouchStart, setImpactTouchStart] = useState<number | null>(null);
-  const galleryTouchStart = useRef<{ x: number; y: number } | null>(null);
   const visible = getProjects(locale);
-  const openProject = (project: Project) => { setSelected(project); setActiveImage(0); setExpanded(project.id === 'drew'); };
-  const step = (direction: number) => {
-    if (selected) { setActiveImage(i => (i + direction + selected.images.length) % selected.images.length); setExpanded(false); }
-  };
   const stepImpact = (direction: number) => setImpactImage(index => index === null ? null : (index + direction + impactThumbs.length) % impactThumbs.length);
-  const startGallerySwipe = (event: TouchEvent<HTMLDivElement>) => {
-    if (event.touches.length !== 1) return;
-    galleryTouchStart.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-  };
-  const endGallerySwipe = (event: TouchEvent<HTMLDivElement>) => {
-    if (!galleryTouchStart.current) return;
-    const distanceX = event.changedTouches[0].clientX - galleryTouchStart.current.x;
-    const distanceY = event.changedTouches[0].clientY - galleryTouchStart.current.y;
-    galleryTouchStart.current = null;
-    if (!selected || selected.images.length < 2) return;
-    if (Math.abs(distanceX) >= 55 && Math.abs(distanceX) > Math.abs(distanceY) * 1.25) step(distanceX < 0 ? 1 : -1);
-  };
-  useEffect(() => {
-    if (!selected) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') { setActiveImage(i => (i + 1) % selected.images.length); setExpanded(false); }
-      if (event.key === 'ArrowLeft') { setActiveImage(i => (i - 1 + selected.images.length) % selected.images.length); setExpanded(false); }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [selected]);
   useEffect(() => {
     if (impactImage === null) return;
     const onKey = (event: KeyboardEvent) => {
@@ -267,10 +239,10 @@ export default function Home({ locale }: { locale: Locale }) {
           <div className="work-title" data-motion-reveal><h2 id="work-heading">{tr(locale, 'Outros trabalhos', 'Other work')}</h2><p>{tr(locale, 'Uma seleção de projetos em música, identidade visual e game design.', 'A selection of projects in music, visual identity and game design.')}</p></div>
           <output className="sr-only">{visible.length} {tr(locale, 'outros trabalhos e contribuições', 'other projects and contributions')}</output>
           <div className="project-grid curated-grid" data-motion-stagger>
-            {visible.map((project,index) => <button className={`project-card ${project.coverLayout}-card`} key={project.id} onClick={() => openProject(project)} aria-label={`${tr(locale, 'Ver projeto', 'View project')} ${project.title}`}>
+            {visible.map((project,index) => <Link className={`project-card ${project.coverLayout}-card`} key={project.id} href={`/${locale}/trabalhos/${project.id}`} aria-label={`${tr(locale, 'Ver projeto', 'View project')} ${project.title}`}>
               <div className="project-cover"><div className="project-parallax-media" data-project-parallax>{project.coverImages.length > 1 ? <div className={`cover-composition ${project.coverLayout}-composition`}>{project.coverImages.map((image,i) => <Image key={image.src} src={image.src} alt={`${project.title}, ${tr(locale, 'peça', 'piece')} ${i+1}`} width={image.width} height={image.height} sizes="(max-width: 700px) 44vw, 20vw" loading="lazy" />)}</div> : <Image src={project.coverImages[0].src} alt={project.title} width={project.coverImages[0].width} height={project.coverImages[0].height} sizes="(max-width: 700px) 90vw, 33vw" loading="lazy" />}</div><span className="card-number">{String(index+1).padStart(2,'0')}</span><span className="card-open"><Plus size={25} /></span>{project.images.length > 1 && <span className="image-count">{project.images.length} {tr(locale, 'IMAGENS', 'IMAGES')}</span>}</div>
               <div className="project-info"><div><span className="project-kind">{project.kind}</span><h3>{project.title}</h3></div><ArrowUpRight size={23} /></div>
-            </button>)}
+            </Link>)}
           </div>
         </section>
         <section className="brand-section" id="marcas" aria-labelledby="brand-heading">
@@ -326,18 +298,6 @@ export default function Home({ locale }: { locale: Locale }) {
             </div>
             <DialogClose className="impact-lightbox-close" aria-label={tr(locale, 'Fechar imagem', 'Close image')}><X size={23} /></DialogClose>
           </div>}
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={Boolean(selected)} onOpenChange={open => { if(!open) setSelected(null); }}>
-        <DialogContent className="project-dialog" showCloseButton={false}>
-          {selected && <>
-            <div className="dialog-heading"><div><span className="project-kind">{selected.kind}</span><DialogTitle className="dialog-title">{selected.title}</DialogTitle></div><DialogClose className="icon-button" aria-label={tr(locale, 'Fechar projeto', 'Close project')}><X size={25}/></DialogClose></div>
-            <div className="dialog-body">
-              <div className="gallery-stage"><div className={`gallery-image ${expanded ? 'expanded' : ''}`} key={`${selected.id}-${activeImage}`} onTouchStart={startGallerySwipe} onTouchEnd={endGallerySwipe} onTouchCancel={() => { galleryTouchStart.current = null; }}><Image src={selected.images[activeImage].src} width={selected.images[activeImage].width} height={selected.images[activeImage].height} sizes="(max-width: 700px) 95vw, 65vw" alt={`${selected.title}, ${tr(locale, 'imagem', 'image')} ${activeImage+1} ${tr(locale, 'de', 'of')} ${selected.images.length}`} /></div><div className="gallery-controls"><button className="icon-button" aria-label={tr(locale, 'Imagem anterior', 'Previous image')} disabled={selected.images.length < 2} onClick={() => step(-1)}><ArrowLeft size={20}/></button><span aria-live="polite">{String(activeImage+1).padStart(2,'0')} / {String(selected.images.length).padStart(2,'0')}</span><button className="icon-button" aria-label={expanded ? tr(locale, 'Ajustar imagem à tela', 'Fit image to screen') : tr(locale, 'Ampliar imagem', 'Enlarge image')} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? <ZoomOut size={20}/> : <ZoomIn size={20}/>}</button><button className="icon-button" aria-label={tr(locale, 'Próxima imagem', 'Next image')} disabled={selected.images.length < 2} onClick={() => step(1)}><ArrowRight size={20}/></button></div></div>
-              <div className="project-context"><DialogDescription className="dialog-description">{selected.description}</DialogDescription><dl><div><dt>{tr(locale, 'CRIAÇÃO', 'CREATED BY')}</dt><dd>{selected.creator ?? 'Jonathan Bolanle'}</dd></div>{selected.contributor && <div><dt>{tr(locale, 'COLABORAÇÃO', 'CONTRIBUTION')}</dt><dd>{selected.contributor}</dd></div>}<div><dt>{tr(locale, 'ESPECIALIDADE', 'SPECIALTY')}</dt><dd>{selected.kind}</dd></div></dl><div className="gallery-thumbs" aria-label={tr(locale, 'Escolher imagem', 'Choose image')}>{selected.images.map((image,i) => <button key={image.src} className={i === activeImage ? 'thumb selected' : 'thumb'} aria-label={`${tr(locale, 'Ver imagem', 'View image')} ${i+1}`} aria-pressed={i === activeImage} onClick={() => {setActiveImage(i);setExpanded(false);}}><Image src={image.src} alt="" width={image.width} height={image.height} sizes="96px" loading="lazy" /></button>)}</div><a className="project-enquiry" href={`mailto:jotabolanle@gmail.com?subject=${encodeURIComponent(tr(locale, 'Projeto de design - ', 'Design project - ') + selected.kind)}`}>{tr(locale, 'Tem um projeto em mente?', 'Have a project in mind?')} <ArrowUpRight size={18}/></a></div>
-            </div>
-          </>}
         </DialogContent>
       </Dialog>
     </>
