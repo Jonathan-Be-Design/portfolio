@@ -324,8 +324,8 @@ html{scrollbar-color:#3a3b42 #050607}
 .broadcast-hint{color:#85878f}
 .broadcast-section .broadcast-platforms img{filter:brightness(0) invert(1)}
 .cinema-header.is-floating::before{content:'';position:fixed;top:0;left:0;right:0;height:96px;z-index:-1;pointer-events:none;background:linear-gradient(#050607f0 55%,#05060700);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
-.hero-contact.nav-pill{background:#4d9bff;border-color:#4d9bff;color:#050607}
-.hero-contact.nav-pill:hover{background:#70b0ff;color:#050607}
+.hero-contact.nav-pill{background:#3d68ff;border-color:#3d68ff;color:#fff}
+.hero-contact.nav-pill:hover{background:#2f57e6;color:#fff}
 .hero-contact .cta-short{display:none}
 @media(max-width:700px){
   .cinema-header.is-floating::before{height:76px}
