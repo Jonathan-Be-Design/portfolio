@@ -378,3 +378,41 @@ html{scrollbar-color:#3a3b42 #050607}
   .project-meta p{font-size:16px}
   .project-gallery figure{border-radius:10px}
 }
+
+/* Formulário de orçamento + WhatsApp na seção de contato. */
+.contact-section .contact-big{margin-bottom:40px}
+.quote-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start;margin-bottom:60px}
+.quote-form{display:grid;gap:22px}
+.quote-row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.quote-form label{display:grid;gap:9px}
+.quote-form label>span,.quote-services legend{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9b9ca3}
+.quote-form label em{font-style:normal;color:#6f7079;letter-spacing:.04em;text-transform:none}
+.quote-form input,.quote-form textarea{width:100%;background:transparent;border:0;border-bottom:1px solid #2e2f36;color:#f5f5f6;font-size:17px;padding:10px 0 12px;border-radius:0;outline:none;transition:border-color .2s;font-family:inherit}
+.quote-form textarea{resize:vertical;min-height:110px;line-height:1.55}
+.quote-form input::placeholder,.quote-form textarea::placeholder{color:#55565e}
+.quote-form input:focus,.quote-form textarea:focus{border-bottom-color:#4d9bff}
+.quote-services{border:0;padding:0;margin:0;display:grid;gap:14px}
+.quote-services>div{display:flex;flex-wrap:wrap;gap:8px}
+.quote-services button{border:1px solid #2e2f36;background:transparent;color:#c9cad0;border-radius:30px;padding:10px 16px;font-size:14px;transition:border-color .2s,color .2s,background .2s}
+.quote-services button:hover{border-color:#55565e;color:#fff}
+.quote-services button.is-picked{border-color:#4d9bff;color:#fff;background:#4d9bff1a}
+.quote-trap{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.quote-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px 22px;margin-top:6px}
+.quote-submit{display:inline-flex;align-items:center;gap:10px;background:#3d68ff;color:#fff;border:0;border-radius:30px;padding:15px 24px;font-size:15px;font-weight:500;transition:background .2s}
+.quote-submit:hover{background:#2f57e6}
+.quote-submit:disabled{opacity:.6;cursor:progress}
+.quote-error{color:#ff8a8a;font-size:14px}.quote-error a{text-decoration:underline}
+.quote-aside{display:grid;gap:16px;border-left:1px solid #24252b;padding-left:clamp(24px,4vw,48px);padding-block:6px}
+.quote-aside p{color:#9b9ca3;font-size:15px}
+.quote-whatsapp{display:inline-flex;align-items:center;gap:10px;justify-content:space-between;border:1px solid #2e2f36;border-radius:30px;padding:14px 20px;font-size:15px;color:#fff;transition:border-color .2s,background .2s;width:max-content}
+.quote-whatsapp:hover{border-color:#4d9bff;background:#4d9bff14}
+.quote-whatsapp>svg:first-child{color:#4d9bff}
+.quote-mail{display:inline-flex;align-items:center;gap:10px;color:#c9cad0;font-size:15px}
+.quote-mail:hover{color:#fff}
+.quote-done{display:grid;gap:14px;justify-items:start;padding:8px 0}
+.quote-done-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#3d68ff;color:#fff}
+.quote-done h3{font-family:var(--display-title);font-size:34px;font-weight:500;letter-spacing:-.03em}
+.quote-done p{color:#9b9ca3;max-width:420px}
+.quote-done button{background:none;border:0;color:#4d9bff;padding:0;font-size:14px}
+@media(max-width:860px){.quote-layout{grid-template-columns:1fr}.quote-aside{border-left:0;border-top:1px solid #24252b;padding:28px 0 0}}
+@media(max-width:560px){.quote-row{grid-template-columns:1fr}.quote-submit{width:100%;justify-content:center}.quote-whatsapp{width:100%}}

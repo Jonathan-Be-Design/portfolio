@@ -11,7 +11,7 @@
     "start": "node preview.mjs",
     "lint": "oxlint",
     "format": "oxfmt",
-    "test:security": "node --experimental-strip-types --test tests/security.test.mjs"
+    "test:security": "node --experimental-strip-types --test tests/security.test.mjs tests/quote-request.test.mjs"
   },
   "dependencies": {
     "react": "19.2.8",
