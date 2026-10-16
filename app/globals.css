@@ -235,9 +235,17 @@
 .hero-nav-shell{display:flex;align-items:center;justify-content:flex-end;gap:8px;pointer-events:auto}
 .nav-pill{display:inline-flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;padding:0 20px;font-family:var(--display),Arial,sans-serif;font-size:14px;font-style:normal;font-weight:700;letter-spacing:.045em;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
 .nav-pill:hover{transform:translateY(-2px)}
-.cinema-header .signature{position:relative;z-index:1;display:block;width:50px;height:50px;pointer-events:auto;transition:transform .2s ease,width .28s ease,height .28s ease}
+.cinema-header .signature{position:relative;z-index:1;display:flex;align-items:center;gap:14px;height:50px;color:#fef7ef;text-decoration:none;pointer-events:auto;transition:transform .2s ease}
+.cinema-header .signature .eye-mark{flex:0 0 auto;width:50px;height:50px}
+.cinema-header .signature .signature-wave{display:flex;align-items:center;font-family:var(--font-geist-sans),Inter,Arial,sans-serif;font-size:22px;line-height:1;letter-spacing:-.02em;white-space:nowrap;transition:opacity .25s ease,transform .25s ease}
+.cinema-header .signature-wave span{display:block;font-variation-settings:"wght" 300;font-weight:300;animation:signature-wave 2.4s ease-in-out infinite}
+.signature-wave .sp{width:.28em}
+@keyframes signature-wave{0%,100%{font-variation-settings:"wght" 200}50%{font-variation-settings:"wght" 900;color:#4d9bff}}
+.cinema-header.is-floating:not(.is-page) .signature-wave{opacity:0;transform:translateX(-6px);pointer-events:none}
+.cinema-header.is-floating:not(.is-page) .signature-wave span{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.cinema-header .signature-wave span{animation:none;font-variation-settings:"wght" 600;font-weight:600}}
 .cinema-header .signature:hover{transform:translateY(-2px)}
-.eye-mark{display:block;width:100%;height:100%;overflow:visible}
+.eye-mark{display:block;overflow:visible}
 .hero-contact.nav-pill{justify-self:auto;border:1px solid #ffffff1f;background:#292b37;color:#fff;gap:9px;white-space:nowrap}
 .hero-contact.nav-pill:hover{background:#111218;color:#fff}
 .hero-menu.nav-pill{width:auto;border:1px solid #fff9;background:#f4f4f8;color:#15161c;gap:9px;cursor:pointer;text-transform:uppercase}
@@ -265,14 +273,16 @@ html{scrollbar-width:thin;scrollbar-color:#25262d #f0f0f5}
   .cinema-header-spacer{height:44px}
   .hero-nav-shell{gap:6px}
   .nav-pill{min-height:44px;padding-inline:14px;font-size:12px;letter-spacing:.025em}
-  .cinema-header .signature{width:44px;height:44px}
+  .cinema-header .signature{height:44px;gap:10px}
+  .cinema-header .signature .eye-mark{width:44px;height:44px}
+  .cinema-header .signature .signature-wave{flex-wrap:wrap;width:5.7em;font-size:15px;line-height:1.05}
+  .signature-wave .sp{flex-basis:100%;height:0}
   .hero-contact.nav-pill{gap:6px;font-size:12px}
   .hero-contact.nav-pill svg{width:14px;height:14px}
   .hero-menu.nav-pill{gap:6px;padding-inline:13px}
   .hero-menu.nav-pill span{display:inline}
   .hero-menu.nav-pill svg{width:15px;height:15px}
   .cinema-header.is-floating{top:12px;right:16px;left:16px}
-  .cinema-header.is-floating .signature{width:44px;height:44px}
   .hero-menu-panel{top:calc(100% + 9px);width:min(430px,calc(100vw - 46px));max-height:calc(100svh - 78px);padding:11px 16px;border-radius:20px}
   .hero-menu-panel a{padding-block:12px;font-size:clamp(24px,7.2vw,34px)}
 }

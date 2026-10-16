@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { gameThumbnailRows } from './games-thumbnails';
 import { tr, type Locale } from './i18n';
 import EyeMark from './eye-mark';
+import SignatureName from './signature-name';
 
 const features = [
   { id: 'worlds', href: '#worlds', title: 'Artes · Worlds', label: '2023–2024 · Key art & pôsteres', src: '/trabalhos/worlds-hero-test.webp?v=ebbd013a', width: 2058, height: 1350, position: 'center 30%' },
@@ -90,6 +91,7 @@ export default function PortfolioHero({ locale }: { locale: Locale }) {
   const header = <header className={`cinema-header ${isFloating ? 'is-floating' : ''} ${menu ? 'menu-open' : ''}`}>
     <a className="signature" href="#inicio" aria-label={tr(locale, 'Jonathan Bolanle, início', 'Jonathan Bolanle, home')}>
       <EyeMark />
+      <SignatureName />
     </a>
     <div className="hero-nav-shell">
       <a className="hero-contact nav-pill" href="#contato"><span className="cta-long">{tr(locale, 'Pedir orçamento', 'Get a quote')}</span><span className="cta-short">{tr(locale, 'Orçamento', 'Quote')}</span> <ArrowUpRight size={17}/></a>

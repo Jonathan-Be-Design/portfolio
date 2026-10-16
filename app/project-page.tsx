@@ -4,13 +4,15 @@ import { ArrowLeft, ArrowUpRight, Mail } from 'lucide-react';
 import { tr, type Locale } from './i18n';
 import type { Project } from './selected-projects';
 import EyeMark from './eye-mark';
+import SignatureName from './signature-name';
 
 export default function ProjectPage({ locale, project, next }: { locale: Locale; project: Project; next: Project }) {
   const other: Locale = locale === 'pt' ? 'en' : 'pt';
   return <>
-    <header className="cinema-header is-floating">
+    <header className="cinema-header is-floating is-page">
       <Link className="signature" href={`/${locale}`} aria-label={tr(locale, 'Jonathan Bolanle, início', 'Jonathan Bolanle, home')}>
         <EyeMark />
+        <SignatureName />
       </Link>
       <div className="hero-nav-shell">
         <Link className="hero-contact nav-pill" href={`/${locale}#contato`}><span className="cta-long">{tr(locale, 'Pedir orçamento', 'Get a quote')}</span><span className="cta-short">{tr(locale, 'Orçamento', 'Quote')}</span> <ArrowUpRight size={17}/></Link>
