@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, Mail, ZoomIn } from 'lucide-react';
+import { ArrowUpRight, ArrowLeft, ArrowRight, Plus, X, ZoomIn } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
@@ -12,6 +12,7 @@ import { tr, type Locale } from './i18n';
 import PortfolioHero from './portfolio-hero';
 import PosterStage from './poster-stage';
 import EsportsBroadcast from './esports-broadcast';
+import QuoteForm, { QuoteAside } from './quote-form';
 import GamesThumbnails from './games-thumbnails';
 
 const featuredBrands = [
@@ -271,10 +272,13 @@ export default function Home({ locale }: { locale: Locale }) {
 
         <section className="contact-section wrap" id="contato" aria-labelledby="contact-heading">
           <div className="section-top" data-motion-reveal><span className="eyebrow"><i /> {tr(locale, 'ABERTO A NOVOS PROJETOS', 'OPEN TO NEW PROJECTS')}</span><span className="section-note">09 / {tr(locale, 'CONTATO', 'CONTACT')}</span></div>
-          <a className="contact-big" href="mailto:jotabolanle@gmail.com" data-motion-reveal><h2 id="contact-heading">{tr(locale, 'Vamos criar', 'Let’s create')}<br /><span>{tr(locale, 'algo juntos?', 'something together?')}</span></h2><ArrowUpRight aria-hidden="true" /></a>
+          <div className="contact-big" data-motion-reveal><h2 id="contact-heading">{tr(locale, 'Vamos criar', 'Let’s create')}<br /><span>{tr(locale, 'algo juntos?', 'something together?')}</span></h2></div>
+          <div className="quote-layout" data-motion-reveal>
+            <QuoteForm locale={locale} />
+            <QuoteAside locale={locale} />
+          </div>
           <div className="contact-bottom">
             <p>{tr(locale, 'Projetos pontuais, parcerias recorrentes', 'One-off projects, ongoing partnerships')}<br />{tr(locale, 'e oportunidades em equipes de criação.', 'and opportunities with creative teams.')}</p>
-            <a href="mailto:jotabolanle@gmail.com"><Mail size={19}/> jotabolanle@gmail.com</a>
             <div className="contact-socials">
               <a href="https://www.linkedin.com/in/johnbolanle/" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={18}/></a>
               <a href="https://www.instagram.com/osuperjohn/" target="_blank" rel="noopener noreferrer">Instagram <ArrowUpRight size={18}/></a>

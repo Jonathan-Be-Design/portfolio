@@ -15,6 +15,8 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === 'seatbelt';
 const localBindingConfig = {
   main: 'vinext/server/fetch-handler',
   compatibility_flags: ['nodejs_compat'],
+  // Formulário de orçamento: envia para o Gmail verificado no Email Routing do domínio.
+  send_email: [{ name: 'QUOTE_EMAIL', destination_address: 'jotabolanle@gmail.com' }],
   d1_databases: d1
     ? [
         {

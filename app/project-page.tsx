@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Mail } from 'lucide-react';
 import { tr, type Locale } from './i18n';
+import { CONTACT_EMAIL, WhatsappIcon, whatsappLink } from './contact-links';
 import type { Project } from './selected-projects';
 import EyeMark from './eye-mark';
 import SignatureName from './signature-name';
@@ -49,10 +50,10 @@ export default function ProjectPage({ locale, project, next }: { locale: Locale;
       </section>
 
       <section className="contact-section wrap">
-        <a className="contact-big" href="mailto:jotabolanle@gmail.com"><h2>{tr(locale, 'Vamos criar', 'Let’s create')}<br /><span>{tr(locale, 'algo juntos?', 'something together?')}</span></h2><ArrowUpRight aria-hidden="true" /></a>
+        <Link className="contact-big" href={`/${locale}#contato`}><h2>{tr(locale, 'Vamos criar', 'Let’s create')}<br /><span>{tr(locale, 'algo juntos?', 'something together?')}</span></h2><ArrowUpRight aria-hidden="true" /></Link>
         <div className="contact-bottom">
           <p>{tr(locale, 'Projetos pontuais, parcerias recorrentes', 'One-off projects, ongoing partnerships')}<br />{tr(locale, 'e oportunidades em equipes de criação.', 'and opportunities with creative teams.')}</p>
-          <a href="mailto:jotabolanle@gmail.com"><Mail size={19}/> jotabolanle@gmail.com</a>
+          <div className="contact-socials"><a href={whatsappLink(locale)} target="_blank" rel="noopener noreferrer"><WhatsappIcon/> WhatsApp</a><a href={`mailto:${CONTACT_EMAIL}`}><Mail size={19}/> {CONTACT_EMAIL}</a></div>
         </div>
       </section>
     </main>
