@@ -7,9 +7,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { gameThumbnailRows } from './games-thumbnails';
 import { tr, type Locale } from './i18n';
+import EyeMark from './eye-mark';
+import SignatureName from './signature-name';
 
 const features = [
-  { id: 'worlds', href: '#worlds', title: 'Artes · Worlds', label: '2023–2024 · Key art & pôsteres', src: '/trabalhos/worlds-hero-test.png?v=ebbd013a', width: 2058, height: 1350, position: 'center 30%' },
+  { id: 'worlds', href: '#worlds', title: 'Artes · Worlds', label: '2023–2024 · Key art & pôsteres', src: '/trabalhos/worlds-hero-test.webp?v=ebbd013a', width: 2058, height: 1350, position: 'center 30%' },
   { id: 'esports', href: '#esports-broadcast', title: 'Esports · Broadcast', label: 'Thumbnails & transmissões', src: '/trabalhos/final-worlds-2023-cover.webp', width: 2400, height: 1760, position: 'center 35%' },
   { id: 'gaming', href: '#games-thumbnails', title: 'Conteúdo · Gaming', label: 'Thumbnails para games', src: '/trabalhos/gaming-hero-test.jpg', width: 2560, height: 1440, position: 'center center' },
   { id: 'other-work', href: '#projetos', title: 'Outros Trabalhos', label: 'Música, identidade visual & game design', src: '/trabalhos/west-reis-hero.jpg', width: 2560, height: 1683, position: 'left center' },
@@ -88,8 +90,8 @@ export default function PortfolioHero({ locale }: { locale: Locale }) {
 
   const header = <header className={`cinema-header ${isFloating ? 'is-floating' : ''} ${menu ? 'menu-open' : ''}`}>
     <a className="signature" href="#inicio" aria-label={tr(locale, 'Jonathan Bolanle, início', 'Jonathan Bolanle, home')}>
-      <span className="signature-name"><span>Jonathan</span><span>Bolanle</span></span>
-      <span className="signature-monogram" aria-hidden="true">JB</span>
+      <EyeMark />
+      <SignatureName />
     </a>
     <div className="hero-nav-shell">
       <a className="hero-contact nav-pill" href="#contato"><span className="cta-long">{tr(locale, 'Pedir orçamento', 'Get a quote')}</span><span className="cta-short">{tr(locale, 'Orçamento', 'Quote')}</span> <ArrowUpRight size={17}/></a>
