@@ -1,5 +1,4 @@
 import { ArrowUpRight, Check, Minus, Mail } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import EyeMark from './eye-mark';
 import { CONTACT_EMAIL, WhatsappIcon } from './contact-links';
@@ -7,26 +6,6 @@ import type { Proposal } from './proposals';
 import styles from './proposal.module.css';
 
 const WHATSAPP_NUMBER = '5521965729594';
-
-const metrics = [
-  { value: '300M+', label: 'visualizações totais' },
-  { value: '2B+', label: 'impressões nas redes' },
-  { value: '5K+', label: 'peças produzidas' },
-];
-
-const brands = [
-  { name: 'Baiano', logo: '/logos/baiano.png', width: 1366, height: 338 },
-  { name: 'Ilha das Lendas', logo: '/logos/ilha-das-lendas.svg', width: 1500, height: 514 },
-  { name: 'Omelete & Co', logo: '/logos/omelete-co.png', width: 1700, height: 198 },
-  { name: 'Riot Games', logo: '/logos/riot-games.png', width: 5275, height: 682 },
-  { name: 'Heineken', logo: '/logos/heineken.png', width: 1280, height: 308 },
-];
-
-const defaultWork = [
-  { src: '/posters/final-worlds-2024.webp', width: 1620, height: 2025, title: 'Key art · Worlds 2024' },
-  { src: '/impact/baiano-heineken-djonga.webp', width: 1280, height: 720, title: 'Campanha · Baiano × Heineken' },
-  { src: '/trabalhos/west-reis-hero.jpg', width: 1920, height: 1262, title: 'Mídia kit · West Reis' },
-];
 
 export default function ProposalPage({ proposal }: { proposal: Proposal }) {
   const approveText = `Olá, Jonathan! Li a proposta "${proposal.project}" e quero seguir.`;
@@ -110,33 +89,15 @@ export default function ProposalPage({ proposal }: { proposal: Proposal }) {
       </div>
     </section>
 
-    <section className={styles.dark}>
-      <div className={styles.wrap}>
-        <div className={styles.sectionHead}><span>05 / Quem assina</span><h2>Cinco anos criando para quem precisa ser visto</h2></div>
-        <div className={styles.metrics}>
-          {metrics.map(metric => <div key={metric.value}><strong>{metric.value}</strong><p>{metric.label}</p></div>)}
-        </div>
-        <div className={styles.work}>
-          {(proposal.work ?? defaultWork).map(item => <figure key={item.src}>
-            <Image src={item.src} alt={item.title} width={item.width} height={item.height} sizes="(max-width: 800px) 90vw, 30vw" />
-            <figcaption>{item.title}</figcaption>
-          </figure>)}
-        </div>
-        <div className={styles.brands} aria-label="Marcas com quem já trabalhei">
-          {brands.map(brand => <Image key={brand.name} src={brand.logo} alt={brand.name} width={brand.width} height={brand.height} sizes="160px" unoptimized={brand.logo.endsWith('.svg')} />)}
-        </div>
-        <Link className={styles.portfolioLink} href="/pt">Ver portfólio completo <ArrowUpRight size={17} /></Link>
-      </div>
-    </section>
-
     <section className={styles.cta}>
       <div className={styles.wrap}>
-        <span className={styles.kicker}>06 / Próximo passo</span>
+        <span className={styles.kicker}>05 / Próximo passo</span>
         <h2>Vamos começar?</h2>
         <p>Para aprovar, é só me chamar. Depois da confirmação envio o contrato e marcamos a conversa de imersão.</p>
         <div className={styles.actions}>
           <a className={styles.primary} href={approveLink} target="_blank" rel="noopener noreferrer"><WhatsappIcon /> Aprovar pelo WhatsApp <ArrowUpRight size={17} /></a>
           <a className={styles.secondary} href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Proposta: ${proposal.project}`)}`}><Mail size={17} /> {CONTACT_EMAIL}</a>
+          <Link className={styles.secondary} href="/pt">Ver portfólio <ArrowUpRight size={17} /></Link>
         </div>
       </div>
     </section>

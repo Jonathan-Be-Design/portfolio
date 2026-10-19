@@ -18,8 +18,6 @@ export type Proposal = {
   };
   includes: string[];
   notIncluded: string[];
-  // Trabalhos mostrados em "Quem assina". Sem isso, a página usa a seleção padrão.
-  work?: { src: string; width: number; height: number; title: string }[];
 };
 
 export const proposals: Proposal[] = [
@@ -88,11 +86,6 @@ export const proposals: Proposal[] = [
     },
     includes: ['Criação e arte final nos formatos do Instagram e do TikTok (4:5 e 9:16)', '2 rodadas de ajuste por peça', 'Trilha e efeitos de banco licenciado nos vídeos Âncora', 'Arquivos finais prontos para postar'],
     notIncluded: ['Texto e roteiro dos conteúdos, que vêm de você e da sua equipe', 'Locução, gravada por você ou por locutor contratado à parte', 'Captação, filmagem, fotos, minidocumentários e minifilmes', 'Imagens ou músicas pagas fora dos bancos que eu já uso', 'Postagem, legendas de post e gestão do perfil', 'Conteúdos para o YouTube e para o @atryabooks'],
-    work: [
-      { src: '/trabalhos/cinema-02.jpg', width: 856, height: 1024, title: 'Design editorial · Festival de Cinema' },
-      { src: '/trabalhos/moon-01.jpg', width: 1200, height: 1477, title: 'Identidade visual · Moon Store' },
-      { src: '/trabalhos/desenvolva-01.webp', width: 1200, height: 675, title: 'Identidade visual · Desenvolva-se' },
-    ],
   },
 ];
 

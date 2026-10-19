@@ -64,16 +64,6 @@
 .yes svg{color:var(--blue-soft)}
 .no li{color:#8f9198}
 
-.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;border-block:1px solid var(--line-dark);padding-block:36px}
-.metrics strong{display:block;font-size:clamp(52px,6.6vw,104px);font-weight:300;line-height:.9;letter-spacing:-.07em}
-.metrics p{margin-top:12px;color:#a3a4aa;font-size:15px}
-.work{display:grid;grid-template-columns:.8fr 1.1fr 1.1fr;gap:16px;margin-top:40px;align-items:stretch}
-.work figure{margin:0;display:flex;flex-direction:column;gap:10px}
-.work img{width:100%;height:clamp(220px,26vw,360px);object-fit:cover;border-radius:12px}
-.work figcaption{font-size:13px;color:#a3a4aa}
-.brands{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px 40px;margin-top:48px;padding-top:36px;border-top:1px solid var(--line-dark)}
-.brands img{height:30px;width:auto;max-width:150px;object-fit:contain;filter:grayscale(1) brightness(0) invert(1);opacity:.85}
-.portfolioLink{display:inline-flex;align-items:center;gap:8px;margin-top:40px;border-bottom:1px solid #ffffff60;padding-bottom:4px;font-size:15px}
 
 .cta{background:var(--blue);color:#fff;padding-block:clamp(72px,10vw,128px)}
 .cta .kicker{color:#dfe6ff}
@@ -92,9 +82,6 @@
   .goals,.scope{grid-template-columns:1fr}
   .timeline{grid-template-columns:1fr 1fr;row-gap:36px}
   .investment{grid-template-columns:1fr}
-  .work{grid-template-columns:1fr 1fr}
-  .work figure:first-child{grid-row:span 2}
-  .work figure:first-child img{height:100%}
   .sectionHead{grid-template-columns:1fr;gap:12px}
 }
 @media(max-width:600px){
@@ -103,11 +90,6 @@
   .timeline{grid-template-columns:1fr;border-top:0;border-left:2px solid var(--text);padding-left:22px;row-gap:28px}
   .timeline li{padding:0}
   .timeline li:before{top:6px;left:-29px}
-  .metrics{grid-template-columns:1fr;gap:28px}
-  .work{grid-template-columns:1fr}
-  .work figure:first-child{grid-row:auto}
-  .work img,.work figure:first-child img{height:240px}
-  .brands{justify-content:center}
   .priceTotal{flex-wrap:wrap}
   .priceRow{gap:16px}
   .actions a{width:100%;justify-content:center}
@@ -115,6 +97,6 @@
 @media print{
   .cover{min-height:auto;padding-block:48px}
   .light,.dark,.cta{padding-block:40px;break-inside:avoid}
-  .actions,.portfolioLink{display:none}
+  .actions{display:none}
   .page{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
