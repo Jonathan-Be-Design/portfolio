@@ -416,3 +416,7 @@ html{scrollbar-color:#3a3b42 #050607}
 .quote-done button{background:none;border:0;color:#4d9bff;padding:0;font-size:14px}
 @media(max-width:860px){.quote-layout{grid-template-columns:1fr}.quote-aside{border-left:0;border-top:1px solid #24252b;padding:28px 0 0}}
 @media(max-width:560px){.quote-row{grid-template-columns:1fr}.quote-submit{width:100%;justify-content:center}.quote-whatsapp{width:100%}}
+.not-found-page h1 span{color:#6f7079}
+.not-found-page .project-hero>p{max-width:52ch;color:#a3a4aa;font-size:17px;line-height:1.6}
+.not-found-page .contact-section{padding-block:clamp(40px,6vw,72px)}
+.not-found-page .project-next a{border-bottom:0}
