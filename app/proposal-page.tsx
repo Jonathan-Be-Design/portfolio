@@ -47,7 +47,7 @@ export default function ProposalPage({ proposal }: { proposal: Proposal }) {
       <dl className={styles.coverMeta}>
         <div><dt>Data</dt><dd>{proposal.date}</dd></div>
         <div><dt>Válida até</dt><dd>{proposal.validUntil}</dd></div>
-        <div><dt>Investimento</dt><dd>{proposal.investment.total}</dd></div>
+        <div><dt>Entregas</dt><dd>{proposal.scope.length} frentes de conteúdo</dd></div>
       </dl>
     </section>
 
@@ -94,9 +94,9 @@ export default function ProposalPage({ proposal }: { proposal: Proposal }) {
           <div className={styles.priceTable}>
             {proposal.investment.items.map(item => <div className={styles.priceRow} key={item.label}>
               <div><strong>{item.label}</strong>{item.description && <p>{item.description}</p>}</div>
-              <span>{item.value}</span>
+              <span className={item.value ? undefined : styles.pending}>{item.value ?? 'A definir'}</span>
             </div>)}
-            <div className={styles.priceTotal}><strong>Total</strong><span>{proposal.investment.total}</span></div>
+            <div className={styles.priceTotal}><strong>Total</strong><span className={proposal.investment.total ? undefined : styles.pending}>{proposal.investment.total ?? 'A definir'}</span></div>
           </div>
           <div className={styles.terms}>
             <h3>Pagamento</h3>

@@ -12,8 +12,8 @@ export type Proposal = {
   scope: { title: string; description: string; items: string[] }[];
   timeline: { phase: string; duration: string; description: string }[];
   investment: {
-    items: { label: string; description?: string; value: string }[];
-    total: string;
+    items: { label: string; description?: string; value?: string }[];
+    total?: string;
     payment: string[];
   };
   includes: string[];
@@ -22,51 +22,56 @@ export type Proposal = {
 
 export const proposals: Proposal[] = [
   {
-    slug: 'exemplo',
-    client: 'Nome da cliente',
-    project: 'Identidade visual e kit para redes sociais',
+    slug: 'narrativas-invisiveis',
+    client: 'Damaris Lago',
+    project: 'Narrativas Invisíveis no Instagram e TikTok',
     date: '19 de outubro de 2026',
     validUntil: '2 de novembro de 2026',
-    intro: 'Uma identidade que funcione do perfil à campanha: reconhecível no feed, consistente em qualquer peça e pronta para crescer junto com a marca.',
+    intro: 'Um perfil que pareça um lugar onde alguém entra para pensar: editorial, limpo, cinematográfico e com pouco ruído visual, do primeiro cartaz ao último vídeo.',
     goals: [
-      'Dar à marca uma presença visual própria e fácil de reconhecer.',
-      'Padronizar as peças do dia a dia para ganhar tempo na produção.',
-      'Preparar a marca para campanhas e parcerias maiores.',
+      'Lançar o @narrativas.invisiveiss com uma linguagem visual própria, sofisticada e fácil de reconhecer.',
+      'Manter presença constante, com 3 a 4 publicações por semana entre cartazes, carrosséis e reels.',
+      'Apresentar a autora sem enfraquecer a estrategista: o livro aparece como mais uma frente, não como mudança de área.',
     ],
     scope: [
       {
-        title: 'Identidade visual',
-        description: 'A base de tudo: o que a marca é e como ela aparece.',
-        items: ['Logo principal e versões reduzidas', 'Paleta de cores e tipografia', 'Mini guia de uso da marca'],
+        title: 'Cartazes editoriais',
+        description: 'Posts tipográficos com frases autorais e de referência, feitos para serem salvos e compartilhados.',
+        items: ['15 cartazes de lâmina única', 'Tipografia e composição editoriais', 'Versões para feed e story'],
       },
       {
-        title: 'Kit para redes sociais',
-        description: 'Modelos editáveis para manter o padrão sem depender de mim a cada post.',
-        items: ['6 modelos de post para feed', '4 modelos de story', 'Capas de destaque e foto de perfil'],
+        title: 'Carrosséis',
+        description: 'Ideias desenvolvidas em sequência, no mesmo padrão visual dos cartazes.',
+        items: ['10 carrosséis de até 7 lâminas', 'Capa pensada para parar o scroll', 'Diagramação dos textos enviados'],
       },
       {
-        title: 'Peça de lançamento',
-        description: 'Uma arte de campanha para apresentar a nova identidade.',
-        items: ['Key art principal', 'Adaptações para feed, story e banner'],
+        title: 'Vídeos âncora',
+        description: 'Narração em off sobre montagem de imagens, sons e música, no formato do vídeo sobre homens.',
+        items: ['10 vídeos de até 3 minutos', 'Montagem, trilha e desenho de som', 'Legendas e versões para Reels e TikTok'],
+      },
+      {
+        title: 'Edição de vídeos',
+        description: 'Tratamento dos vídeos gravados pela Damaris, como os de escrita e leitura de trechos.',
+        items: ['5 edições de até 1 minuto', 'Corte, ritmo, cor e legendas', 'Mesma identidade dos demais conteúdos'],
       },
     ],
     timeline: [
-      { phase: 'Imersão', duration: '2 dias', description: 'Conversa inicial, referências e definição do caminho visual.' },
-      { phase: 'Conceito', duration: '5 dias', description: 'Apresentação de duas direções de identidade para escolha.' },
-      { phase: 'Desenvolvimento', duration: '7 dias', description: 'Refinamento da direção escolhida e criação do kit.' },
-      { phase: 'Entrega', duration: '2 dias', description: 'Arquivos finais, guia de uso e ajustes finais.' },
+      { phase: 'Linha visual', duration: 'Semana 1', description: 'Definição de tipografia, cores e modelos de cartaz, carrossel e vídeo para aprovação.' },
+      { phase: 'Primeiro lote', duration: 'Semana 2', description: 'Conteúdos das primeiras semanas prontos antes do lançamento do perfil.' },
+      { phase: 'Produção contínua', duration: 'Semanas 3 a 12', description: 'Entregas por lote, acompanhando o ritmo de 3 a 4 publicações por semana.' },
+      { phase: 'Fechamento', duration: 'Ao fim do pacote', description: 'Arquivos finais organizados e conversa sobre os próximos formatos.' },
     ],
     investment: {
       items: [
-        { label: 'Identidade visual', description: 'Logo, paleta, tipografia e guia', value: 'R$ 0.000' },
-        { label: 'Kit para redes sociais', description: '10 modelos editáveis e capas', value: 'R$ 0.000' },
-        { label: 'Peça de lançamento', description: 'Key art e adaptações', value: 'R$ 000' },
+        { label: '15 cartazes editoriais', description: 'Lâmina única' },
+        { label: '10 carrosséis', description: 'Até 7 lâminas cada' },
+        { label: '10 vídeos âncora', description: 'Narração em off, até 3 minutos' },
+        { label: '5 edições de vídeo', description: 'Material enviado, até 1 minuto' },
       ],
-      total: 'R$ 0.000',
-      payment: ['50% na aprovação da proposta', '50% na entrega dos arquivos finais', 'Pix ou transferência'],
+      payment: ['Condições a combinar', 'Pix ou transferência'],
     },
-    includes: ['Até 2 rodadas de ajustes por etapa', 'Arquivos abertos e exportados (PNG, PDF e SVG)', 'Modelos editáveis no Canva ou Photoshop'],
-    notIncluded: ['Impressão e produção gráfica', 'Fotos e banco de imagens pagos', 'Gestão e publicação das redes'],
+    includes: ['Linha visual do perfil, sem custo extra', 'Até 2 rodadas de ajustes por peça', 'Arquivos nos formatos de Instagram e TikTok', 'Trilhas de bancos licenciados para uso nas redes'],
+    notIncluded: ['Captação e gravação de vídeos', 'Roteiros e textos, que vêm da Damaris', 'Publicação e gestão dos perfis', 'Minifilmes, micronarrativas e minidocs, que podem ser orçados à parte'],
   },
 ];
 

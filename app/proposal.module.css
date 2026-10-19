@@ -27,7 +27,7 @@
 .goals span{font-size:13px;color:var(--blue);font-weight:600}
 .goals p{font-size:19px;line-height:1.4;letter-spacing:-.02em}
 
-.scope{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
 .scope article{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column}
 .index{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px}
 .scope h3{margin-top:28px;font-size:26px;letter-spacing:-.035em;line-height:1.1}
@@ -53,6 +53,8 @@
 .priceTotal{border-bottom:0;padding-top:28px}
 .priceTotal strong{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#8f9198;font-weight:500}
 .priceTotal span{font-family:var(--font-space-grotesk),Arial,sans-serif;font-size:clamp(44px,5.6vw,80px);letter-spacing:-.05em;line-height:1;color:#fff}
+.priceRow>span.pending,.priceTotal span.pending{color:#6f7078}
+.priceTotal span.pending{font-size:clamp(32px,3.6vw,52px)}
 .terms{background:var(--ink-2);border:1px solid var(--line-dark);border-radius:18px;padding:28px}
 .terms h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-soft);font-family:inherit}
 .terms h3:not(:first-child){margin-top:26px}
