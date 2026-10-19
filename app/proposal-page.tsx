@@ -75,7 +75,7 @@ export default function ProposalPage({ proposal }: { proposal: Proposal }) {
               <div><strong>{item.label}</strong>{item.description && <p>{item.description}</p>}</div>
               <span className={item.value ? undefined : styles.pending}>{item.value ?? 'A definir'}</span>
             </div>)}
-            <div className={styles.priceTotal}><strong>Total</strong><span className={proposal.investment.total ? undefined : styles.pending}>{proposal.investment.total ?? 'A definir'}</span></div>
+            <div className={styles.priceTotal}><strong>{proposal.investment.totalLabel ?? 'Total'}</strong><span className={proposal.investment.total ? undefined : styles.pending}>{proposal.investment.total ?? 'A definir'}</span></div>
           </div>
           <div className={styles.terms}>
             <h3>Pagamento</h3>
