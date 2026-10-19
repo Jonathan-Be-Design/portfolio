@@ -108,7 +108,8 @@
   .work figure:first-child{grid-row:auto}
   .work img,.work figure:first-child img{height:240px}
   .brands{justify-content:center}
-  .priceRow,.priceTotal{flex-wrap:wrap}
+  .priceTotal{flex-wrap:wrap}
+  .priceRow{gap:16px}
   .actions a{width:100%;justify-content:center}
 }
 @media print{

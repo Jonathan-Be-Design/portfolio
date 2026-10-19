@@ -47,7 +47,7 @@ export default function ProposalPage({ proposal }: { proposal: Proposal }) {
       <dl className={styles.coverMeta}>
         <div><dt>Data</dt><dd>{proposal.date}</dd></div>
         <div><dt>Válida até</dt><dd>{proposal.validUntil}</dd></div>
-        <div><dt>Entregas</dt><dd>{proposal.scope.length} frentes de conteúdo</dd></div>
+        <div><dt>Entregas</dt><dd>{proposal.scope.length} frentes de trabalho</dd></div>
       </dl>
     </section>
 
