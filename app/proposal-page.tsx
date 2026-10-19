@@ -22,7 +22,7 @@ const brands = [
   { name: 'Heineken', logo: '/logos/heineken.png', width: 1280, height: 308 },
 ];
 
-const work = [
+const defaultWork = [
   { src: '/posters/final-worlds-2024.webp', width: 1620, height: 2025, title: 'Key art · Worlds 2024' },
   { src: '/impact/baiano-heineken-djonga.webp', width: 1280, height: 720, title: 'Campanha · Baiano × Heineken' },
   { src: '/trabalhos/west-reis-hero.jpg', width: 1920, height: 1262, title: 'Mídia kit · West Reis' },
@@ -117,7 +117,7 @@ export default function ProposalPage({ proposal }: { proposal: Proposal }) {
           {metrics.map(metric => <div key={metric.value}><strong>{metric.value}</strong><p>{metric.label}</p></div>)}
         </div>
         <div className={styles.work}>
-          {work.map(item => <figure key={item.src}>
+          {(proposal.work ?? defaultWork).map(item => <figure key={item.src}>
             <Image src={item.src} alt={item.title} width={item.width} height={item.height} sizes="(max-width: 800px) 90vw, 30vw" />
             <figcaption>{item.title}</figcaption>
           </figure>)}

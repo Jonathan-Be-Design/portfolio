@@ -18,6 +18,8 @@ export type Proposal = {
   };
   includes: string[];
   notIncluded: string[];
+  // Trabalhos mostrados em "Quem assina". Sem isso, a página usa a seleção padrão.
+  work?: { src: string; width: number; height: number; title: string }[];
 };
 
 export const proposals: Proposal[] = [
@@ -78,6 +80,11 @@ export const proposals: Proposal[] = [
     },
     includes: ['Até 2 rodadas de ajustes por peça', 'Arquivos nos formatos de Instagram e TikTok', 'Trilhas de bancos licenciados para uso nas redes'],
     notIncluded: ['Captação e gravação de vídeos', 'Roteiros e textos, que vêm da Damaris', 'Publicação e gestão dos perfis', 'Minifilmes, micronarrativas e minidocs, que podem ser orçados à parte'],
+    work: [
+      { src: '/trabalhos/cinema-02.jpg', width: 856, height: 1024, title: 'Design editorial · Festival de Cinema' },
+      { src: '/trabalhos/moon-01.jpg', width: 1200, height: 1477, title: 'Identidade visual · Moon Store' },
+      { src: '/trabalhos/desenvolva-01.webp', width: 1200, height: 675, title: 'Identidade visual · Desenvolva-se' },
+    ],
   },
 ];
 
