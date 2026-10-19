@@ -27,7 +27,7 @@
 .goals span{font-size:13px;color:var(--blue);font-weight:600}
 .goals p{font-size:19px;line-height:1.4;letter-spacing:-.02em}
 
-.scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
 .scope article{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column}
 .index{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px}
 .scope h3{margin-top:28px;font-size:26px;letter-spacing:-.035em;line-height:1.1}

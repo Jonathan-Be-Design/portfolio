@@ -35,6 +35,11 @@ export const proposals: Proposal[] = [
     ],
     scope: [
       {
+        title: 'Linha visual do perfil',
+        description: 'Pesquisa e criação da identidade que todos os conteúdos vão seguir.',
+        items: ['Pesquisa de referências e direção de arte', 'Tipografia, cores e tratamento de imagem', 'Modelos-base de cartaz, carrossel e vídeo'],
+      },
+      {
         title: 'Cartazes editoriais',
         description: 'Posts tipográficos com frases autorais e de referência, feitos para serem salvos e compartilhados.',
         items: ['15 cartazes de lâmina única', 'Tipografia e composição editoriais', 'Versões para feed e story'],
@@ -63,14 +68,15 @@ export const proposals: Proposal[] = [
     ],
     investment: {
       items: [
+        { label: 'Linha visual do perfil', description: 'Pesquisa, direção de arte e modelos-base' },
         { label: '15 cartazes editoriais', description: 'Lâmina única' },
         { label: '10 carrosséis', description: 'Até 7 lâminas cada' },
         { label: '10 vídeos âncora', description: 'Narração em off, até 3 minutos' },
         { label: '5 edições de vídeo', description: 'Material enviado, até 1 minuto' },
       ],
-      payment: ['Condições a combinar', 'Pix ou transferência'],
+      payment: ['Condições a combinar', 'Pix ou transferência', 'Emissão de nota fiscal', 'Contrato assinado antes do início'],
     },
-    includes: ['Linha visual do perfil, sem custo extra', 'Até 2 rodadas de ajustes por peça', 'Arquivos nos formatos de Instagram e TikTok', 'Trilhas de bancos licenciados para uso nas redes'],
+    includes: ['Até 2 rodadas de ajustes por peça', 'Arquivos nos formatos de Instagram e TikTok', 'Trilhas de bancos licenciados para uso nas redes'],
     notIncluded: ['Captação e gravação de vídeos', 'Roteiros e textos, que vêm da Damaris', 'Publicação e gestão dos perfis', 'Minifilmes, micronarrativas e minidocs, que podem ser orçados à parte'],
   },
 ];
