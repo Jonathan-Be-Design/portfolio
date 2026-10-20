@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Proposta · Arena Norte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<!--
+  PÁGINA DE PROPOSTA · COMO USAR
+  1. Copie esta pasta inteira e renomeie com o nome do cliente (ex.: cafe-aurora).
+  2. Edite só o bloco PROPOSTA logo abaixo do <body>. O resto se monta sozinho.
+  3. Troque o orcamento.pdf da pasta pelo PDF desse cliente.
+  4. Suba a pasta site/ inteira na Cloudflare Pages. O link fica:
+     proposta.jonathanbolanle.studio/nome-da-pasta
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: uma coluna estreita, como uma carta. Mesma identidade do orçamento em PDF. */
+  :root{
+    --bg:#0b0b0d;       /* fundo */
+    --ink:#f4f4f6;      /* texto principal */
+    --muted:#8a8a95;    /* texto secundário */
+    --line:#222228;     /* linhas finas */
+    --line-strong:#3e3e47;
+    --accent:#3d68ff;   /* azul de destaque */
+    --display:"Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --body:Inter, "Helvetica Neue", Arial, sans-serif;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+    color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; background:var(--bg); }
+  body{ color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+        padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+  a{ color:inherit; }
+  .glow{ position:fixed; inset:0; pointer-events:none; z-index:0;
+         background:radial-gradient(600px 600px at 100% -10%, rgba(61,104,255,.20), transparent 65%); }
+  .grid{ position:absolute; left:0; right:0; top:0; height:420px; pointer-events:none; z-index:0;
+         background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+         background-size:40px 40px; -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.55), transparent); mask-image:linear-gradient(180deg, rgba(0,0,0,.55), transparent); }
+  main{ position:relative; z-index:1; max-width:720px; margin:0 auto; padding-block:32px 72px; display:flex; flex-direction:column; gap:72px; }
+
+  .label{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .label.blue{ color:var(--accent); }
+
+  header{ display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .mark{ width:34px; height:34px; display:block; }
+  .wordmark{ font-family:var(--display); font-size:17px; font-weight:500; letter-spacing:-.02em; color:var(--ink); }
+
+  .hero{ display:flex; flex-direction:column; gap:20px; padding-top:24px; }
+  h1{ margin:0; font-family:var(--display); font-weight:400; font-size:clamp(32px, 6vw, 48px); line-height:1.1; letter-spacing:-.02em; text-wrap:balance; }
+  .intro{ margin:0; color:var(--muted); max-width:58ch; }
+  .intro b{ color:var(--ink); font-weight:500; }
+  .status{ display:flex; flex-wrap:wrap; gap:10px 24px; align-items:center; font-size:14px; color:var(--muted); }
+  .pill{ display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line-strong); padding:4px 12px; border-radius:999px; color:var(--ink); font-size:13px; }
+  .pill::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); }
+  .pill.off{ color:var(--muted); }
+  .pill.off::before{ background:var(--muted); }
+
+  section{ display:flex; flex-direction:column; gap:20px; }
+  .head{ position:relative; display:flex; justify-content:space-between; padding-bottom:12px; border-bottom:1px solid var(--line-strong); }
+  .head::after{ content:""; position:absolute; left:0; bottom:-1px; width:64px; height:2px; background:var(--accent); }
+
+  .items{ display:flex; flex-direction:column; }
+  .item{ display:grid; grid-template-columns:32px minmax(0,1fr) auto; gap:4px 16px; padding:18px 0; border-bottom:1px solid var(--line); }
+  .item .n{ font-family:var(--mono); font-size:12px; color:var(--accent); padding-top:3px; font-variant-numeric:tabular-nums; }
+  .item .name{ font-weight:500; }
+  .item .desc{ color:var(--muted); font-size:14px; margin-top:2px; }
+  .item .price{ font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums; }
+
+  .total{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; padding-top:8px; }
+  .total .value{ font-family:var(--display); font-weight:700; font-size:clamp(34px, 7vw, 48px); letter-spacing:-.025em; font-variant-numeric:tabular-nums; }
+  .total .cur{ font-weight:400; color:var(--muted); font-size:.45em; margin-right:6px; letter-spacing:0; }
+
+  .terms{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px; }
+  .terms .v{ margin-top:6px; }
+  .terms small{ display:block; color:var(--muted); font-size:13px; }
+
+  .steps{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px; counter-reset:s; }
+  .step{ display:flex; flex-direction:column; gap:6px; }
+  .step .t{ font-weight:500; }
+  .step .d{ color:var(--muted); font-size:14px; }
+
+  .refs{ display:flex; flex-direction:column; }
+  .ref{ display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 0; border-bottom:1px solid var(--line); text-decoration:none; transition:padding .2s ease, color .2s ease; }
+  .ref span:last-child{ color:var(--muted); font-size:14px; }
+  .ref:hover, .ref:focus-visible{ padding-left:8px; color:var(--accent); outline:none; }
+
+  .cta{ border:1px solid var(--line-strong); padding:32px; display:flex; flex-direction:column; gap:20px; }
+  .cta h2{ margin:0; font-family:var(--display); font-weight:400; font-size:28px; letter-spacing:-.015em; }
+  .cta p{ margin:0; color:var(--muted); max-width:52ch; }
+  .actions{ display:flex; flex-wrap:wrap; gap:12px; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font:600 14px var(--body); padding:12px 18px; text-decoration:none; border:1px solid var(--line-strong); color:var(--ink); background:transparent; cursor:pointer; }
+  .btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn:hover{ border-color:var(--accent); }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .mail{ font-family:var(--mono); font-size:13px; color:var(--muted); user-select:all; }
+
+  footer{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; font-size:13px; color:var(--muted); border-top:1px solid var(--line); padding-top:20px; }
+
+  @media (max-width:560px){
+    main{ gap:56px; }
+    .terms, .steps{ grid-template-columns:1fr; gap:18px; }
+    .item{ grid-template-columns:24px minmax(0,1fr); }
+    .item .price{ grid-column:2; }
+    .cta{ padding:24px 20px; }
+  }
+  @media (prefers-reduced-motion:reduce){ .ref{ transition:none; } }
+</style>
+</head>
+<body>
+
+<script>
+/* ======== EDITE AQUI ======== */
+const PROPOSTA = {
+  numero: "014",
+  cliente: "Arena Norte Esports",
+  contato: "Mariana",                       // primeiro nome de quem vai ler
+  projeto: "Campanha de lançamento da Copa Arena Norte 2026",
+  intro: "preparei esta proposta pensando no lançamento da Copa: uma key art forte que puxa tudo, adaptada para as redes, com vinheta e teaser no mesmo clima.",
+  data: "2026-10-14",                       // ano-mês-dia
+  validade: "2026-10-28",                   // ano-mês-dia; depois disso a página mostra "expirada"
+  itens: [
+    { nome: "Key art da campanha", desc: "Arte principal do evento, com 2 rodadas de ajustes.", valor: 1800 },
+    { nome: "Kit de 8 posts para redes sociais", desc: "Adaptações da key art para feed e stories.", valor: 1200 },
+    { nome: "Vinheta animada", desc: "Motion de até 10 segundos, nos formatos 16:9 e 9:16.", valor: 1400 },
+    { nome: "Edição do vídeo-teaser", desc: "Até 60 segundos, com legendas, cor e áudio.", valor: 900 },
+  ],
+  prazo: ["15 dias úteis", "após a aprovação"],
+  pagamento: ["50% na aprovação", "50% na entrega, via Pix"],
+  referencias: [
+    { titulo: "West Reis", tipo: "Key art", link: "https://jonathanbolanle.studio/pt/trabalhos/west-reis" },
+    { titulo: "Drew", tipo: "Motion", link: "https://jonathanbolanle.studio/pt/trabalhos/drew" },
+    { titulo: "1936", tipo: "Edição de vídeo", link: "https://jonathanbolanle.studio/pt" },
+  ],
+  pdf: "orcamento.pdf",
+  email: "contato@jonathanbolanle.studio",
+};
+/* ============================ */
+</script>
+
+<div class="glow" aria-hidden="true"></div>
+<div class="grid" aria-hidden="true"></div>
+
+<main>
+  <header>
+    <a class="brand" href="https://jonathanbolanle.studio/pt"><img class="mark" src="/proposta/olho.svg" alt="" width="34" height="34"><div class="wordmark">Jonathan Bolanle</div></a>
+    <span class="label" id="num"></span>
+  </header>
+
+  <div class="hero">
+    <span class="label blue" id="para"></span>
+    <h1 id="projeto"></h1>
+    <p class="intro" id="intro"></p>
+    <div class="status"><span class="pill" id="pill"></span><span id="datas"></span></div>
+  </div>
+
+  <section aria-labelledby="h-servicos">
+    <div class="head"><span class="label" id="h-servicos">O que vou entregar</span><span class="label">Valor</span></div>
+    <div class="items" id="itens"></div>
+    <div class="total"><span class="label blue">Investimento total</span><span class="value" id="total"></span></div>
+  </section>
+
+  <section aria-labelledby="h-cond">
+    <div class="head"><span class="label" id="h-cond">Condições</span></div>
+    <div class="terms">
+      <div><span class="label">Prazo</span><div class="v" id="prazo"></div></div>
+      <div><span class="label">Pagamento</span><div class="v" id="pagamento"></div></div>
+      <div><span class="label">Validade</span><div class="v" id="validade"></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-como">
+    <div class="head"><span class="label" id="h-como">Como funciona</span></div>
+    <div class="steps">
+      <div class="step"><span class="label blue">01</span><span class="t">Aprovação</span><span class="d">Você aprova a proposta e paga o sinal. Eu reservo a agenda.</span></div>
+      <div class="step"><span class="label blue">02</span><span class="t">Produção</span><span class="d">Mando as primeiras versões e ajustamos juntos, dentro das rodadas combinadas.</span></div>
+      <div class="step"><span class="label blue">03</span><span class="t">Entrega</span><span class="d">Com o saldo quitado, envio todos os arquivos finais nos formatos combinados.</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-refs" id="refs-wrap">
+    <div class="head"><span class="label" id="h-refs">Trabalhos parecidos</span></div>
+    <div class="refs" id="refs"></div>
+  </section>
+
+  <div class="cta">
+    <h2>Vamos fazer?</h2>
+    <p id="cta-txt"></p>
+    <div class="actions">
+      <a class="btn primary" id="aprovar">Aprovar por e-mail</a>
+      <a class="btn" id="pdf" target="_blank" rel="noopener">Baixar PDF</a>
+    </div>
+    <span class="mail" id="mail"></span>
+  </div>
+
+  <footer><span>Jonathan Bolanle · Design gráfico, edição e motion</span><a href="https://jonathanbolanle.studio/pt">jonathanbolanle.studio</a></footer>
+</main>
+
+<script>
+  const P = PROPOSTA, $ = id => document.getElementById(id);
+  const brl = v => v.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  const dia = s => { const [a,m,d] = s.split("-").map(Number); return `${d} ${meses[m-1]} ${a}`; };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+
+  document.title = `Proposta · ${P.cliente}`;
+  $("num").textContent = `Proposta Nº ${P.numero}`;
+  $("para").textContent = `Para ${P.cliente}`;
+  $("projeto").textContent = P.projeto;
+  $("intro").innerHTML = `<b>${esc(P.contato)}</b>, ${esc(P.intro)}`;
+
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const [va,vm,vd] = P.validade.split("-").map(Number);
+  const restam = Math.round((new Date(va, vm-1, vd) - hoje) / 864e5);
+  const pill = $("pill");
+  if (restam < 0) { pill.textContent = "Proposta expirada"; pill.classList.add("off"); }
+  else pill.textContent = restam === 0 ? "Válida até hoje" : `Válida por mais ${restam} ${restam === 1 ? "dia" : "dias"}`;
+  $("datas").textContent = `Enviada em ${dia(P.data)}`;
+
+  let total = 0;
+  $("itens").innerHTML = P.itens.map((it, i) => { total += it.valor; return `
+    <div class="item"><span class="n">${String(i+1).padStart(2,"0")}</span>
+      <div><div class="name">${esc(it.nome)}</div><div class="desc">${esc(it.desc)}</div></div>
+      <span class="price">${brl(it.valor)}</span></div>`; }).join("");
+  $("total").innerHTML = brl(total).replace(/^R\$\s?/, '<span class="cur">R$</span>');
+
+  $("prazo").innerHTML = `${esc(P.prazo[0])}<small>${esc(P.prazo[1])}</small>`;
+  $("pagamento").innerHTML = `${esc(P.pagamento[0])}<small>${esc(P.pagamento[1])}</small>`;
+  $("validade").innerHTML = `${dia(P.validade)}<small>${restam < 0 ? "peça uma nova proposta" : "depois disso, refaço os valores"}</small>`;
+
+  if (P.referencias.length) $("refs").innerHTML = P.referencias.map(r =>
+    `<a class="ref" href="${esc(r.link)}" target="_blank" rel="noopener"><span>${esc(r.titulo)}</span><span>${esc(r.tipo)} ↗</span></a>`).join("");
+  else $("refs-wrap").hidden = true;
+
+  $("cta-txt").textContent = restam < 0
+    ? "Essa proposta passou da validade. Me chama que eu atualizo os valores e o prazo."
+    : `Para começar, é só responder aprovando. Eu mando o contrato e os dados do Pix para o sinal.`;
+  const assunto = encodeURIComponent(`Aprovação da proposta Nº ${P.numero} · ${P.cliente}`);
+  const corpo = encodeURIComponent(`Oi, Jonathan! Aprovo a proposta "${P.projeto}" (Nº ${P.numero}).`);
+  $("aprovar").href = `mailto:${P.email}?subject=${assunto}&body=${corpo}`;
+  $("pdf").href = P.pdf;
+  $("mail").textContent = P.email;
+</script>
+</body>
+</html>
