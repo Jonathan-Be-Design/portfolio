@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://jonathanbolanle.studio/pt</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jonathanbolanle.studio/pt" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jonathanbolanle.studio/pt" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/trabalhos/west-reis</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/west-reis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/west-reis" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/trabalhos/west-reis</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/west-reis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/west-reis" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/trabalhos/drew</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/drew" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/drew" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/trabalhos/drew</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/drew" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/drew" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/trabalhos/1936</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/1936" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/1936" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/trabalhos/1936</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/1936" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/1936" />
+  </url>
+</urlset>

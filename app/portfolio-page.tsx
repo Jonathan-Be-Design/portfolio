@@ -200,6 +200,7 @@ export default function Home({ locale }: { locale: Locale }) {
     <>
       <a className="skip-link" href="#projetos">{tr(locale, 'Ir para os projetos', 'Skip to projects')}</a>
       <main ref={motionScopeRef}>
+        <h1 className="sr-only">{tr(locale, 'Jonathan Bolanle — design para criadores, games e esports', 'Jonathan Bolanle — design for creators, gaming and esports')}</h1>
         <PortfolioHero locale={locale} />
         <PosterStage layout="spread" locale={locale} />
         <section className="impact-section" id="impacto" aria-labelledby="impact-heading">

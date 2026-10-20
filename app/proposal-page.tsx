@@ -1,0 +1,107 @@
+import { ArrowUpRight, Check, Minus, Mail } from 'lucide-react';
+import Link from 'next/link';
+import EyeMark from './eye-mark';
+import { CONTACT_EMAIL, WhatsappIcon } from './contact-links';
+import type { Proposal } from './proposals';
+import styles from './proposal.module.css';
+
+const WHATSAPP_NUMBER = '5521965729594';
+
+export default function ProposalPage({ proposal }: { proposal: Proposal }) {
+  const approveText = `Olá, Jonathan! Li a proposta "${proposal.project}" e quero seguir.`;
+  const approveLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(approveText)}`;
+  const n = (i: number) => String(i).padStart(2, '0');
+
+  return <main className={styles.page}>
+    <section className={styles.cover}>
+      <header className={styles.coverTop}>
+        <Link href="/pt" className={styles.brand}><EyeMark /><span>Jonathan Bolanle</span></Link>
+        <span className={styles.tag}>Proposta comercial</span>
+      </header>
+      <div className={styles.coverBody}>
+        <p className={styles.kicker}>Para {proposal.client}</p>
+        <h1>{proposal.project}</h1>
+        <p className={styles.lead}>{proposal.intro}</p>
+      </div>
+      <dl className={styles.coverMeta}>
+        <div><dt>Data</dt><dd>{proposal.date}</dd></div>
+        <div><dt>Válida até</dt><dd>{proposal.validUntil}</dd></div>
+        <div><dt>Entregas</dt><dd>{proposal.scope.length} frentes de trabalho</dd></div>
+      </dl>
+    </section>
+
+    <section className={styles.light}>
+      <div className={styles.wrap}>
+        <div className={styles.sectionHead}><span>01 / Objetivo</span><h2>O que esse projeto precisa resolver</h2></div>
+        <ol className={styles.goals}>
+          {proposal.goals.map((goal, i) => <li key={goal}><span>{n(i + 1)}</span><p>{goal}</p></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section className={styles.light}>
+      <div className={styles.wrap}>
+        <div className={styles.sectionHead}><span>02 / Escopo</span><h2>O que será entregue</h2></div>
+        <div className={styles.scope}>
+          {proposal.scope.map((block, i) => <article key={block.title}>
+            <span className={styles.index}>{n(i + 1)}</span>
+            <h3>{block.title}</h3>
+            <p>{block.description}</p>
+            <ul>{block.items.map(item => <li key={item}><Check size={16} />{item}</li>)}</ul>
+          </article>)}
+        </div>
+      </div>
+    </section>
+
+    <section className={styles.light}>
+      <div className={styles.wrap}>
+        <div className={styles.sectionHead}><span>03 / Etapas</span><h2>Como vamos trabalhar</h2></div>
+        <ol className={styles.timeline}>
+          {proposal.timeline.map((step, i) => <li key={step.phase}>
+            <div className={styles.stepTop}><span>{n(i + 1)}</span><em>{step.duration}</em></div>
+            <h3>{step.phase}</h3>
+            <p>{step.description}</p>
+          </li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section className={styles.dark}>
+      <div className={styles.wrap}>
+        <div className={styles.sectionHead}><span>04 / Investimento</span><h2>Valores e condições</h2></div>
+        <div className={styles.investment}>
+          <div className={styles.priceTable}>
+            {proposal.investment.items.map(item => <div className={styles.priceRow} key={item.label}>
+              <div><strong>{item.label}</strong>{item.description && <p>{item.description}</p>}</div>
+              <span className={item.value ? undefined : styles.pending}>{item.value ?? 'A definir'}</span>
+            </div>)}
+            <div className={styles.priceTotal}><strong>{proposal.investment.totalLabel ?? 'Total'}</strong><span className={proposal.investment.total ? undefined : styles.pending}>{proposal.investment.total ?? 'A definir'}</span></div>
+          </div>
+          <div className={styles.terms}>
+            <h3>Pagamento</h3>
+            <ul>{proposal.investment.payment.map(item => <li key={item}>{item}</li>)}</ul>
+            <h3>Incluso</h3>
+            <ul className={styles.yes}>{proposal.includes.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>
+            <h3>Não incluso</h3>
+            <ul className={styles.no}>{proposal.notIncluded.map(item => <li key={item}><Minus size={15} />{item}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section className={styles.cta}>
+      <div className={styles.wrap}>
+        <span className={styles.kicker}>05 / Próximo passo</span>
+        <h2>Vamos começar?</h2>
+        <p>Para aprovar, é só me chamar. Depois da confirmação envio o contrato e marcamos a conversa de imersão.</p>
+        <div className={styles.actions}>
+          <a className={styles.primary} href={approveLink} target="_blank" rel="noopener noreferrer"><WhatsappIcon /> Aprovar pelo WhatsApp <ArrowUpRight size={17} /></a>
+          <a className={styles.secondary} href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Proposta: ${proposal.project}`)}`}><Mail size={17} /> {CONTACT_EMAIL}</a>
+          <Link className={styles.secondary} href="/pt">Ver portfólio <ArrowUpRight size={17} /></Link>
+        </div>
+      </div>
+    </section>
+
+    <footer className={styles.footer}><span>© {new Date().getFullYear()} Jonathan Bolanle</span><span>Rio de Janeiro, Brasil</span><span>jonathanbolanle.studio</span></footer>
+  </main>;
+}
