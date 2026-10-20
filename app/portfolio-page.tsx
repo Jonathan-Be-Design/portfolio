@@ -14,6 +14,7 @@ import PosterStage from './poster-stage';
 import EsportsBroadcast from './esports-broadcast';
 import QuoteForm, { QuoteAside } from './quote-form';
 import GamesThumbnails from './games-thumbnails';
+import { WhatsappIcon, whatsappLink } from './contact-links';
 
 const featuredBrands = [
   { name: 'Baiano', logo: '/logos/baiano.png', width: 1366, height: 338, lines: ['STREAMER', 'E-SPORTS'], className: 'baiano', href: 'https://www.instagram.com/baianolol/', destination: 'Instagram' },
@@ -62,6 +63,18 @@ const englishImpactTitles: Record<string, string> = {
   'Ilha das Lendas em Londres': 'Ilha das Lendas in London',
   'Robo de Camille — CBLOL': 'Robo on Camille — CBLOL',
 };
+
+const services = [
+  { featured: false,
+    pt: { tag: 'Entrega única', title: 'Identidade do perfil', text: 'Paleta, fontes, chamadas de capa e modelos de cartaz, carrossel e vídeo, com peças de teste para aprovar.', price: 'A partir de R$\u00a01.200' },
+    en: { tag: 'One-off', title: 'Profile identity', text: 'Palette, typefaces, cover headlines and templates for posters, carousels and video, with test pieces to approve.', price: 'From R$\u00a01,200' } },
+  { featured: true,
+    pt: { tag: 'Recomendado', title: 'Pacote mensal', text: '20 peças por mês entre cartazes, carrosséis, thumbnails e vídeos, sempre no mesmo padrão visual.', price: 'R$\u00a02.500 por mês' },
+    en: { tag: 'Recommended', title: 'Monthly package', text: '20 pieces a month across posters, carousels, thumbnails and videos, always in the same visual system.', price: 'R$\u00a02,500 a month' } },
+  { featured: false,
+    pt: { tag: 'Sob demanda', title: 'Peças avulsas', text: 'Thumbnails, key art, capas e edições de vídeo para lançamentos, campanhas e transmissões.', price: 'Orçamento por projeto' },
+    en: { tag: 'On demand', title: 'Single pieces', text: 'Thumbnails, key art, covers and video edits for launches, campaigns and broadcasts.', price: 'Quoted per project' } },
+];
 
 export default function Home({ locale }: { locale: Locale }) {
   const impactTitle = (title: string) => locale === 'en' ? englishImpactTitles[title] ?? title : title;
@@ -271,8 +284,23 @@ export default function Home({ locale }: { locale: Locale }) {
             <div className="about-copy" data-motion-reveal><p className="about-lead">{tr(locale, 'Há 5 anos, transformo ideias em imagens para criadores de conteúdo, games e esports.', 'For five years, I have turned ideas into visuals for content creators, gaming and esports.')}</p><p>{tr(locale, 'Minha trajetória inclui a liderança de design para Ilha das Lendas e Baiano, além de colaborações em eventos e campanhas junto à Omelete Company, como o CBOLÃO na CCXP Brasil, em 2023 e 2024.', 'My experience includes leading design for Ilha das Lendas and Baiano, as well as collaborating on events and campaigns with Omelete Company, including CBOLÃO at CCXP Brasil in 2023 and 2024.')}</p><p>{tr(locale, 'Como designer e profissional audiovisual, conduzo projetos variados, pôsteres para campanhas, identidade visual, thumbnails e outros. Também trabalho com edição de vídeo, somando movimento ao meu repertório de criação.', 'As a designer and audiovisual professional, I work across campaign posters, visual identity, thumbnails and other projects. I also edit video, bringing motion into my creative practice.')}</p><div className="skill-list"><span>{tr(locale, 'THUMBNAILS & CONTEÚDO', 'THUMBNAILS & CONTENT')}</span><span>{tr(locale, 'CAMPANHAS & KEY ART', 'CAMPAIGNS & KEY ART')}</span><span>{tr(locale, 'IDENTIDADE VISUAL', 'VISUAL IDENTITY')}</span><span>{tr(locale, 'EDIÇÃO DE VÍDEO', 'VIDEO EDITING')}</span></div></div></div>
         </section>
 
+        <section className="services-section" id="pacotes" aria-labelledby="services-heading">
+          <div className="wrap">
+            <div className="services-head" data-motion-reveal><span className="eyebrow">09 / {tr(locale, 'COMO TRABALHAMOS', 'HOW WE WORK')}</span><h2 id="services-heading">{tr(locale, 'Identidade e conteúdo', 'Identity and content')}<br /><span>{tr(locale, 'para quem publica toda semana.', 'for people who post every week.')}</span></h2></div>
+            <div className="services-grid">
+              {services.map(service => <article className={service.featured ? 'is-featured' : undefined} key={service.pt.title} data-motion-reveal>
+                <span className="services-tag">{tr(locale, service.pt.tag, service.en.tag)}</span>
+                <h3>{tr(locale, service.pt.title, service.en.title)}</h3>
+                <p>{tr(locale, service.pt.text, service.en.text)}</p>
+                <strong>{tr(locale, service.pt.price, service.en.price)}</strong>
+              </article>)}
+            </div>
+            <a className="services-cta" href={whatsappLink(locale)} target="_blank" rel="noopener noreferrer"><WhatsappIcon /> {tr(locale, 'Montar o meu pacote', 'Build my package')} <ArrowUpRight size={17} /></a>
+          </div>
+        </section>
+
         <section className="contact-section wrap" id="contato" aria-labelledby="contact-heading">
-          <div className="section-top" data-motion-reveal><span className="eyebrow"><i /> {tr(locale, 'ABERTO A NOVOS PROJETOS', 'OPEN TO NEW PROJECTS')}</span><span className="section-note">09 / {tr(locale, 'CONTATO', 'CONTACT')}</span></div>
+          <div className="section-top" data-motion-reveal><span className="eyebrow"><i /> {tr(locale, 'ABERTO A NOVOS PROJETOS', 'OPEN TO NEW PROJECTS')}</span><span className="section-note">10 / {tr(locale, 'CONTATO', 'CONTACT')}</span></div>
           <div className="contact-big" data-motion-reveal><h2 id="contact-heading">{tr(locale, 'Vamos criar', 'Let’s create')}<br /><span>{tr(locale, 'algo juntos?', 'something together?')}</span></h2></div>
           <div className="quote-layout" data-motion-reveal>
             <QuoteForm locale={locale} />
