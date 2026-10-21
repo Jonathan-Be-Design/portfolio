@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   title: 'Jonathan Bolanle | Design para criadores, games e esports',
   description: 'Portfólio de Jonathan Bolanle: key visuals, campanhas, pôsteres, identidade visual e conteúdo para YouTube. Rio de Janeiro, atendimento remoto.',
   alternates: { canonical: '/' },
+  icons: { icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }, { url: '/icon-32.png', sizes: '32x32', type: 'image/png' }, { url: '/icon-192.png', sizes: '192x192', type: 'image/png' }], apple: '/apple-touch-icon.png' },
   openGraph: {
     type: 'website',
     locale: 'pt_BR',

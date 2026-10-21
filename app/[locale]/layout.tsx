@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title,
     description,
     alternates: { canonical: `/${locale}`, languages: { 'pt-BR': '/pt', en: '/en', 'x-default': '/pt' } },
+    icons: { icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }, { url: '/icon-32.png', sizes: '32x32', type: 'image/png' }, { url: '/icon-192.png', sizes: '192x192', type: 'image/png' }], apple: '/apple-touch-icon.png' },
     openGraph: {
       type: 'website',
       locale: isEnglish ? 'en_US' : 'pt_BR',
