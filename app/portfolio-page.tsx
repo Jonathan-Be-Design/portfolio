@@ -15,6 +15,7 @@ import EsportsBroadcast from './esports-broadcast';
 import QuoteForm, { QuoteAside } from './quote-form';
 import GamesThumbnails from './games-thumbnails';
 import { WhatsappIcon, whatsappLink } from './contact-links';
+import { packages } from './services';
 
 const featuredBrands = [
   { name: 'Baiano', logo: '/logos/baiano.png', width: 1366, height: 338, lines: ['STREAMER', 'E-SPORTS'], className: 'baiano', href: 'https://www.instagram.com/baianolol/', destination: 'Instagram' },
@@ -63,18 +64,6 @@ const englishImpactTitles: Record<string, string> = {
   'Ilha das Lendas em Londres': 'Ilha das Lendas in London',
   'Robo de Camille — CBLOL': 'Robo on Camille — CBLOL',
 };
-
-const services = [
-  { featured: false,
-    pt: { tag: 'Entrega única', title: 'Identidade do perfil', text: 'Paleta, fontes, chamadas de capa e modelos de cartaz, carrossel e vídeo, com peças de teste para aprovar.', price: 'A partir de R$\u00a01.200' },
-    en: { tag: 'One-off', title: 'Profile identity', text: 'Palette, typefaces, cover headlines and templates for posters, carousels and video, with test pieces to approve.', price: 'From R$\u00a01,200' } },
-  { featured: true,
-    pt: { tag: 'Recomendado', title: 'Pacote mensal', text: '20 peças por mês entre cartazes, carrosséis, thumbnails e vídeos, sempre no mesmo padrão visual.', price: 'R$\u00a02.500 por mês' },
-    en: { tag: 'Recommended', title: 'Monthly package', text: '20 pieces a month across posters, carousels, thumbnails and videos, always in the same visual system.', price: 'R$\u00a02,500 a month' } },
-  { featured: false,
-    pt: { tag: 'Sob demanda', title: 'Peças avulsas', text: 'Thumbnails, key art, capas e edições de vídeo para lançamentos, campanhas e transmissões.', price: 'Orçamento por projeto' },
-    en: { tag: 'On demand', title: 'Single pieces', text: 'Thumbnails, key art, covers and video edits for launches, campaigns and broadcasts.', price: 'Quoted per project' } },
-];
 
 export default function Home({ locale }: { locale: Locale }) {
   const impactTitle = (title: string) => locale === 'en' ? englishImpactTitles[title] ?? title : title;
@@ -288,14 +277,17 @@ export default function Home({ locale }: { locale: Locale }) {
           <div className="wrap">
             <div className="services-head" data-motion-reveal><span className="eyebrow">09 / {tr(locale, 'COMO TRABALHAMOS', 'HOW WE WORK')}</span><h2 id="services-heading">{tr(locale, 'Identidade e conteúdo', 'Identity and content')}<br /><span>{tr(locale, 'para quem publica toda semana.', 'for people who post every week.')}</span></h2></div>
             <div className="services-grid">
-              {services.map(service => <article className={service.featured ? 'is-featured' : undefined} key={service.pt.title} data-motion-reveal>
+              {packages.map(service => <Link className={service.featured ? 'is-featured' : undefined} href={`/${locale}${service.href}`} key={service.pt.title} data-motion-reveal>
                 <span className="services-tag">{tr(locale, service.pt.tag, service.en.tag)}</span>
                 <h3>{tr(locale, service.pt.title, service.en.title)}</h3>
                 <p>{tr(locale, service.pt.text, service.en.text)}</p>
-                <strong>{tr(locale, service.pt.price, service.en.price)}</strong>
-              </article>)}
+                <strong>{tr(locale, service.pt.price, service.en.price)} <ArrowUpRight size={18} /></strong>
+              </Link>)}
             </div>
-            <a className="services-cta" href={whatsappLink(locale)} target="_blank" rel="noopener noreferrer"><WhatsappIcon /> {tr(locale, 'Montar o meu pacote', 'Build my package')} <ArrowUpRight size={17} /></a>
+            <div className="services-actions">
+              <a className="services-cta" href={whatsappLink(locale)} target="_blank" rel="noopener noreferrer"><WhatsappIcon /> {tr(locale, 'Montar o meu pacote', 'Build my package')} <ArrowUpRight size={17} /></a>
+              <Link className="services-more" href={`/${locale}/servicos`}>{tr(locale, 'Ver todos os serviços', 'See all services')} <ArrowUpRight size={17} /></Link>
+            </div>
           </div>
         </section>
 
