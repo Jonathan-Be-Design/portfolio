@@ -42,4 +42,54 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/1936" />
     <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/1936" />
   </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/servicos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/servicos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/servicos/identidade-visual</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/identidade-visual" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/identidade-visual" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/servicos/identidade-visual</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/identidade-visual" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/identidade-visual" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/servicos/thumbnails</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/thumbnails" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/thumbnails" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/servicos/thumbnails</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/thumbnails" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/thumbnails" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/servicos/key-art</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/key-art" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/key-art" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/servicos/key-art</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/key-art" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/key-art" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/servicos/edicao-de-video</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/edicao-de-video" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/edicao-de-video" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/servicos/edicao-de-video</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/servicos/edicao-de-video" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/servicos/edicao-de-video" />
+  </url>
 </urlset>
