@@ -36,6 +36,7 @@ export default function ProjectPage({ locale, project, next }: { locale: Locale;
       </section>
 
       <section className="project-gallery wrap" aria-label={tr(locale, 'Imagens do projeto', 'Project images')}>
+        {project.videoId && <figure className="project-video"><iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}?rel=0&playsinline=1`} title={`${tr(locale, 'Vídeo', 'Video')}: ${project.title}`} allow="encrypted-media; picture-in-picture; fullscreen" allowFullScreen loading="lazy" referrerPolicy="strict-origin-when-cross-origin" /></figure>}
         {project.images.map((image, i) => <figure key={image.src}>
           <Image src={image.src} width={image.width} height={image.height} sizes="(max-width: 700px) 100vw, 1400px" alt={`${project.title}, ${tr(locale, 'imagem', 'image')} ${i + 1} ${tr(locale, 'de', 'of')} ${project.images.length}`} priority={i === 0} />
         </figure>)}

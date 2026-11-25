@@ -563,5 +563,55 @@
       }
     ],
     "source": "https://jonathanboa.myportfolio.com/game-design-1936-1"
+  },
+  {
+    "id": "aerotower",
+    "title": "AeroTower",
+    "category": "Motion design",
+    "kind": "Motion design · Pitch",
+    "description": "Animação em motion design para o pitch do AeroTower, uma horta hidropônica modular impressa em 3D. Direção visual, ilustração da torre, animação, trilha e efeitos sonoros.",
+    "images": [
+      {
+        "src": "/trabalhos/aerotower-01.webp",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "src": "/trabalhos/aerotower-02.webp",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "src": "/trabalhos/aerotower-03.webp",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "src": "/trabalhos/aerotower-04.webp",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "src": "/trabalhos/aerotower-05.webp",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "src": "/trabalhos/aerotower-06.webp",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "src": "/trabalhos/aerotower-07.webp",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "src": "/trabalhos/aerotower-08.webp",
+        "width": 1920,
+        "height": 1080
+      }
+    ],
+    "source": ""
   }
 ]

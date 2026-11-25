@@ -238,7 +238,7 @@ export default function Home({ locale }: { locale: Locale }) {
         <GamesThumbnails locale={locale} />
         <section className="work-section wrap" id="projetos" aria-labelledby="work-heading">
           <div className="section-top" data-motion-reveal><span className="eyebrow">{tr(locale, 'PORTFÓLIO', 'PORTFOLIO')} / JONATHAN BOLANLE</span><span className="section-note">{tr(locale, 'OUTROS TRABALHOS', 'OTHER WORK')} — 06</span></div>
-          <div className="work-title" data-motion-reveal><h2 id="work-heading">{tr(locale, 'Outros trabalhos', 'Other work')}</h2><p>{tr(locale, 'Uma seleção de projetos em música, identidade visual e game design.', 'A selection of projects in music, visual identity and game design.')}</p></div>
+          <div className="work-title" data-motion-reveal><h2 id="work-heading">{tr(locale, 'Outros trabalhos', 'Other work')}</h2><p>{tr(locale, 'Uma seleção de projetos em motion design, música, identidade visual e game design.', 'A selection of projects in motion design, music, visual identity and game design.')}</p></div>
           <output className="sr-only">{visible.length} {tr(locale, 'outros trabalhos e contribuições', 'other projects and contributions')}</output>
           <div className="project-grid curated-grid" data-motion-stagger>
             {visible.map((project,index) => <Link className={`project-card ${project.coverLayout}-card`} key={project.id} href={`/${locale}/trabalhos/${project.id}`} aria-label={`${tr(locale, 'Ver projeto', 'View project')} ${project.title}`}>
