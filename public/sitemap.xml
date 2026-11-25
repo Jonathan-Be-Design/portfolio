@@ -42,4 +42,14 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/1936" />
     <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/1936" />
   </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/pt/trabalhos/aerotower</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/aerotower" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/aerotower" />
+  </url>
+  <url>
+    <loc>https://jonathanbolanle.studio/en/trabalhos/aerotower</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://jonathanbolanle.studio/pt/trabalhos/aerotower" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jonathanbolanle.studio/en/trabalhos/aerotower" />
+  </url>
 </urlset>

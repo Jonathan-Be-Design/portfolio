@@ -14,6 +14,7 @@ export type Project = {
   coverLayout: 'wide' | 'worlds' | 'drew' | 'game';
   creator?: string;
   contributor?: string;
+  videoId?: string;
 };
 
 function original(id: string) {
@@ -38,6 +39,7 @@ function project(id: string, numbers: number[] | null, overrides: Partial<Projec
 
 // Outros trabalhos e contribuições selecionados por Jonathan.
 const projectsPt: Project[] = [
+  project('aerotower', null, { videoId: '54gV8dF7RCY', coverImages: selectImages('aerotower', [2]) }),
   project('west-reis', null, { title: 'West Reis', kind: 'Música · Media kit' }),
   project('drew', null, {
     title: 'DREW', coverLayout: 'drew', creator: 'André Ferreira Carneiro', contributor: 'Jonathan Bolanle',
@@ -53,6 +55,8 @@ const projectsPt: Project[] = [
 export function getProjects(locale: Locale): Project[] {
   if (locale === 'pt') return projectsPt;
   return projectsPt.map(project => {
+    if (project.id === 'aerotower') return { ...project, kind: 'Motion design · Pitch',
+      description: 'Motion design animation for the AeroTower pitch, a modular 3D-printed hydroponic garden. Art direction, tower illustration, animation, music and sound design.' };
     if (project.id === 'west-reis') return { ...project, category: 'Editorial & more', kind: 'Music · Media kit',
       description: 'A visual presentation for West Reis. Photography, contrast and typography bring structure to the artist’s visual identity.' };
     if (project.id === 'drew') return { ...project, category: 'Visual identity', kind: 'Branding & visual identity',
